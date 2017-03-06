@@ -12,6 +12,10 @@
         <default key="_controller"></default>
     </route>
 
+    <route id="admin.home" path="/admin">
+        <default key="_controller">AppBundle:Admin:courseList</default>
+    </route>
+
 </routes>
 
 
