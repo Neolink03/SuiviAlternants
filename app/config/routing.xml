@@ -4,11 +4,9 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="homepage" path="/">
-        <default key="_controller"></default>
-    </route>
+    <import resource="@FOSUserBundle/Resources/config/routing/all.xml"/>
 
-    <route id="public.signin" path="/signin">
+    <route id="homepage" path="/">
         <default key="_controller"></default>
     </route>
 
