@@ -10,6 +10,8 @@
             <argument type="service" id="debug.argument_resolver" />
         </service>
 
+        <service id="app.factory.workflow" class="AppBundle\Services\WorkflowFactory">
+        </service>
     </services>
 
 </container>
