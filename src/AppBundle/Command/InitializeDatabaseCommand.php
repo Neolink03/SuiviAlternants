@@ -24,7 +24,8 @@ class InitializeDatabaseCommand extends ContainerAwareCommand
     {
         $commands = array(
             'doctrine:database:create' =>   array('command' => 'doctrine:database:create'),
-            'doctrine:schema:update' =>   array('command' => 'doctrine:schema:update', '--force'  => true)
+            'doctrine:schema:update' =>   array('command' => 'doctrine:schema:update', '--force'  => true),
+            'doctrine:fixtures:load' =>   array('command' => 'doctrine:fixtures:load')
         );
 
         foreach ($commands as $commandName => $params ){
