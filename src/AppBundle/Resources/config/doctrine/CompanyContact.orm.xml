@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity repository-class="AppBundle\Repository\CompanyContactRepository" name="AppBundle\Entity\CompanyContact">
+    <id name="id" type="integer" column="id">
+      <generator strategy="AUTO"/>
+    </id>
+    <field name="companyName" type="string" column="companyName" length="255" unique="true"/>
+    <field name="firstNameContact" type="string" column="firstNameContact" length="255"/>
+    <field name="lastNameContact" type="string" column="lastNameContact" length="255"/>
+    <field name="email" type="string" column="email" length="255"/>
+    <field name="phoneNumber" type="string" column="phoneNumber" length="255"/>
+  </entity>
+</doctrine-mapping>
