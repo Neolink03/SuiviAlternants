@@ -6,14 +6,6 @@
 
     <import resource="@FOSUserBundle/Resources/config/routing/all.xml"/>
 
-    <route id="homepage" path="/">
-        <default key="_controller"></default>
-    </route>
-
-    <route id="public.login" path="/login">
-        <default key="_controller">AppBundle:User:login</default>
-    </route>
-
     <route id="admin.home" path="/admin">
         <default key="_controller">AppBundle:Admin:courseList</default>
     </route>
