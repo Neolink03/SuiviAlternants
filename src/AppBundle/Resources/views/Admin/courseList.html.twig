@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Liste des formations{% endblock %}
+
+{% block body %}
+    <h1>Liste des formations</h1>
+    <section id="accommodations">
+        {% for course in courses %}
+            <div class="row">
+                <div class="col-md-6">
+                    <strong><span>{{ course.name }}</span></strong>
+                    <p>Nombre d'étudiant : {{ course.studentNumber }}</p>
+                    </div>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}
