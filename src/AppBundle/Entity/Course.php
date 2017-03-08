@@ -11,13 +11,6 @@ class Course
     private $name;
     private $studentNumber;
 
-    public function __construct($name, $studentNumber)
-    {
-        $this->id = uniqid();
-        $this->name = $name;
-        $this->studentNumber = $studentNumber;
-    }
-
     public function getId()
     {
         return $this->id;
@@ -35,14 +28,14 @@ class Course
         return $this->name;
     }
 
-    public function setStudentNumber($studentNumber)
+    public function setStudentNumber(int $studentNumber)
     {
         $this->studentNumber = $studentNumber;
 
         return $this;
     }
 
-    public function getStudentNumber()
+    public function getStudentNumber() : int
     {
         return $this->studentNumber;
     }

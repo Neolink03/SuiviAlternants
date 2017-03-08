@@ -15,15 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends Controller
 {
-    private $courses = [];
 
     public function courseListAction(Request $request){
-        $courses = [
-            new Course('metinet', 24),
-            new Course('Iem', 3),
-            new Course('Jonathan', 10000000000000000000)
-        ];
-
+        $courses = $this->getDoctrine()->getRepository(Course::class)->findAll();
         return $this->render('AppBundle:Admin:courseList.html.twig', [
             "courses" => $courses,
         ]);
