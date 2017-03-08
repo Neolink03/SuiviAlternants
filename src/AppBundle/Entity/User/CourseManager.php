@@ -6,7 +6,7 @@ use AppBundle\Entity\User;
 
 class CourseManager extends User
 {
-    private $id;
+    protected $id;
     private $phoneNumber;
 
     public function getId() : int

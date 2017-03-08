@@ -4,13 +4,17 @@ namespace AppBundle\Entity\User;
 
 use AppBundle\Entity\User;
 
-class Adminstrator extends User
+class Administrator extends User
 {
-    private $id;
-
     public function getId() : int
     {
         return $this->id;
     }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
 }
 

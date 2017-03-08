@@ -6,7 +6,7 @@ use AppBundle\Entity\User;
 
 class Student extends User
 {
-    private $id;
+    protected $id;
 
     public function getId() : int
     {
