@@ -18,7 +18,7 @@ class User extends BaseUser
         parent::__construct();
     }
 
-    public function getFirstName(): string
+    public function getFirstName()
     {
         return $this->firstName;
     }
@@ -28,7 +28,7 @@ class User extends BaseUser
         $this->firstName = $firstName;
     }
 
-    public function getLastName(): string
+    public function getLastName()
     {
         return $this->lastName;
     }

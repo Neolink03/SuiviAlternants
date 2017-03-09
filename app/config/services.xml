@@ -12,6 +12,11 @@
 
         <service id="app.factory.workflow" class="AppBundle\Services\WorkflowFactory">
         </service>
+
+        <service id="app.form.registration" class="AppBundle\Forms\Types\RegistrationType">
+            <tag name="form.type" alias="app_user_registration" />
+        </service>
+
     </services>
 
 </container>
