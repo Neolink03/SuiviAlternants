@@ -10,6 +10,7 @@ use AppBundle\Entity\State;
 use AppBundle\Entity\Transition;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Workflow\DefinitionBuilder;
+use Symfony\Component\Workflow\Dumper\StateMachineGraphvizDumper;
 use Symfony\Component\Workflow\MarkingStore\SingleStateMarkingStore;
 use Symfony\Component\Workflow\Workflow;
 
@@ -29,7 +30,7 @@ class WorkflowFactory
         $states = $this->em->getRepository(State::class)->findAll();
         /** @var State $state */
         foreach ($states as $state){
-            $builder->addPlace($state->getName());
+            $builder->addPlace($state->getMachineName());
         }
 
         $transitions = $this->em->getRepository(Transition::class)->findAll();
@@ -38,13 +39,14 @@ class WorkflowFactory
         foreach ($transitions as $transition){
             $builder->addTransition(
                 new \Symfony\Component\Workflow\Transition(
-                    $transition->getName(),
-                    $transition->getStartState()->getName(),
-                    $transition->getEndState()->getName())
+                    $transition->getMachineName(),
+                    $transition->getStartState()->getMachineName(),
+                    $transition->getEndState()->getMachineName())
             );
         }
 
         $definition = $builder->build();
+        echo (new StateMachineGraphvizDumper)->dump($definition);
         $marking = new SingleStateMarkingStore('currentState');
         return new Workflow($definition, $marking);
     }
