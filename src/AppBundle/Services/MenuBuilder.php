@@ -20,6 +20,7 @@ class MenuBuilder
     public function __construct(AuthorizationChecker $securityContext)
     {
         $this->securityContext = $securityContext;
+        $this->menuItems = array();
         $this->build();
     }
 
