@@ -10,7 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\User\Student;
-use AppBundle\Forms\Types\StudentType;
+use AppBundle\Forms\Types\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -20,7 +20,7 @@ class CourseManagerController extends Controller
 {
     public function addStudentAction(Request $request){
         $student = new Student();
-        $studentForm = $this->createForm(StudentType::class, $student);
+        $studentForm = $this->createForm(UserType::class, $student);
 
         if ($request->isMethod('post')) {
 
