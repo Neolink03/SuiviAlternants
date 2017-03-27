@@ -5,6 +5,8 @@ AppBundle\Entity\User\Administrator:
         username: <userName()>
         plainPassword: <word()>
         email: <email()>
+        roles:
+          - ROLE_ADMIN
         enabled: true
    admin_1:
         firstName: John
@@ -12,6 +14,8 @@ AppBundle\Entity\User\Administrator:
         username: administrator
         plainPassword: administrator
         email: test3@test.test
+        roles:
+          - ROLE_ADMIN
         enabled: true
 
 AppBundle\Entity\User\CourseManager:

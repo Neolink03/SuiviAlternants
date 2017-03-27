@@ -4,6 +4,10 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
+    <route id="public.login" path="/login">
+        <default key="_controller">AppBundle:Security:login</default>
+    </route>
+
     <import resource="@FOSUserBundle/Resources/config/routing/all.xml"/>
 
     <route id="homepage" path="/">
@@ -13,6 +17,7 @@
     <route id="admin.home" path="/admin">
         <default key="_controller">AppBundle:Admin:courseList</default>
     </route>
+
     <route id="admin.workflow" path="/workflow">
         <default key="_controller">AppBundle:Admin:dumpWorkflow</default>
     </route>
