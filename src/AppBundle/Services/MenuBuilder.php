@@ -10,16 +10,26 @@ namespace AppBundle\Services;
 
 
 use AppBundle\Models\MenuItem;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class MenuBuilder
 {
+    private $securityContext;
     private $menuItems;
 
-    public function __construct()
+    public function __construct(AuthorizationChecker $securityContext)
     {
-        $this->menuItems = array(
-            new MenuItem('Admin', 'admin.home')
-        );
+        $this->securityContext = $securityContext;
+        $this->build();
+    }
+
+    private function build()
+    {
+        if ($this->securityContext->isGranted('ROLE_ADMIN')) {
+            $this->menuItems = array(
+                new MenuItem('Admin', 'admin.home')
+            );
+        }
     }
 
     public function getMenuItems(): array

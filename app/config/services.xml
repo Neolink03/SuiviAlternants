@@ -19,6 +19,7 @@
         </service>
 
         <service id="app.menu" class="AppBundle\Services\MenuBuilder">
+            <argument type="service" id="security.authorization_checker" />
         </service>
 
     </services>
