@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 class Transition
 {
     private $id;
+    private $workflow;
     private $name;
     private $machineName;
     private $startState;
@@ -60,6 +61,16 @@ class Transition
     public function setEndState(State $endState)
     {
         $this->endState = $endState;
+    }
+
+    public function getWorkflow()
+    {
+        return $this->workflow;
+    }
+
+    public function setWorkflow($workflow)
+    {
+        $this->workflow = $workflow;
     }
 
 }

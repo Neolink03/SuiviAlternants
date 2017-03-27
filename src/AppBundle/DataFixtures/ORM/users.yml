@@ -1,0 +1,49 @@
+AppBundle\Entity\User\Administrator:
+   Administrator{1..2}:
+        firstName: <firstName()>
+        lastName: <lastName()>
+        username: <userName()>
+        plainPassword: <word()>
+        email: <email()>
+        enabled: true
+   admin_1:
+        firstName: John
+        lastName: Doe
+        username: administrator
+        plainPassword: administrator
+        email: test3@test.test
+        enabled: true
+
+AppBundle\Entity\User\CourseManager:
+   CourseManager{1..5}:
+        firstName: <firstName()>
+        lastName: <lastName()>
+        username: <userName()>
+        plainPassword: <word()>
+        email: <email()>
+        phoneNumber: <phoneNumber()>
+        enabled: true
+   manager_1:
+        firstName: Adrien
+        lastName: Dupond
+        username: manage
+        plainPassword: manage
+        email: test2@test.test
+        enabled: true
+        phoneNumber: 0245986552
+
+AppBundle\Entity\User\Student:
+   Student{1..30}:
+        firstName: <firstName()>
+        lastName: <lastName()>
+        username: <userName()>
+        plainPassword: <word()>
+        email: <email()>
+        enabled: true
+   student_1:
+        firstName: Antoine
+        lastName: Joubert
+        username: student
+        plainPassword: student
+        email: test@test.test
+        enabled: true

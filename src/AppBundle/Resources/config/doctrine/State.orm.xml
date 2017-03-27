@@ -6,5 +6,8 @@
     </id>
     <field name="name" type="string" column="name" length="255"/>
     <field name="machineName" type="string" column="machineName" length="255"/>
+
+    <many-to-one field="workflow" target-entity="AppBundle\Entity\WorkFlow" inversed-by="states" />
+
   </entity>
 </doctrine-mapping>
