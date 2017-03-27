@@ -22,4 +22,8 @@ class AdminController extends Controller
             "courses" => $courses,
         ]);
     }
+
+    public function dumpWorkflowAction(Request $request){
+        $this->get('app.factory.workflow')->generateWorflowFromTrainging(12, 2018);
+    }
 }

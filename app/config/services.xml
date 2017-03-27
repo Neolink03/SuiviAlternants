@@ -11,6 +11,7 @@
         </service>
 
         <service id="app.factory.workflow" class="AppBundle\Services\WorkflowFactory">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
 
         <service id="app.form.registration" class="AppBundle\Forms\Types\RegistrationType">
