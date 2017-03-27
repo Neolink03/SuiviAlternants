@@ -12,6 +12,13 @@
 </head>
 <body>
 
+{% if app.user %}
+    {{ render(controller(
+        'AppBundle:Menu:generateMenu',
+        { 'currentRoute': app.request.attributes.get('_route') }
+    )) }}
+{% endif %}
+
 <div class="container">
 
     {% if app.session.flashbag.peekAll|length > 0 %}
