@@ -21,27 +21,30 @@ class LoadUsers extends AbstractFixture implements OrderedFixtureInterface
         $admin->setFirstName('John');
         $admin->setLastName('Doe');
         $admin->setUsername('admin');
-        $admin->setPassword('admin');
+        $admin->setPlainPassword('admin');
         $admin->setEmail('test@test.test');
+        $admin->setEnabled(true);
 
         $manager->persist($admin);
 
         $courseManager = new CourseManager();
         $courseManager->setFirstName('Adrien');
         $courseManager->setLastName('Dupond');
-        $courseManager->setEmail('test@test.test');
+        $courseManager->setEmail('test2@test.test');
         $courseManager->setUsername('manage');
-        $courseManager->setPassword('manage');
+        $courseManager->setPlainPassword('manage');
         $courseManager->setPhoneNumber('0245986552');
+        $courseManager->setEnabled(true);
 
         $manager->persist($courseManager);
 
         $student = new Student();
         $student->setFirstName('Antoine');
         $student->setLastName('Joubert');
-        $student->setEmail('test@test.test');
+        $student->setEmail('test3@test.test');
         $student->setUsername('student');
-        $student->setPassword('student');
+        $student->setPlainPassword('student');
+        $student->setEnabled(true);
 
         $manager->persist($student);
 
