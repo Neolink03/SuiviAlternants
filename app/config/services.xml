@@ -18,6 +18,9 @@
             <tag name="form.type" alias="app_user_registration" />
         </service>
 
+        <service id="app.menu" class="AppBundle\Services\MenuBuilder">
+        </service>
+
     </services>
 
 </container>
