@@ -1,0 +1,4 @@
+AppBundle\Entity\Course:
+   Course{1..10}:
+        name: <lastName()>
+        studentNumber: <numberBetween(10,30)>

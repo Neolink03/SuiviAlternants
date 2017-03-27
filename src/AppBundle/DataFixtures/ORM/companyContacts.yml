@@ -1,0 +1,7 @@
+AppBundle\Entity\CompanyContact:
+   CompanyContact{1..30}:
+        companyName: <company()> <catchPhrase()>
+        firstNameContact: <firstName()>
+        lastNameContact: <lastName()>
+        email: <email()>
+        phoneNumber: <phoneNumber()>

@@ -7,39 +7,16 @@ namespace AppBundle\Entity;
  */
 class State
 {
-    /**
-     * @var int
-     */
     private $id;
-
-    /**
-     * @var string
-     */
     private $name;
-
-    /**
-     * @var string
-     */
     private $machineName;
+    private $workflow;
 
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return State
-     */
     public function setName($name)
     {
         $this->name = $name;
@@ -47,23 +24,11 @@ class State
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * Set machineName
-     *
-     * @param string $machineName
-     *
-     * @return State
-     */
     public function setMachineName($machineName)
     {
         $this->machineName = $machineName;
@@ -71,14 +36,20 @@ class State
         return $this;
     }
 
-    /**
-     * Get machineName
-     *
-     * @return string
-     */
     public function getMachineName()
     {
         return $this->machineName;
     }
+
+    public function getWorkflow() : WorkFlow
+    {
+        return $this->workflow;
+    }
+
+    public function setWorkflow(WorkFlow $workflow)
+    {
+        $this->workflow = $workflow;
+    }
+
 }
 
