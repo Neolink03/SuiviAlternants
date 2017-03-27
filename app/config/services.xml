@@ -14,6 +14,10 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
 
+        <service id="app.factory.user" class="AppBundle\Services\UserFactory">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+
         <service id="app.form.registration" class="AppBundle\Forms\Types\RegistrationType">
             <tag name="form.type" alias="app_user_registration" />
         </service>

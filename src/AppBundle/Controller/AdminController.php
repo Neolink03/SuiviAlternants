@@ -10,6 +10,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Course;
+use AppBundle\Forms\Types\AdminNewUserType;
+use AppBundle\Models\AdminNewUserDto;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -26,4 +28,24 @@ class AdminController extends Controller
     public function dumpWorkflowAction(Request $request){
         $this->get('app.factory.workflow')->generateWorflowFromTrainging(12, 2018);
     }
+
+    public function userAddAction(Request $request)
+    {
+        $adminNewUserDto = new AdminNewUserDto();
+
+        $form = $this->createForm(AdminNewUserType::class,$adminNewUserDto);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->get('app.factory.user')->saveFromAdmin($adminNewUserDto);
+            //return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('AppBundle:Admin:addUser.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+
 }
