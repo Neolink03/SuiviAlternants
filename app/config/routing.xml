@@ -17,11 +17,12 @@
     <route id="admin.home" path="/admin">
         <default key="_controller">AppBundle:Admin:courseList</default>
     </route>
-
-    <route id="admin.edit_course" path="/admin/edit/course">
-        <default key="_controller">AppBundle:Admin:editCourse</default>
+    <route id="admin.edit_course" path="/admin/course/create">
+        <default key="_controller">AppBundle:Admin:createCourse</default>
     </route>
-    
+    <route id="admin.course_create_success" path="/admin/course/create/success">
+        <default key="_controller">AppBundle:Admin:createCourseSuccess</default>
+    </route>
     <route id="admin.workflow" path="/workflow">
         <default key="_controller">AppBundle:Admin:dumpWorkflow</default>
     </route>

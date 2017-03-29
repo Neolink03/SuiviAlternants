@@ -14,8 +14,9 @@ use AppBundle\Forms\Types\AdminNewUserType;
 use AppBundle\Models\AdminNewUserDto;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
-use AppBundle\Forms\Types\Courses\CourseType;
+use AppBundle\Forms\Types\Courses\CourseCreateType;
 
 class AdminController extends Controller
 {
@@ -26,15 +27,39 @@ class AdminController extends Controller
         ]);
     }
     
-    public function editCourseAction(Request $request) {
+    public function createCourseAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $courseManagers = $em->getRepository(\AppBundle\Entity\User\CourseManager::class)
-                             ->findAll();
+        $form = $this->createForm(CourseCreateType::class);
+        
+        if ($request->isMethod('post')) {
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                
+                $courseFormData = $form->getData();
+                $course = new Course();
+                $course->setName($courseFormData['name']);
+                $course->setManager($courseFormData['manager']['selector']);
+                $course->setCoManager($courseFormData['coManager']['selector']);
+                $course->setSecretariatContactDetails($courseFormData['secretariatContactDetails']);
+                $course->setStudentNumber(25);
+                
+                $em->persist($course);
+                $em->flush($course);
+                
+                return new RedirectResponse($this->generateUrl("admin.course_create_success"));
+            }
+        }
         
         return $this->render('AppBundle:Admin:editCourse.html.twig', [
             "courses" => null,
-            "currentForm" => $this->createForm(CourseType::class)->createView()
+            "currentForm" => $form->createView()
         ]);
+    }
+    
+    public function createCourseSuccessAction(Request $request) {
+        return new \Symfony\Component\HttpFoundation\Response("Course successfully created");
     }
 
     public function dumpWorkflowAction(Request $request){
