@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Companycontact creation</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Create" class="btn btn-default"/>
+    {{ form_end(form) }}
+
+    <button class="btn btn-default">
+            <a href="{{ path('companycontact_index') }}">Back to the list</a>
+    </button>
+{% endblock %}

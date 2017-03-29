@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Companycontact</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Nom de la société : </th>
+                <td>{{ companyContact.companyName }}</td>
+            </tr>
+            <tr>
+                <th>Prénom du contact : </th>
+                <td>{{ companyContact.firstNameContact }}</td>
+            </tr>
+            <tr>
+                <th>Nom du contact : </th>
+                <td>{{ companyContact.lastNameContact }}</td>
+            </tr>
+            <tr>
+                <th>Email : </th>
+                <td>{{ companyContact.email }}</td>
+            </tr>
+            <tr>
+                <th>Téléphone : </th>
+                <td>{{ companyContact.phoneNumber }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="btn btn-default">
+    <a href="{{ path('companycontact_index') }}">Back to the list</a>
+    </button>
+    <button class="btn btn-default">
+    <a href="{{ path('companycontact_edit', { 'id': companyContact.id }) }}">Edit</a>
+    </button>
+    {{ form_start(delete_form) }}
+        <input type="submit" value="Delete" class="btn btn-default">
+    {{ form_end(delete_form) }}
+{% endblock %}
