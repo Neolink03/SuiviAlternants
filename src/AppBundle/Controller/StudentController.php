@@ -35,6 +35,10 @@ class StudentController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($student);
                 $em->flush();
+                $this->addFlash(
+                    'success',
+                    'Vos informations ont bien été mises a jour!'
+                );
             }
         }
 
