@@ -8,6 +8,6 @@
     <field name="studentNumber" type="integer"/>
     <many-to-one field="manager" target-entity="\AppBundle\Entity\User\CourseManager" />
     <many-to-one field="coManager" target-entity="\AppBundle\Entity\User\CourseManager" nullable="true" />
-    <field name="secretariatContactDetails" type="text" nullable="true"/>
+    <field name="secretariatContactDetails" type="text"/>
   </entity>
 </doctrine-mapping>

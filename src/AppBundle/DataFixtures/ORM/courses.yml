@@ -1,4 +1,7 @@
 AppBundle\Entity\Course:
    Course{1..10}:
-        name: <lastName()>
+        name: <lastName()> <lastName()>
         studentNumber: <numberBetween(10,30)>
+        manager: '@CourseManager*'
+        coManager: '@CourseManager*'
+        secretariatContactDetails: <text(200)>
