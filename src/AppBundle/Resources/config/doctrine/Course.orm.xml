@@ -9,5 +9,11 @@
     <many-to-one field="manager" target-entity="\AppBundle\Entity\User\CourseManager" />
     <many-to-one field="coManager" target-entity="\AppBundle\Entity\User\CourseManager" nullable="true" />
     <field name="secretariatContactDetails" type="text"/>
+
+    <one-to-many field="promotions" target-entity="AppBundle\Entity\Promotion" mapped-by="course">
+      <cascade>
+        <cascade-persist/>
+      </cascade>
+    </one-to-many>
   </entity>
 </doctrine-mapping>

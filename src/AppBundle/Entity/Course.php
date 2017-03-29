@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Course
  */
@@ -13,6 +15,35 @@ class Course
     private $manager;
     private $coManager;
     private $secretariatContactDetails;
+    private $promotions;
+
+    public function __construct()
+    {
+        $this->promotions = new ArrayCollection();
+    }
+
+    public function getPromotions()
+    {
+        return $this->promotions;
+    }
+
+    public function setPromotions($promotions)
+    {
+        $this->promotions = $promotions;
+    }
+
+    public function addPromotion(Promotion $promotion)
+    {
+        $this->promotions[] = $promotion;
+        $promotion->setCourse($this);
+
+        return $this;
+    }
+
+    public function removeState(State $state)
+    {
+        $this->promotions->removeElement($state);
+    }
 
     public function getId()
     {
