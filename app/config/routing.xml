@@ -39,6 +39,7 @@
         <default key="_controller">AppBundle:Student:displayPersonalInformations</default>
     </route>
 
+    <import resource="@AppBundle/Resources/config/routing.yml"></import>
 </routes>
 
 

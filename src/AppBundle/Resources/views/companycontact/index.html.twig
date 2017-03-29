@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Companycontacts list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom de la société</th>
+                <th>Prénom du contact</th>
+                <th>Nom du contact</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for companyContact in companyContacts %}
+            <tr>
+                <td><a href="{{ path('companycontact_show', { 'id': companyContact.id }) }}">{{ companyContact.companyName }}</a></td>
+                <td>{{ companyContact.firstNameContact }}</td>
+                <td>{{ companyContact.lastNameContact }}</td>
+                <td>{{ companyContact.email }}</td>
+                <td>{{ companyContact.phoneNumber }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <button class="btn btn-default">
+    <a href="{{ path('companycontact_new') }}">Create a new companyContact</a>
+    </button>
+{% endblock %}
