@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Informations personnelles{% endblock %}
+
+{% block body %}
+    <h1>Mes informations personnelles</h1>
+    <div id="addStudent">
+        {{ form_start(student) }}
+
+        {{ form_row(student.lastName) }}
+        {{ form_row(student.firstName) }}
+        {{ form_row(student.email) }}
+        {{ form_row(student.address.street) }}
+        {{ form_row(student.address.postalCode) }}
+        {{ form_row(student.address.city) }}
+        {{ form_row(student.address.country) }}
+        {{ form_row(student.phone) }}
+        {{ form_row(student.cellphone) }}
+        {{ form_row(student.birthday) }}
+
+        <input type="submit" value="Valider" class="btn btn-default">
+        {{ form_rest(student) }}
+    </div>
+{% endblock %}

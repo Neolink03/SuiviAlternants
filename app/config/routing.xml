@@ -18,6 +18,10 @@
         <default key="_controller">AppBundle:Admin:courseList</default>
     </route>
 
+    <route id="admin.edit_course" path="/admin/edit/course">
+        <default key="_controller">AppBundle:Admin:editCourse</default>
+    </route>
+    
     <route id="admin.workflow" path="/workflow">
         <default key="_controller">AppBundle:Admin:dumpWorkflow</default>
     </route>
@@ -28,6 +32,10 @@
 
     <route id="courseManager.addStudent" path="/course-manager/promotion/{promotionId}/create/student">
         <default key="_controller">AppBundle:CourseManager:addStudent</default>
+    </route>
+
+    <route id="courseManager.addStudent" path="/student/informations/{studentId}">
+        <default key="_controller">AppBundle:Student:displayPersonalInformations</default>
     </route>
 
 </routes>
