@@ -2,8 +2,8 @@
 
 namespace AppBundle\Entity\User;
 
-use AppBundle\Entity\Address;
 use AppBundle\Entity\User;
+use AppBundle\Forms\Types\AddressType;
 
 class Student extends User
 {
@@ -18,7 +18,7 @@ class Student extends User
         return $this->id;
     }
 
-    public function getAddress() : Address
+    public function getAddress()
     {
         return $this->address;
     }

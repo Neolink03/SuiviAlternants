@@ -14,15 +14,15 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class Address extends AbstractType
+class AddressType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('street', TextType::class)
-            ->add('city', TextType::class)
-            ->add('postalCode', IntegerType::class)
-            ->add('country', TextType::class)
+            ->add('street', TextType::class, array('label' => 'Adresse'))
+            ->add('city', TextType::class, array('label' => 'Ville'))
+            ->add('postalCode', IntegerType::class, array('label' => 'Code Postal'))
+            ->add('country', TextType::class, array('label' => 'Pays'))
         ;
     }
 }

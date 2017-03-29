@@ -14,13 +14,8 @@
     <p>Promotion : nomPromo</p>
     <div id="addStudent">
         {{ form_start(student) }}
-            {{ form_label(student.email) }}
-            {{ form_row(student.email) }}
-            {{ form_label(student.lastname) }}
-            {{ form_row(student.lastname) }}
-            {{ form_label(student.firstname) }}
-            {{ form_row(student.firstname) }}
+        {{ form_widget(student) }}
+        <input type="submit" value="Valider" class="btn btn-default">
+        {{ form_rest(student) }}
     </div>
-    <input type="submit" value="Valider" class="btn btn-default">
-    {{ form_rest(student) }}
 {% endblock %}
