@@ -10,6 +10,9 @@ class Course
     private $id;
     private $name;
     private $studentNumber;
+    private $manager;
+    private $coManager;
+    private $secretariatContactDetails;
 
     public function getId()
     {
@@ -39,5 +42,31 @@ class Course
     {
         return $this->studentNumber;
     }
+    
+    function getManager() {
+        return $this->manager;
+    }
+
+    function getCoManager() {
+        return $this->coManager;
+    }
+
+    function getSecretariatContactDetails() {
+        return $this->secretariatContactDetails;
+    }
+
+    function setManager($manager) {
+        $this->manager = $manager;
+    }
+
+    function setCoManager($coManager) {
+        $this->coManager = $coManager;
+    }
+
+    function setSecretariatContactDetails($secretariatContactDetails) {
+        $this->secretariatContactDetails = $secretariatContactDetails;
+    }
+
+
 }
 

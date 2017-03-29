@@ -35,5 +35,8 @@ class User extends BaseUser
         $this->lastName = $lastName;
     }
 
+    public function getFullName() {
+        return sprintf("%s %s", $this->firstName, $this->lastName);
+    }
 }
 

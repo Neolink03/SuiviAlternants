@@ -15,13 +15,25 @@ use AppBundle\Models\AdminNewUserDto;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use AppBundle\Forms\Types\Courses\CourseType;
+
 class AdminController extends Controller
 {
-
     public function courseListAction(Request $request){
         $courses = $this->getDoctrine()->getRepository(Course::class)->findAll();
         return $this->render('AppBundle:Admin:courseList.html.twig', [
             "courses" => $courses,
+        ]);
+    }
+    
+    public function editCourseAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $courseManagers = $em->getRepository(\AppBundle\Entity\User\CourseManager::class)
+                             ->findAll();
+        
+        return $this->render('AppBundle:Admin:editCourse.html.twig', [
+            "courses" => null,
+            "currentForm" => $this->createForm(CourseType::class)->createView()
         ]);
     }
 
