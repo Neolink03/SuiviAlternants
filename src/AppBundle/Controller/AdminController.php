@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use AppBundle\Forms\Types\Courses\CourseCreateType;
+use AppBundle\Models\Dtos\Courses\Course as CourseDto;
 
 class AdminController extends Controller
 {
@@ -29,7 +30,7 @@ class AdminController extends Controller
     
     public function createCourseAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(CourseCreateType::class);
+        $form = $this->createForm(CourseCreateType::class, new CourseDto());
         
         if ($request->isMethod('post')) {
 
@@ -37,16 +38,8 @@ class AdminController extends Controller
 
             if ($form->isSubmitted() && $form->isValid()) {
                 
-                $courseFormData = $form->getData();
-                $course = new Course();
-                $course->setName($courseFormData['name']);
-                $course->setManager($courseFormData['manager']['selector']);
-                $course->setCoManager($courseFormData['coManager']['selector']);
-                $course->setSecretariatContactDetails($courseFormData['secretariatContactDetails']);
-                $course->setStudentNumber(25);
-                
-                $em->persist($course);
-                $em->flush($course);
+                $courseDto = $form->getData();
+                $this->get('app.factory.course')->saveFromAdmin($courseDto);
                 
                 return new RedirectResponse($this->generateUrl("admin.course_create_success"));
             }

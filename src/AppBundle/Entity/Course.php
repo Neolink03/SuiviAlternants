@@ -7,6 +7,8 @@ namespace AppBundle\Entity;
  */
 class Course
 {
+    const DEFAULT_STUDENT_NUMBER = 25;
+    
     private $id;
     private $name;
     private $studentNumber;
