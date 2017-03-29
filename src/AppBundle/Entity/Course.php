@@ -13,7 +13,7 @@ class Course
     private $manager;
     private $coManager;
     private $secretariatContactDetails;
-
+    
     public function getId()
     {
         return $this->id;
@@ -66,7 +66,5 @@ class Course
     function setSecretariatContactDetails($secretariatContactDetails) {
         $this->secretariatContactDetails = $secretariatContactDetails;
     }
-
-
 }
 
