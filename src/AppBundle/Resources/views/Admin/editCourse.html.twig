@@ -1,0 +1,24 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Admin - Create course{% endblock %}
+
+{% block body %}
+    <h1>Admin - Create course</h1>
+    
+    <div class="container">
+        <div class="col-md-6">
+            {{ form_label(currentForm.name)}}
+            {{ form_widget(currentForm.name, {'attr': {"class": 'form-control'} }) }}
+
+            {{ form_label(currentForm.manager)}}
+            {{ form_widget(currentForm.manager.selector, {'attr': {"class": 'form-control custom-select'} }) }}
+
+            {{ form_label(currentForm.coManager)}}
+            {{ form_widget(currentForm.coManager.selector, {'attr': {"class": 'form-control custom-select'} }) }}
+
+            {{ form_label(currentForm.secretariatContactDetails)}}
+            {{ form_widget(currentForm.secretariatContactDetails, {'attr': {"class": 'form-control'} }) }}
+        </div>
+    </div>
+    
+{% endblock %}
