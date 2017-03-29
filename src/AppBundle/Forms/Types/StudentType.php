@@ -19,10 +19,10 @@ class StudentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('address', AddressType::class)
+            ->add('address', AddressType::class, array('required' => false))
             ->add('phone', TextType::class, array('label' => 'Téléphone fixe', 'required' => false))
-            ->add('cellphone', TextType::class, array('label' => 'Téléphone portable'))
-            ->add('birthday', DateType::class, array('label' => 'Date de naissance'))
+            ->add('cellphone', TextType::class, array('label' => 'Téléphone portable', 'required' => false))
+            ->add('birthday', DateType::class, array('label' => 'Date de naissance', 'required' => false))
         ;
     }
 

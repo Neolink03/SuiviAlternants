@@ -4,9 +4,9 @@
     <id name="id" type="integer" column="id">
       <generator strategy="AUTO"/>
     </id>
-    <field name="street" type="string" column="street" length="255"/>
-    <field name="city" type="string" column="city" length="255"/>
-    <field name="postalCode" type="string" column="postalCode" length="255"/>
-    <field name="country" type="string" column="country" length="255"/>
+    <field name="street" type="string" column="street" length="255" nullable="true"/>
+    <field name="city" type="string" column="city" length="255" nullable="true"/>
+    <field name="postalCode" type="string" column="postalCode" length="255" nullable="true"/>
+    <field name="country" type="string" column="country" length="255" nullable="true"/>
   </entity>
 </doctrine-mapping>
