@@ -1,0 +1,17 @@
+AppBundle\Entity\WorkFlow:
+   WorkFlow_1:
+        id: <randomDigitNotNull()>
+
+AppBundle\Entity\State:
+   State{10..20}:
+        name: <word()>
+        machineName: <words(2, true)>
+        workflow: '@WorkFlow*'
+
+AppBundle\Entity\Transition:
+   Transition{20..50}:
+        workflow: '@WorkFlow*'
+        name: <word()>
+        machineName: <words(5, true)>
+        startState: '@State*'
+        endState: '@State*'
