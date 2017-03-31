@@ -14,10 +14,10 @@ class AppFixtures implements FixtureInterface
     {
         Fixtures::load(
             [
-                __DIR__ . '/companyContacts.yml',
                 __DIR__ . '/users.yml',
                 __DIR__ . '/courses.yml',
-                __DIR__ . '/workflow.yml'
+                __DIR__ . '/workflow.yml',
+                __DIR__ . '/companyContacts.yml'
             ],
             $manager,
             [

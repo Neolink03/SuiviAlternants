@@ -34,7 +34,7 @@
         <default key="_controller">AppBundle:CourseManager:addStudent</default>
     </route>
 
-    <route id="courseManager.addStudent" path="/student/informations/{studentId}">
+    <route id="student.showPersonalInformation" path="/student/informations/{studentId}">
         <default key="_controller">AppBundle:Student:displayPersonalInformations</default>
     </route>
 
