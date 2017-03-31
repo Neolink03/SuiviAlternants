@@ -6,8 +6,8 @@
     </id>
     <field name="name" type="string" column="name" length="255"/>
     <field name="machineName" type="string" column="machineName" length="255"/>
-    <many-to-one field="startState" target-entity="State" />
-    <many-to-one field="endState" target-entity="State" />
+    <many-to-one field="startState" target-entity="AppBundle\Entity\State" />
+    <many-to-one field="endState" target-entity="AppBundle\Entity\State" />
 
     <many-to-one field="workflow" target-entity="AppBundle\Entity\WorkFlow" inversed-by="transitions" />
   </entity>

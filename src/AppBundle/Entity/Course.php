@@ -9,6 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Course
 {
+    const DEFAULT_STUDENT_NUMBER = 25;
+    
     private $id;
     private $name;
     private $studentNumber;
@@ -44,7 +46,7 @@ class Course
     {
         $this->promotions->removeElement($promotion);
     }
-
+    
     public function getId()
     {
         return $this->id;
@@ -97,7 +99,5 @@ class Course
     function setSecretariatContactDetails($secretariatContactDetails) {
         $this->secretariatContactDetails = $secretariatContactDetails;
     }
-
-
 }
 

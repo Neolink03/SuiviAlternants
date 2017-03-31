@@ -14,28 +14,13 @@ class AppFixtures implements FixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-
-//        $course = new Course();
-//        $course->setName('lol');
-//        $course->setStudentNumber(24);
-//        $course->setSecretariatContactDetails('r');
-//
-//        $promotion = new Promotion();
-//        $promotion->setCourse($course);
-//        $promotion->setName('2016-2017');
-//        $promotion->setStudentNumber(24);
-//        $promotion->setStartDate(new \DateTime());
-//        $promotion->setEndDate(new \DateTime());
-//
-//        $manager->persist($promotion);
-//        $manager->flush();
-
         Fixtures::load(
             [
                 __DIR__ . '/companyContacts.yml',
                 __DIR__ . '/users.yml',
                 __DIR__ . '/courses.yml',
-                __DIR__ . '/promotions.yml'
+                __DIR__ . '/promotions.yml',
+                __DIR__ . '/workflow.yml'
             ],
             $manager,
             [
