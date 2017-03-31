@@ -10,7 +10,7 @@
     <field name="secretariatContactDetails" type="text" />
     <many-to-one field="manager" target-entity="\AppBundle\Entity\User\CourseManager" />
     <many-to-one field="coManager" target-entity="\AppBundle\Entity\User\CourseManager" />
-    <one-to-many field="companyContacts" target-entity="AppBundle\Entity\CompanyContact" mapped-by="course" />
+    <one-to-many field="companyContacts" target-entity="AppBundle\Entity\CompanyContact" mapped-by="course"></one-to-many>
     <one-to-many field="promotions" target-entity="AppBundle\Entity\Promotion" mapped-by="course">
       <cascade>
         <cascade-persist/>

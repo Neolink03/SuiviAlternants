@@ -9,7 +9,7 @@
     {{ form_end(edit_form) }}
 
     <button class="btn btn-default">
-            <a href="{{ path('companycontact_index') }}">Back to the list</a>
+            <a href="{{ path('companycontact_index', {'courseId': course.id}) }}">Back to the list</a>
     </button>
     {{ form_start(delete_form) }}
         <input type="submit" value="Delete" class="btn btn-default">

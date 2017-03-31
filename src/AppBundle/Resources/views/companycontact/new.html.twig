@@ -9,6 +9,6 @@
     {{ form_end(form) }}
 
     <button class="btn btn-default">
-            <a href="{{ path('companycontact_index') }}">Back to the list</a>
+            <a href="{{ path('companycontact_index', {'courseId': course.id}) }}">Back to the list</a>
     </button>
 {% endblock %}
