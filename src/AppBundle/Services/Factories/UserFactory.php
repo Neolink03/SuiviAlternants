@@ -3,7 +3,7 @@
  * User: Antoine Lamirault
  */
 
-namespace AppBundle\Services;
+namespace AppBundle\Services\Factories;
 
 
 use AppBundle\Entity\User\CourseManager;

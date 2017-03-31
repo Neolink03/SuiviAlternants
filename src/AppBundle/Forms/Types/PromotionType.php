@@ -11,7 +11,7 @@ namespace AppBundle\Forms\Types;
 use AppBundle\Entity\Promotion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,7 +24,7 @@ class PromotionType extends AbstractType
         $builder->add('name', TextType::class, array('label' => 'Nom'));
         $builder->add('startDate', DateType::class, array('label' => 'Date de début'));
         $builder->add('endDate', DateType::class, array('label' => 'Date de fin'));
-        $builder->add('studentNumber', NumberType::class, array('label' => 'Nombre d\'étudiants maximal'));
+        $builder->add('studentNumber', IntegerType::class, array('label' => 'Nombre d\'étudiants maximal'));
         $builder->add('submit', SubmitType::class, array('label' => 'Ajouter'));
     }
 
