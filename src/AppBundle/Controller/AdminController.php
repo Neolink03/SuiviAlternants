@@ -40,8 +40,9 @@ class AdminController extends Controller
                 
                 $courseDto = $form->getData();
                 $this->get('app.factory.course')->saveFromAdmin($courseDto);
+                $this->addFlash("success", "La formation a bien été créée.");
                 
-                return new RedirectResponse($this->generateUrl("admin.course_create_success"));
+                return new RedirectResponse($this->generateUrl("admin.home"));
             }
         }
         
@@ -49,10 +50,6 @@ class AdminController extends Controller
             "courses" => null,
             "currentForm" => $form->createView()
         ]);
-    }
-    
-    public function createCourseSuccessAction(Request $request) {
-        return new \Symfony\Component\HttpFoundation\Response("Course successfully created");
     }
 
     public function dumpWorkflowAction(Request $request){
