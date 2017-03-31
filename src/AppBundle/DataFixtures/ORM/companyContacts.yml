@@ -5,3 +5,4 @@ AppBundle\Entity\CompanyContact:
         lastNameContact: <lastName()>
         email: <email()>
         phoneNumber: <phoneNumber()>
+        course: '@Course*'

@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\CompanyContact;
+use AppBundle\Entity\Course;
 use AppBundle\Forms\Types\CompanyContactType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,24 +17,20 @@ class CompanyContactController extends Controller
 {
     /**
      * Lists all companyContact entities.
-     *
+     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
      */
-    public function indexAction()
+    public function indexAction(Course $course)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $companyContacts = $em->getRepository('AppBundle:CompanyContact')->findAll();
-
         return $this->render('AppBundle:companycontact:index.html.twig', array(
-            'companyContacts' => $companyContacts,
+            'course' => $course,
         ));
     }
 
     /**
      * Creates a new companyContact entity.
-     *
+     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, Course $course)
     {
         $companyContact = new Companycontact();
         $form = $this->createForm(CompanyContactType::class, $companyContact);
@@ -49,28 +47,27 @@ class CompanyContactController extends Controller
         return $this->render('AppBundle:companycontact:new.html.twig', array(
             'companyContact' => $companyContact,
             'form' => $form->createView(),
+            'course' => $course,
         ));
     }
 
     /**
      * Finds and displays a companyContact entity.
-     *
+     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
      */
-    public function showAction(CompanyContact $companyContact)
+    public function showAction(CompanyContact $companyContact, Course $course)
     {
-        $deleteForm = $this->createDeleteForm($companyContact);
-
         return $this->render('@App/companycontact/show.html.twig', array(
             'companyContact' => $companyContact,
-            'delete_form' => $deleteForm->createView(),
+            'course' => $course,
         ));
     }
 
     /**
      * Displays a form to edit an existing companyContact entity.
-     *
+     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
      */
-    public function editAction(Request $request, CompanyContact $companyContact)
+    public function editAction(Request $request, CompanyContact $companyContact, Course $course)
     {
         $deleteForm = $this->createDeleteForm($companyContact);
         $editForm = $this->createForm(CompanyContactType::class, $companyContact);
@@ -86,25 +83,24 @@ class CompanyContactController extends Controller
             'companyContact' => $companyContact,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'course' => $course,
         ));
     }
 
     /**
      * Deletes a companyContact entity.
-     *
+     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
+     * @ParamConverter("companyContact", options={"mapping": {"id" : "id"}})
      */
-    public function deleteAction(Request $request, CompanyContact $companyContact)
+    public function deleteAction(Request $request, CompanyContact $companyContact, Course $course)
     {
-        $form = $this->createDeleteForm($companyContact);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($companyContact);
+        $em->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($companyContact);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('companycontact_index');
+        return $this->redirectToRoute('companycontact_index', array(
+            'courseId' => $course->getId(),
+        ));
     }
 
     /**

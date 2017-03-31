@@ -19,7 +19,7 @@ AppBundle\Entity\User\Administrator:
         enabled: true
 
 AppBundle\Entity\User\CourseManager:
-   CourseManager{1..5}:
+   Manager{1..5}:
         firstName: <firstName()>
         lastName: <lastName()>
         username: <userName()>
@@ -35,6 +35,8 @@ AppBundle\Entity\User\CourseManager:
         email: test2@test.test
         enabled: true
         phoneNumber: 0245986552
+        roles:
+          - ROLE_MANAGER
 
 AppBundle\Entity\User\Student:
    Student{1..30}:

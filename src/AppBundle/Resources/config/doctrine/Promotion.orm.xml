@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity repository-class="AppBundle\Repository\PromotionRepository" name="AppBundle\Entity\Promotion">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="name" type="string" column="name" length="255"/>
+        <field name="startDate" type="date" column="startDate"/>
+        <field name="endDate" type="date" column="endDate"/>
+        <field name="studentNumber" type="integer" column="studentNumber"/>
+
+        <many-to-one target-entity="AppBundle\Entity\Course" field="course" inversed-by="promotions">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
+
+        <one-to-many field="applications" target-entity="AppBundle\Entity\Application" mapped-by="promotion">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+
+    </entity>
+</doctrine-mapping>

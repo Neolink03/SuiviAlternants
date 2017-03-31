@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity repository-class="AppBundle\Repository\CourseRepository" name="AppBundle\Entity\Course">
+
     <id name="id" type="integer" column="id">
       <generator strategy="AUTO"/>
     </id>
-    <field name="name" unique="true"/>
-    <field name="studentNumber" type="integer"/>
+    <field name="name" unique="true" />
+    <field name="studentNumber" type="integer" />
+    <field name="secretariatContactDetails" type="text" />
     <many-to-one field="manager" target-entity="\AppBundle\Entity\User\CourseManager" />
-    <many-to-one field="coManager" target-entity="\AppBundle\Entity\User\CourseManager" nullable="true" />
-    <field name="secretariatContactDetails" type="text"/>
+    <many-to-one field="coManager" target-entity="\AppBundle\Entity\User\CourseManager" />
+    <one-to-many field="companyContacts" target-entity="AppBundle\Entity\CompanyContact" mapped-by="course"></one-to-many>
+    <one-to-many field="promotions" target-entity="AppBundle\Entity\Promotion" mapped-by="course">
+      <cascade>
+        <cascade-persist/>
+      </cascade>
+    </one-to-many>
   </entity>
 </doctrine-mapping>

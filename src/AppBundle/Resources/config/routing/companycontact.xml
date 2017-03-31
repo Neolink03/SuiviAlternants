@@ -20,7 +20,7 @@
         <default key="_controller">AppBundle:CompanyContact:edit</default>
     </route>
 
-    <route id="companycontact_delete" path="/{id}/delete" methods="DELETE">
+    <route id="companycontact_delete" path="/{id}/delete" methods="GET">
         <default key="_controller">AppBundle:CompanyContact:delete</default>
     </route>
 

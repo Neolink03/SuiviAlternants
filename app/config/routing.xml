@@ -8,22 +8,16 @@
         <default key="_controller">AppBundle:Security:login</default>
     </route>
 
-    <import resource="@FOSUserBundle/Resources/config/routing/all.xml"/>
-    <import resource="@AppBundle/Resources/config/routing/admin.xml" prefix="/admin"/>
-
-    <route id="homepage" path="/">
-        <default key="_controller"></default>
-    </route>
-
-    <route id="courseManager.addStudent" path="/course-manager/promotion/{promotionId}/create/student">
-        <default key="_controller">AppBundle:CourseManager:addStudent</default>
-    </route>
-
-    <route id="courseManager.addStudent" path="/student/informations/{studentId}">
+    <route id="student.showPersonalInformation" path="/student/informations/{studentId}">
         <default key="_controller">AppBundle:Student:displayPersonalInformations</default>
     </route>
 
     <import resource="@AppBundle/Resources/config/routing.yml"></import>
+
+    <import resource="@FOSUserBundle/Resources/config/routing/all.xml"/>
+    <import resource="@AppBundle/Resources/config/routing/admin.xml" prefix="/admin"/>
+    <import resource="@AppBundle/Resources/config/routing/course_manager.xml" prefix="/course-manager"/>
+
 </routes>
 
 
