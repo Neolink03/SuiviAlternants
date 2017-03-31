@@ -1,0 +1,4 @@
+AppBundle\Entity\StatusModification:
+   StatusModification{1..30}:
+        dateTime: <(new \DateTime())>
+        comment: <realText(300)>
