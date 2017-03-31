@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Services;
+namespace AppBundle\Services\Factories;
 
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Course;
