@@ -9,20 +9,47 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Course
 {
+    const DEFAULT_STUDENT_NUMBER = 25;
+    
     private $id;
     private $name;
     private $studentNumber;
     private $manager;
     private $coManager;
     private $secretariatContactDetails;
+    private $promotions;
     private $companyContacts;
 
     public function __construct()
     {
         $this->companyContacts = new ArrayCollection();
+        $this->promotions = new ArrayCollection();
+    }
+
+    public function getPromotions()
+    {
+        return $this->promotions;
+    }
+
+    public function setPromotions($promotions)
+    {
+        $this->promotions = $promotions;
 
     }
 
+    public function addPromotion(Promotion $promotion)
+    {
+        $this->promotions[] = $promotion;
+        $promotion->setCourse($this);
+
+        return $this;
+    }
+
+    public function removePromotion(Promotion $promotion)
+    {
+        $this->promotions->removeElement($promotion);
+    }
+    
     public function getId()
     {
         return $this->id;

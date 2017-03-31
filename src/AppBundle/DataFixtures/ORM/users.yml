@@ -19,7 +19,7 @@ AppBundle\Entity\User\Administrator:
         enabled: true
 
 AppBundle\Entity\User\CourseManager:
-   CourseManager{1..5}:
+   Manager{1..5}:
         firstName: <firstName()>
         lastName: <lastName()>
         username: <userName()>

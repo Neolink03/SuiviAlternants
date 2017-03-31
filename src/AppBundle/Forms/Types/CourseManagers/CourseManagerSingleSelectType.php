@@ -5,7 +5,6 @@ namespace AppBundle\Forms\Types\CourseManagers;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
 use AppBundle\Entity\User\CourseManager;
 
 class CourseManagerSingleSelectType extends AbstractType{
