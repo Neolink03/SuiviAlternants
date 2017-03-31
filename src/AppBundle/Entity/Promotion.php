@@ -31,7 +31,7 @@ class Promotion
         return $this->name;
     }
 
-    public function setStartDate($startDate)
+    public function setStartDate(\DateTime $startDate)
     {
         $this->startDate = $startDate;
 
@@ -43,7 +43,7 @@ class Promotion
         return $this->startDate;
     }
 
-    public function setEndDate($endDate)
+    public function setEndDate(\DateTime $endDate)
     {
         $this->endDate = $endDate;
 

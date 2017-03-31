@@ -1,0 +1,7 @@
+AppBundle\Entity\Promotion:
+   Promotion{1..10}:
+        name: <word()>
+        startDate: <(new \DateTime())>
+        endDate: <(new \DateTime())>
+        studentNumber: <numberBetween(10,30)>
+        course: '@Course*'

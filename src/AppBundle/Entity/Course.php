@@ -40,9 +40,9 @@ class Course
         return $this;
     }
 
-    public function removeState(State $state)
+    public function removePromotion(Promotion $promotion)
     {
-        $this->promotions->removeElement($state);
+        $this->promotions->removeElement($promotion);
     }
 
     public function getId()
