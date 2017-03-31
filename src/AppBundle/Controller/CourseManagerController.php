@@ -9,7 +9,9 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Promotion;
 use AppBundle\Entity\User\Student;
+use AppBundle\Forms\Types\PromotionType;
 use AppBundle\Forms\Types\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -18,7 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CourseManagerController extends Controller
 {
-    public function addStudentAction(Request $request){
+    public function addStudentAction(Request $request)
+    {
         $student = new Student();
         $studentForm = $this->createForm(UserType::class, $student);
 
@@ -27,7 +30,8 @@ class CourseManagerController extends Controller
             $studentForm->handleRequest($request);
 
             if ($studentForm->isSubmitted() && $studentForm->isValid()) {
-                dump($studentForm);die();
+                dump($studentForm);
+                die();
                 /* TO DO
                 $newStudent = $studentForm->getData();
 
@@ -42,8 +46,18 @@ class CourseManagerController extends Controller
             }
         }
 
-        return $this->render('AppBundle:CourseManager:createStudent.html.twig',[
+        return $this->render('AppBundle:CourseManager:createStudent.html.twig', [
             'student' => $studentForm->createView(),
+        ]);
+    }
+
+    public function editCourseAction(Request $request)
+    {
+        $promotion = new Promotion();
+        $promotionForm = $this->createForm(PromotionType::class, $promotion);
+
+        return $this->render('AppBundle:CourseManager:editCourse.html.twig', [
+            'promotionForm' => $promotionForm->createView()
         ]);
     }
 

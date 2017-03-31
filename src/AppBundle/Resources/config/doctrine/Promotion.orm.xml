@@ -7,8 +7,8 @@
             <generator strategy="AUTO"/>
         </id>
         <field name="name" type="string" column="name" length="255"/>
-        <field name="startDate" type="datetime" column="startDate"/>
-        <field name="endDate" type="datetime" column="endDate"/>
+        <field name="startDate" type="date" column="startDate"/>
+        <field name="endDate" type="date" column="endDate"/>
         <field name="studentNumber" type="integer" column="studentNumber"/>
 
         <many-to-one target-entity="AppBundle\Entity\Course" field="course" inversed-by="promotions">
