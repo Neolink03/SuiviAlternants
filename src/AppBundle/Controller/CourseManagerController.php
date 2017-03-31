@@ -14,8 +14,6 @@ use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\PromotionType;
 use AppBundle\Forms\Types\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
 class CourseManagerController extends Controller
