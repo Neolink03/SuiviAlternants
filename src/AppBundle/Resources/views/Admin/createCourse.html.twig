@@ -1,29 +1,41 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Admin - Create course{% endblock %}
+{% block title %}Créer une formation{% endblock %}
 
 {% block body %}
-    <h1>Admin - Create course</h1>
+    <h1>Créer une formation</h1>
     
-    {{ form_start(currentForm, {'action': path('admin.edit_course')}) }}
     <div class="row col-md-6">
-        {{ form_label(currentForm.name)}}
-        {{ form_widget(currentForm.name, {'attr': {"class": 'form-control'} }) }}
-        {{ form_errors(currentForm.name)}}
+        
+        {{ form_start(currentForm, {'action': path('admin.edit_course')}) }}
+        
+            <div class="form-group">
+                {{ form_label(currentForm.name)}}
+                {{ form_widget(currentForm.name, {'attr': {"class": 'form-control'} }) }}
+                {{ form_errors(currentForm.name)}}
+            </div>
 
-        {{ form_label(currentForm.manager)}}
-        {{ form_widget(currentForm.manager.selector, {'attr': {"class": 'form-control custom-select'} }) }}
+            <div class="form-group">
+                {{ form_label(currentForm.manager)}}
+                {{ form_widget(currentForm.manager.selector, {'attr': {"class": 'form-control custom-select'} }) }}
+            </div>
 
-        {{ form_label(currentForm.coManager)}}
-        {{ form_widget(currentForm.coManager.selector, {'attr': {"class": 'form-control custom-select'} }) }}
+            <div class="form-group">
+                {{ form_label(currentForm.coManager, 'Co-responsable de formation (optionnel)') }}
+                {{ form_widget(currentForm.coManager.selector, {'attr': {"class": 'form-control custom-select'} }) }}
+            </div>
 
-        {{ form_label(currentForm.secretariatContactDetails)}}
-        {{ form_widget(currentForm.secretariatContactDetails, {'attr': {"class": 'form-control'} }) }}
-        {{ form_errors(currentForm.secretariatContactDetails)}}
+            <div class="form-group">
+                {{ form_label(currentForm.secretariatContactDetails)}}
+                {{ form_widget(currentForm.secretariatContactDetails, {'attr': {"class": 'form-control'} }) }}
+                {{ form_errors(currentForm.secretariatContactDetails)}}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(currentForm.submit)}}
+            </div>
 
-        {{ form_label(currentForm.submit)}}
-
-        {{ form_widget(currentForm.submit, {'attr': {"class": 'form-control btn btn-primary'} }) }}
+            {{ form_widget(currentForm.submit, {'attr': {"class": 'form-control btn btn-primary'} }) }}
 
         {{ form_rest(currentForm) }}
     </div>
