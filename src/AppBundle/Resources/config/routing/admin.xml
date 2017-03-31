@@ -8,12 +8,8 @@
         <default key="_controller">AppBundle:Admin:courseList</default>
     </route>
     
-    <route id="admin.edit_course" path="/course/create">
+    <route id="admin.course_create" path="/course/create">
         <default key="_controller">AppBundle:Admin:createCourse</default>
-    </route>
-    
-    <route id="admin.course_create_success" path="/course/create/success">
-        <default key="_controller">AppBundle:Admin:createCourseSuccess</default>
     </route>
     
     <route id="admin.workflow" path="/workflow">
