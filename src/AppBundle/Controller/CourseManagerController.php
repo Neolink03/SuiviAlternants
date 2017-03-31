@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Course;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\PromotionType;
@@ -51,7 +52,12 @@ class CourseManagerController extends Controller
 
     public function editCourseAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $course = $em->getRepository(Course::class)->find($request->get('courseId'));
         $promotion = new Promotion();
+        $promotion->setCourse($course);
+
         $promotionForm = $this->createForm(PromotionType::class, $promotion);
 
         if ($request->isMethod('post')) {
@@ -59,9 +65,9 @@ class CourseManagerController extends Controller
             $promotionForm->handleRequest($request);
 
             if ($promotionForm->isSubmitted() && $promotionForm->isValid()) {
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($promotion);
                 $em->flush();
+                $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
             }
         }
 
