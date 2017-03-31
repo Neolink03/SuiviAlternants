@@ -6,6 +6,7 @@ class Application
 {
     private $id;
     private $year;
+    private $student;
 
     public function getId() : int
     {
@@ -23,5 +24,16 @@ class Application
     {
         return $this->year;
     }
+
+    public function getStudent()
+    {
+        return $this->student;
+    }
+
+    public function setStudent($student)
+    {
+        $this->student = $student;
+    }
+
 }
 

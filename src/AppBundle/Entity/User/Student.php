@@ -2,8 +2,10 @@
 
 namespace AppBundle\Entity\User;
 
+use AppBundle\Entity\Application;
 use AppBundle\Entity\User;
 use AppBundle\Forms\Types\AddressType;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class Student extends User
 {
@@ -12,6 +14,13 @@ class Student extends User
     private $phone;
     private $cellphone;
     private $birthday;
+    private $applications;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->applications = new ArrayCollection();
+    }
 
     public function getId() : int
     {
@@ -63,5 +72,27 @@ class Student extends User
         $this->birthday = $birthday;
     }
 
+    public function getApplications()
+    {
+        return $this->applications;
+    }
+
+    public function setTransitions($application)
+    {
+        $this->applications = $application;
+    }
+
+    public function addTransition(Application $application)
+    {
+        $this->applications[] = $application;
+        $application->setStudent($this);
+
+        return $this;
+    }
+
+    public function removeTransition(Application $application)
+    {
+        $this->applications->removeElement($application);
+    }
 }
 
