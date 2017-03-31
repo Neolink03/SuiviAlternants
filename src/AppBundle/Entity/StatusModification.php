@@ -7,39 +7,16 @@ namespace AppBundle\Entity;
  */
 class StatusModification
 {
-    /**
-     * @var int
-     */
     private $id;
-
-    /**
-     * @var \DateTime
-     */
     private $dateTime;
-
-    /**
-     * @var string
-     */
     private $comment;
+    private $application;
 
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set dateTime
-     *
-     * @param \DateTime $dateTime
-     *
-     * @return StatusModification
-     */
     public function setDateTime($dateTime)
     {
         $this->dateTime = $dateTime;
@@ -47,23 +24,11 @@ class StatusModification
         return $this;
     }
 
-    /**
-     * Get dateTime
-     *
-     * @return \DateTime
-     */
     public function getDateTime()
     {
         return $this->dateTime;
     }
 
-    /**
-     * Set comment
-     *
-     * @param string $comment
-     *
-     * @return StatusModification
-     */
     public function setComment($comment)
     {
         $this->comment = $comment;
@@ -71,14 +36,20 @@ class StatusModification
         return $this;
     }
 
-    /**
-     * Get comment
-     *
-     * @return string
-     */
     public function getComment()
     {
         return $this->comment;
     }
+
+    public function getApplication()
+    {
+        return $this->application;
+    }
+
+    public function setApplication($application)
+    {
+        $this->application = $application;
+    }
+
 }
 

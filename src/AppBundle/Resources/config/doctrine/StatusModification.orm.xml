@@ -6,5 +6,7 @@
     </id>
     <field name="dateTime" type="datetimetz" column="dateTime"/>
     <field name="comment" type="text" column="comment" />
+
+    <many-to-one field="application" target-entity="AppBundle\Entity\Application" inversed-by="statusModifications" />
   </entity>
 </doctrine-mapping>
