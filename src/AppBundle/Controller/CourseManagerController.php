@@ -54,6 +54,17 @@ class CourseManagerController extends Controller
         $promotion = new Promotion();
         $promotionForm = $this->createForm(PromotionType::class, $promotion);
 
+        if ($request->isMethod('post')) {
+
+            $promotionForm->handleRequest($request);
+
+            if ($promotionForm->isSubmitted() && $promotionForm->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($promotion);
+                $em->flush();
+            }
+        }
+
         return $this->render('AppBundle:CourseManager:editCourse.html.twig', [
             'promotionForm' => $promotionForm->createView()
         ]);
