@@ -1,0 +1,60 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Modifier formation{% endblock %}
+
+{% block body %}
+    <h1>Promotions</h1>
+    <div class="row col-12">
+        {{ form_start(promotionForm) }}
+        <div class="form-group {{ promotionForm.name.vars.valid ?: 'has-danger' }}">
+            {{ form_label(promotionForm.name) }}
+            {{ form_widget(promotionForm.name, {'attr': {'class': 'form-control'}} ) }}
+            {% if not promotionForm.name.vars.valid %}
+                <ul>
+                    {% for error in promotionForm.name.vars.errors %}
+                        <p class="form-control-feedback">{{ error.message }}</p>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 {{ promotionForm.startDate.vars.valid ?: 'has-danger' }}">
+                {{ form_label(promotionForm.startDate) }}
+                {{ form_widget(promotionForm.startDate) }}
+                {% if not promotionForm.startDate.vars.valid %}
+                    <ul>
+                        {% for error in promotionForm.startDate.vars.errors %}
+                            <p class="form-control-feedback">{{ error.message }}</p>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="form-group col-md-6 {{ promotionForm.endDate.vars.valid ?: 'has-danger' }}">
+                {{ form_label(promotionForm.endDate) }}
+                {{ form_widget(promotionForm.endDate) }}
+                {% if not promotionForm.endDate.vars.valid %}
+                    <ul>
+                        {% for error in promotionForm.endDate.vars.errors %}
+                            <p class="form-control-feedback">{{ error.message }}</p>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group {{ promotionForm.studentNumber.vars.valid ?: 'has-danger' }}">
+            {{ form_label(promotionForm.studentNumber) }}
+            {{ form_widget(promotionForm.studentNumber, {'attr': {'class': 'form-control'}} ) }}
+            {% if not promotionForm.studentNumber.vars.valid %}
+                <ul>
+                    {% for error in promotionForm.studentNumber.vars.errors %}
+                        <p class="form-control-feedback">{{ error.message }}</p>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form_widget(promotionForm.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+            {{ form_rest(promotionForm) }}
+        </div>
+    </div>
+{% endblock %}

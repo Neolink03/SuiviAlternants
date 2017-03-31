@@ -21,7 +21,8 @@ class CourseCreateType extends AbstractType{
                  'label' => 'Responsable de formation'
             ])
             ->add('coManager', CourseManagerSingleSelectType::class, [
-                 'label' => 'Co-responsable de formation'
+                 'label' => 'Co-responsable de formation',
+                 'required' => false
             ])
             ->add('secretariatContactDetails', TextareaType::class, [
                 'label' => 'Coordonnées secrétariat'

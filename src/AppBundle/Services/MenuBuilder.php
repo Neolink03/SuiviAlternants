@@ -30,6 +30,8 @@ class MenuBuilder
             $this->menuItems = array(
                 new MenuItem('Admin', 'admin.home')
             );
+        } else if ($this->securityContext->isGranted('ROLE_MANAGER')) {
+            $this->menuItems = array();
         }
     }
 
