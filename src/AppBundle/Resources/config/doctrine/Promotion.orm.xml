@@ -17,5 +17,11 @@
             </cascade>
         </many-to-one>
 
+        <one-to-many field="applications" target-entity="AppBundle\Entity\Application" mapped-by="promotion">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+
     </entity>
 </doctrine-mapping>

@@ -77,12 +77,12 @@ class Student extends User
         return $this->applications;
     }
 
-    public function setTransitions($application)
+    public function setApplication($application)
     {
         $this->applications = $application;
     }
 
-    public function addTransition(Application $application)
+    public function addApplication(Application $application)
     {
         $this->applications[] = $application;
         $application->setStudent($this);
@@ -90,7 +90,7 @@ class Student extends User
         return $this;
     }
 
-    public function removeTransition(Application $application)
+    public function removeApplication(Application $application)
     {
         $this->applications->removeElement($application);
     }
