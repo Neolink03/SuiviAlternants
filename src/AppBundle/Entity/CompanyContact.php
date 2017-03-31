@@ -13,6 +13,7 @@ class CompanyContact
     private $lastNameContact;
     private $email;
     private $phoneNumber;
+    private $course;
 
     public function getId() : int
     {
@@ -26,7 +27,7 @@ class CompanyContact
         return $this;
     }
 
-    public function getCompanyName() : string
+    public function getCompanyName()
     {
         return $this->companyName;
     }
@@ -38,7 +39,7 @@ class CompanyContact
         return $this;
     }
 
-    public function getFirstNameContact() : string
+    public function getFirstNameContact()
     {
         return $this->firstNameContact;
     }
@@ -50,7 +51,7 @@ class CompanyContact
         return $this;
     }
 
-    public function getLastNameContact() : string
+    public function getLastNameContact()
     {
         return $this->lastNameContact;
     }
@@ -62,12 +63,12 @@ class CompanyContact
         return $this;
     }
 
-    public function getEmail() : string
+    public function getEmail()
     {
         return $this->email;
     }
 
-    public function getPhoneNumber() : string
+    public function getPhoneNumber()
     {
         return $this->phoneNumber;
     }
@@ -76,5 +77,17 @@ class CompanyContact
     {
         $this->phoneNumber = $phoneNumber;
     }
+
+    public function getCourse()
+    {
+        return $this->course;
+    }
+
+    public function setCourse($course)
+    {
+        $this->course = $course;
+    }
+
+
 }
 

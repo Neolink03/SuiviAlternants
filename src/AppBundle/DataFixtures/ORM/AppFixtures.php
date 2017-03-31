@@ -16,7 +16,8 @@ class AppFixtures implements FixtureInterface
             [
                 __DIR__ . '/companyContacts.yml',
                 __DIR__ . '/users.yml',
-                __DIR__ . '/courses.yml'
+                __DIR__ . '/courses.yml',
+                __DIR__ . '/workflow.yml'
             ],
             $manager,
             [
