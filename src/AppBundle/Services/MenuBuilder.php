@@ -8,7 +8,6 @@
 
 namespace AppBundle\Services;
 
-
 use AppBundle\Models\MenuItem;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 

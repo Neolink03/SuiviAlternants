@@ -8,6 +8,7 @@ class Application
     private $year;
     private $student;
     private $promotion;
+    private $statusModifications;
 
     public function getId() : int
     {
@@ -44,6 +45,29 @@ class Application
     public function setPromotion($promotion)
     {
         $this->promotion = $promotion;
+    }
+
+    public function getStatusModifications()
+    {
+        return $this->statusModifications;
+    }
+
+    public function setStatusModification($statusModifications)
+    {
+        $this->statusModifications = $statusModifications;
+    }
+
+    public function addStatusModification(StatusModification $statusModifications)
+    {
+        $this->statusModifications[] = $statusModifications;
+        $statusModifications->setApplication($this);
+
+        return $this;
+    }
+
+    public function removeStatusModification(StatusModification $statusModifications)
+    {
+        $this->statusModifications->removeElement($statusModifications);
     }
 
 }

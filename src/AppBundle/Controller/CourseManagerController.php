@@ -9,13 +9,12 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Course;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\PromotionType;
 use AppBundle\Forms\Types\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
 class CourseManagerController extends Controller
@@ -53,8 +52,24 @@ class CourseManagerController extends Controller
 
     public function editCourseAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $course = $em->getRepository(Course::class)->find($request->get('courseId'));
         $promotion = new Promotion();
+        $promotion->setCourse($course);
+
         $promotionForm = $this->createForm(PromotionType::class, $promotion);
+
+        if ($request->isMethod('post')) {
+
+            $promotionForm->handleRequest($request);
+
+            if ($promotionForm->isSubmitted() && $promotionForm->isValid()) {
+                $em->persist($promotion);
+                $em->flush();
+                $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
+            }
+        }
 
         return $this->render('AppBundle:CourseManager:editCourse.html.twig', [
             'promotionForm' => $promotionForm->createView()

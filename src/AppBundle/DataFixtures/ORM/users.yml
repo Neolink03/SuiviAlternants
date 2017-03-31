@@ -26,6 +26,8 @@ AppBundle\Entity\User\CourseManager:
         plainPassword: <word()>
         email: <email()>
         phoneNumber: <phoneNumber()>
+        roles:
+          - ROLE_MANAGER
         enabled: true
    manager_1:
         firstName: Adrien
@@ -45,6 +47,8 @@ AppBundle\Entity\User\Student:
         username: <userName()>
         plainPassword: <word()>
         email: <email()>
+        roles:
+          - ROLE_STUDENT
         enabled: true
    student_1:
         firstName: Antoine
@@ -53,3 +57,5 @@ AppBundle\Entity\User\Student:
         plainPassword: student
         email: test@test.test
         enabled: true
+        roles:
+          - ROLE_STUDENT

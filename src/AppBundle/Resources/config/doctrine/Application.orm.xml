@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity repository-class="AppBundle\Repository\ApplicationRepository" name="AppBundle\Entity\Application">
-    <id name="id" type="integer" column="id">
-      <generator strategy="AUTO"/>
-    </id>
-    <field name="year" type="datetime" column="year"/>
-    <many-to-one field="student" target-entity="AppBundle\Entity\User\Student" inversed-by="applications" />
-    <many-to-one field="promotion" target-entity="AppBundle\Entity\Promotion" inversed-by="applications" />
-  </entity>
+    <entity repository-class="AppBundle\Repository\ApplicationRepository" name="AppBundle\Entity\Application">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="year" type="datetime" column="year"/>
+        <many-to-one field="student" target-entity="AppBundle\Entity\User\Student" inversed-by="applications" />
+        <many-to-one field="promotion" target-entity="AppBundle\Entity\Promotion" inversed-by="applications" />
+        <one-to-many field="statusModifications" target-entity="AppBundle\Entity\StatusModification" mapped-by="application">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+    </entity>
 </doctrine-mapping>

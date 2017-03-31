@@ -10,11 +10,11 @@
             <argument type="service" id="debug.argument_resolver" />
         </service>
 
-        <service id="app.factory.workflow" class="AppBundle\Services\WorkflowFactory">
+        <service id="app.factory.workflow" class="AppBundle\Services\Factories\WorkflowFactory">
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
 
-        <service id="app.factory.user" class="AppBundle\Services\UserFactory">
+        <service id="app.factory.user" class="AppBundle\Services\Factories\UserFactory">
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
         
