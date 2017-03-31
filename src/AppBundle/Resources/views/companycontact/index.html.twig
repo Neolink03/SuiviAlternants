@@ -14,9 +14,9 @@
             </tr>
         </thead>
         <tbody>
-        {% for companyContact in companyContacts %}
+        {% for companyContact in course.companyContacts %}
             <tr>
-                <td><a href="{{ path('companycontact_show', { 'id': companyContact.id }) }}">{{ companyContact.companyName }}</a></td>
+                <td><a href="{{ path('companycontact_show', { 'courseId': course.id, 'id': companyContact.id }) }}">{{ companyContact.companyName }}</a></td>
                 <td>{{ companyContact.firstNameContact }}</td>
                 <td>{{ companyContact.lastNameContact }}</td>
                 <td>{{ companyContact.email }}</td>
@@ -26,6 +26,6 @@
         </tbody>
     </table>
     <button class="btn btn-default">
-    <a href="{{ path('companycontact_new') }}">Create a new companyContact</a>
+    <a href="{{ path('companycontact_new', {'courseId': course.id}) }}">Create a new companyContact</a>
     </button>
 {% endblock %}

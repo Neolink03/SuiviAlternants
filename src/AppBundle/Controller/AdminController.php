@@ -45,7 +45,7 @@ class AdminController extends Controller
             }
         }
         
-        return $this->render('AppBundle:Admin:editCourse.html.twig', [
+        return $this->render('AppBundle:Admin:createCourse.html.twig', [
             "courses" => null,
             "currentForm" => $form->createView()
         ]);

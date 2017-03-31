@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity repository-class="AppBundle\Repository\User\StudentRepository" name="AppBundle\Entity\User\Student">
-    <one-to-one field="address" target-entity="AppBundle\Entity\Address" >
-      <cascade>
-        <cascade-persist/>
-      </cascade>
-    </one-to-one>
-    <field name="phone" type="string" column="phone" length="255" nullable="true"/>
-    <field name="cellphone" type="string" column="cellphone" length="255" nullable="true"/>
-    <field name="birthday" type="date" column="birthday" length="255" nullable="true"/>
-  </entity>
+    <entity repository-class="AppBundle\Repository\User\StudentRepository" name="AppBundle\Entity\User\Student">
+        <field name="phone" type="string" column="phone" length="255" nullable="true"/>
+        <field name="cellphone" type="string" column="cellphone" length="255" nullable="true"/>
+        <field name="birthday" type="date" column="birthday" length="255" nullable="true"/>
+        <one-to-one field="address" target-entity="AppBundle\Entity\Address" >
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-one>
+
+        <one-to-many field="applications" target-entity="AppBundle\Entity\Application" mapped-by="student">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+    </entity>
 </doctrine-mapping>

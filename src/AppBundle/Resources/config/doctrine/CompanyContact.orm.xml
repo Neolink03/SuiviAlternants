@@ -9,6 +9,6 @@
     <field name="lastNameContact" type="string" column="lastNameContact" length="255"/>
     <field name="email" type="string" column="email" length="255"/>
     <field name="phoneNumber" type="string" column="phoneNumber" length="255"/>
-    <many-to-one field="course" target-entity="AppBundle\Entity\Course" inversed-by="companyContacts" />
+    <many-to-one field="course" target-entity="AppBundle\Entity\Course" inversed-by="companyContacts" ></many-to-one>
   </entity>
 </doctrine-mapping>

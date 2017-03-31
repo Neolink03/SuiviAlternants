@@ -6,6 +6,8 @@ class Application
 {
     private $id;
     private $year;
+    private $student;
+    private $promotion;
 
     public function getId() : int
     {
@@ -23,5 +25,26 @@ class Application
     {
         return $this->year;
     }
+
+    public function getStudent()
+    {
+        return $this->student;
+    }
+
+    public function setStudent($student)
+    {
+        $this->student = $student;
+    }
+
+    public function getPromotion()
+    {
+        return $this->promotion;
+    }
+
+    public function setPromotion($promotion)
+    {
+        $this->promotion = $promotion;
+    }
+
 }
 

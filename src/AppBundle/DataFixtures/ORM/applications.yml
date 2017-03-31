@@ -1,0 +1,5 @@
+AppBundle\Entity\Application:
+   Application{1..10}:
+        year: <(new \DateTime())>
+        student: '@Student*'
+        promotion: '@Promotion*'

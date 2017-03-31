@@ -13,6 +13,7 @@ class Promotion
     private $endDate;
     private $studentNumber;
     private $course;
+    private $applications;
 
     public function getId()
     {
@@ -77,5 +78,27 @@ class Promotion
         $this->course = $course;
     }
 
+    public function getApplications()
+    {
+        return $this->applications;
+    }
+
+    public function setApplication($application)
+    {
+        $this->applications = $application;
+    }
+
+    public function addApplication(Application $application)
+    {
+        $this->applications[] = $application;
+        $application->setPromotion($this);
+
+        return $this;
+    }
+
+    public function removeApplication(Application $application)
+    {
+        $this->applications->removeElement($application);
+    }
 }
 

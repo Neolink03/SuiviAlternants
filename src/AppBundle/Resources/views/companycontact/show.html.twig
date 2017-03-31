@@ -29,12 +29,12 @@
     </table>
 
     <button class="btn btn-default">
-    <a href="{{ path('companycontact_index') }}">Back to the list</a>
+        <a href="{{ path('companycontact_index', {'courseId': course.id}) }}">Back to the list</a>
     </button>
     <button class="btn btn-default">
-    <a href="{{ path('companycontact_edit', { 'id': companyContact.id }) }}">Edit</a>
+        <a href="{{ path('companycontact_edit', { 'courseId': course.id, 'id': companyContact.id }) }}">Edit</a>
     </button>
-    {{ form_start(delete_form) }}
-        <input type="submit" value="Delete" class="btn btn-default">
-    {{ form_end(delete_form) }}
+    <button class="btn btn-default">
+        <a href="{{ path('companycontact_delete', { 'courseId': course.id, 'id': companyContact.id }) }}">Supprimer</a>
+    </button>
 {% endblock %}

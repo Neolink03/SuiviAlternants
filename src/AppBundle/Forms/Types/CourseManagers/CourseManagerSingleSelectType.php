@@ -16,6 +16,7 @@ class CourseManagerSingleSelectType extends AbstractType{
             'choice_label' => function (CourseManager $courseManager) {
                 return $courseManager->getFullName();
             },
+            'placeholder' => ""
         ]);
     }
 }

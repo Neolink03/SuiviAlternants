@@ -1,4 +1,4 @@
 app_companycontact:
     resource: "@AppBundle/Resources/config/routing/companycontact.xml"
-    prefix:   /companycontact
+    prefix:   course-manager/course/{courseId}/companycontact
 
