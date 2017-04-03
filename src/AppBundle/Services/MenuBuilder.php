@@ -32,7 +32,7 @@ class MenuBuilder
         } 
         else if ($this->securityContext->isGranted('ROLE_MANAGER')) {
             $this->menuItems = [
-                new MenuItem('Liste des étudiants', 'course_manager.student.list')
+                new MenuItem('Liste des étudiants', 'course_manager.students')
             ];
         }
     }

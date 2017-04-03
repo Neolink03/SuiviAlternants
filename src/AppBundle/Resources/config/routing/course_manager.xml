@@ -12,7 +12,7 @@
         <default key="_controller">AppBundle:CourseManager:editCourse</default>
     </route>
 
-    <route id="course_manager.student.list" path="/student">
+    <route id="course_manager.students" path="/students">
         <default key="_controller">AppBundle:CourseManager:studentList</default>
     </route>
 </routes>
