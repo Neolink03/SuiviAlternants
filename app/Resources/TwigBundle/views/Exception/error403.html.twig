@@ -1,3 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Pouet {% endblock %}
+{% block title %}Erreur 403 !{% endblock %}
+
+{% block body %}
+    <h1>Erreur 403 !</h1>
+    <div>
+        <p>Oups ! Vous n'avez pas les droits pour acceder à cette page ! Si vous voulez quand même y acceder il vous faut aller demander les droits. Sinon on ne peut rien faire pour vous.
+        En attendant si vous voulez retourner sur votre page d'accueil c'est par <a href="{{ path('homepage') }}">ICI !</a></p>
+
+    </div>
+{% endblock %}
