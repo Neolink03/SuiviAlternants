@@ -202,4 +202,14 @@ class CourseManagerController extends Controller
             "students" => $students
         ]);
     }
+
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     */
+    public function sendMailAction(Promotion $promotion)
+    {
+        return $this->render('AppBundle:CourseManager:sendEmail.html.twig', [
+            'promotion' => $promotion
+        ]);
+    }
 }
