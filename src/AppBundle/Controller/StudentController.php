@@ -22,6 +22,18 @@ class StudentController extends Controller
     /**
      * @ParamConverter("student", options={"mapping": {"studentId" : "id"}})
      */
+    public function studentIndexAction(Student $student){
+
+        $applications = $student->getApplications();
+
+        return $this->render('AppBundle:Student:home.html.twig',[
+            'applications' => $applications,
+        ]);
+    }
+
+    /**
+     * @ParamConverter("student", options={"mapping": {"studentId" : "id"}})
+     */
     public function displayPersonalInformationsAction(Student $student, Request $request){
 
         $form = $this->createForm(StudentType::class, $student);
@@ -46,4 +58,5 @@ class StudentController extends Controller
             'student' => $form->createView(),
         ]);
     }
+
 }

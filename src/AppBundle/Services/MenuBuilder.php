@@ -19,18 +19,21 @@ class MenuBuilder
     public function __construct(AuthorizationChecker $securityContext)
     {
         $this->securityContext = $securityContext;
-        $this->menuItems = array();
+        $this->menuItems = [];
         $this->build();
     }
 
     private function build()
     {
         if ($this->securityContext->isGranted('ROLE_ADMIN')) {
-            $this->menuItems = array(
+            $this->menuItems = [
                 new MenuItem('Admin', 'admin.home')
-            );
-        } else if ($this->securityContext->isGranted('ROLE_MANAGER')) {
-            $this->menuItems = array();
+            ];
+        } 
+        else if ($this->securityContext->isGranted('ROLE_MANAGER')) {
+            $this->menuItems = [
+                new MenuItem('Liste des étudiants', 'course_manager.student.list')
+            ];
         }
     }
 

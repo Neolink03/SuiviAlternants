@@ -9,16 +9,13 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Courses\EditCourseType;
 use AppBundle\Forms\Types\UserType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class CourseManagerController extends Controller
 {
@@ -82,16 +79,12 @@ class CourseManagerController extends Controller
         ]);
     }
 
-    /**
-     * @ParamConverter("application", options={"mapping": {"applicationId" : "id"}})
-     */
-    public function viewApplicationAction(Application $application)
-    {
-        return $this->render('AppBundle:CourseManager:viewApplication.html.twig', [
-            'application' => $application
+<<<<<<< HEAD
+    public function studentListAction(Request $request) {
+        return $this->render('::base.html.twig', [
         ]);
     }
-
+=======
     public function addPromotionAction(Request $request)
     {
         $courseId = $request->get('courseId');
@@ -104,8 +97,5 @@ class CourseManagerController extends Controller
         return $this->redirectToRoute('course_manager.course.edit', ['courseId' => $courseId]); // Redirect to CourseList
     }
 
-    public function studentListAction(Request $request) {
-        return $this->render('::base.html.twig', [
-        ]);
-    }
+>>>>>>> promotion
 }

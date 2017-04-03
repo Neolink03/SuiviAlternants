@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Accueil étudiant{% endblock %}
+
+{% block body %}
+    <h1>Formations</h1>
+    <div id="courseList">
+        {% for application in applications %}
+            <div>
+                <span>{{ application.promotion.course.name }}</span>
+                <span>{{ dump(application.getLastStatusModification()) }}</span>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
