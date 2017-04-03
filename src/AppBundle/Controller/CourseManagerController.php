@@ -76,4 +76,8 @@ class CourseManagerController extends Controller
         ]);
     }
 
+    public function studentListAction(Request $request) {
+        return $this->render('::base.html.twig', [
+        ]);
+    }
 }
