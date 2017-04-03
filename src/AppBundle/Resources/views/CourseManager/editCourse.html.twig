@@ -5,61 +5,78 @@
 {% block body %}
     <h1>Editer formation</h1>
     <div class="row col-12">
-
-    </div>
-
-    <h1>Promotions</h1>
-    <div class="row col-12">
-        {{ form_start(promotionForm, { 'action': path('course_manager.promotion.add', { 'courseId': app.request.get('courseId') }), 'method': 'POST' }) }}
-        <div class="form-group {{ promotionForm.name.vars.valid ?: 'has-danger' }}">
-            {{ form_label(promotionForm.name) }}
-            {{ form_widget(promotionForm.name, {'attr': {'class': 'form-control'}} ) }}
-            {% if not promotionForm.name.vars.valid %}
+        {{ form_start(editCourseForm, { 'attr': { 'class': 'form-inline' } }) }}
+        <div class="form-group {{ editCourseForm.name.vars.valid ?: 'has-danger' }}">
+            {{ form_label(editCourseForm.name, null, { 'label_attr': { 'class': 'mr-sm-2' } }) }}
+            {{ form_widget(editCourseForm.name, { 'attr': { 'class': 'form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
+            {% if not editCourseForm.name.vars.valid %}
                 <ul>
-                    {% for error in promotionForm.name.vars.errors %}
-                        <p class="form-control-feedback">{{ error.message }}</p>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6 {{ promotionForm.startDate.vars.valid ?: 'has-danger' }}">
-                {{ form_label(promotionForm.startDate) }}
-                {{ form_widget(promotionForm.startDate) }}
-                {% if not promotionForm.startDate.vars.valid %}
-                    <ul>
-                        {% for error in promotionForm.startDate.vars.errors %}
-                            <p class="form-control-feedback">{{ error.message }}</p>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-            <div class="form-group col-md-6 {{ promotionForm.endDate.vars.valid ?: 'has-danger' }}">
-                {{ form_label(promotionForm.endDate) }}
-                {{ form_widget(promotionForm.endDate) }}
-                {% if not promotionForm.endDate.vars.valid %}
-                    <ul>
-                        {% for error in promotionForm.endDate.vars.errors %}
-                            <p class="form-control-feedback">{{ error.message }}</p>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-        </div>
-        <div class="form-group {{ promotionForm.studentNumber.vars.valid ?: 'has-danger' }}">
-            {{ form_label(promotionForm.studentNumber) }}
-            {{ form_widget(promotionForm.studentNumber, {'attr': {'class': 'form-control'}} ) }}
-            {% if not promotionForm.studentNumber.vars.valid %}
-                <ul>
-                    {% for error in promotionForm.studentNumber.vars.errors %}
+                    {% for error in editCourseForm.name.vars.errors %}
                         <p class="form-control-feedback">{{ error.message }}</p>
                     {% endfor %}
                 </ul>
             {% endif %}
         </div>
         <div class="form-group text-right">
-            {{ form_widget(promotionForm.submit, {'attr': {'class': 'btn btn-primary'}}) }}
-            {{ form_rest(promotionForm) }}
+            {{ form_widget(editCourseForm.submit, {'attr': {'class': 'btn btn-primary'}}) }}
         </div>
+        {{ form_rest(editCourseForm) }}
+        {{ form_end(editCourseForm) }}
+    </div>
+
+    <h1>Promotions</h1>
+    <div class="row col-12">
+        {{ form_start(addPromotionForm, { 'action': path('course_manager.promotion.add', { 'courseId': app.request.get('courseId') }), 'method': 'POST' }) }}
+        <div class="form-group {{ addPromotionForm.name.vars.valid ?: 'has-danger' }}">
+            {{ form_label(addPromotionForm.name) }}
+            {{ form_widget(addPromotionForm.name, {'attr': {'class': 'form-control'}} ) }}
+            {% if not addPromotionForm.name.vars.valid %}
+                <ul>
+                    {% for error in addPromotionForm.name.vars.errors %}
+                        <p class="form-control-feedback">{{ error.message }}</p>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 {{ addPromotionForm.startDate.vars.valid ?: 'has-danger' }}">
+                {{ form_label(addPromotionForm.startDate) }}
+                {{ form_widget(addPromotionForm.startDate) }}
+                {% if not addPromotionForm.startDate.vars.valid %}
+                    <ul>
+                        {% for error in addPromotionForm.startDate.vars.errors %}
+                            <p class="form-control-feedback">{{ error.message }}</p>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="form-group col-md-6 {{ addPromotionForm.endDate.vars.valid ?: 'has-danger' }}">
+                {{ form_label(addPromotionForm.endDate) }}
+                {{ form_widget(addPromotionForm.endDate) }}
+                {% if not addPromotionForm.endDate.vars.valid %}
+                    <ul>
+                        {% for error in addPromotionForm.endDate.vars.errors %}
+                            <p class="form-control-feedback">{{ error.message }}</p>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group {{ addPromotionForm.studentNumber.vars.valid ?: 'has-danger' }}">
+            {{ form_label(addPromotionForm.studentNumber) }}
+            {{ form_widget(addPromotionForm.studentNumber, {'attr': {'class': 'form-control'}} ) }}
+            {% if not addPromotionForm.studentNumber.vars.valid %}
+                <ul>
+                    {% for error in addPromotionForm.studentNumber.vars.errors %}
+                        <p class="form-control-feedback">{{ error.message }}</p>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="form-group text-right">
+            {{ form_widget(addPromotionForm.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+        </div>
+        {{ form_rest(addPromotionForm) }}
+        {{ form_end(addPromotionForm) }}
     </div>
 {% endblock %}
