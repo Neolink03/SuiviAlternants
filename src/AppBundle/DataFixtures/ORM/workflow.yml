@@ -4,14 +4,14 @@ AppBundle\Entity\WorkFlow:
 
 AppBundle\Entity\State:
    State{10..20}:
-        name: <word()>
-        machineName: <words(2, true)>
+        name:  <words(2, true)>
+        machineName: <word()>
         workflow: '@WorkFlow*'
 
 AppBundle\Entity\Transition:
    Transition{20..50}:
         workflow: '@WorkFlow*'
-        name: <word()>
-        machineName: <words(5, true)>
+        name: <words(5, true)>
+        machineName: <word()>
         startState: '@State*'
         endState: '@State*'

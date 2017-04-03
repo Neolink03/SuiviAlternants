@@ -12,4 +12,8 @@
         <default key="_controller">AppBundle:CourseManager:editCourse</default>
     </route>
 
+    <route id="course_manager.application.view" path="/application/{applicationId}/view">
+        <default key="_controller">AppBundle:CourseManager:viewApplication</default>
+    </route>
+
 </routes>

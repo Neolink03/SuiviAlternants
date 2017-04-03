@@ -9,13 +9,16 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\PromotionType;
 use AppBundle\Forms\Types\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CourseManagerController extends Controller
 {
@@ -73,6 +76,16 @@ class CourseManagerController extends Controller
 
         return $this->render('AppBundle:CourseManager:editCourse.html.twig', [
             'promotionForm' => $promotionForm->createView()
+        ]);
+    }
+
+    /**
+     * @ParamConverter("application", options={"mapping": {"applicationId" : "id"}})
+     */
+    public function viewApplicationAction(Application $application)
+    {
+        return $this->render('AppBundle:CourseManager:viewApplication.html.twig', [
+            'application' => $application
         ]);
     }
 
