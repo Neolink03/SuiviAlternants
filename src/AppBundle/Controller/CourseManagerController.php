@@ -11,7 +11,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
-use AppBundle\Entity\StatusModification;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddPromotionType;
@@ -155,6 +154,16 @@ class CourseManagerController extends Controller
         
         return $this->render('AppBundle:Student:list.html.twig', [
             "students" => $students
+        ]);
+    }
+
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     */
+    public function sendMailAction(Promotion $promotion)
+    {
+        return $this->render('AppBundle:CourseManager:sendEmail.html.twig', [
+            'promotion' => $promotion
         ]);
     }
 }

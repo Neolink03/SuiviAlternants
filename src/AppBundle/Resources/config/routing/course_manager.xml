@@ -24,6 +24,11 @@
         <default key="_controller">AppBundle:CourseManager:viewApplication</default>
     </route>
 
+    <route id="course_manager.mail.send" path="/promotion/{promotionId}/mail/send">
+        <default key="_controller">AppBundle:CourseManager:sendMail</default>
+    </route>
+
+
     <route id="courseManager.home" path="">
         <default key="_controller">AppBundle:CourseManager:courseManagerIndex</default>
     </route>
