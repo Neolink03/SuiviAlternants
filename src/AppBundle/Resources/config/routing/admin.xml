@@ -12,7 +12,7 @@
         <default key="_controller">AppBundle:Admin:createCourse</default>
     </route>
     
-    <route id="admin.workflow" path="/workflow">
+    <route id="admin.workflow" path="application/{id}/workflow">
         <default key="_controller">AppBundle:Admin:dumpWorkflow</default>
     </route>
 

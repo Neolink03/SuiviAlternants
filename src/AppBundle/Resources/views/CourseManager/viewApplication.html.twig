@@ -1,0 +1,39 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Détails d'une candidature{% endblock %}
+
+{% block body %}
+    <h1>{{ application.student.firstName }} {{ application.student.lastName }}</h1>
+    <div>
+        TODO Graphe status
+    </div>
+    <div>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Valider"
+               class="btn btn-default" />
+        {{ form_end(form) }}
+    </div>
+    <div>
+        <span>Historique des étapes</span>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Status</th>
+                <th>Date de modification</th>
+                <th>Commentaire</th>
+            </tr>
+            </thead>
+            <tbody>
+                    {% for statusModification in application.statusModifications %}
+                        <tr>
+                            <td>Un status</td>
+                            <td>{{ statusModification.dateTime | date}}</td>
+                            <td>{{ statusModification.comment }}</td>
+                        </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

@@ -9,9 +9,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
 use AppBundle\Forms\Types\AdminNewUserType;
+use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Models\AdminNewUserDto;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -52,8 +55,11 @@ class AdminController extends Controller
         ]);
     }
 
-    public function dumpWorkflowAction(Request $request){
-        $this->get('app.factory.workflow')->generateWorflowFromTrainging(12, 2018);
+    /**
+     * @ParamConverter("application")
+     */
+    public function dumpWorkflowAction(Request $request, Application $application){
+        $workflow = $this->get('app.factory.workflow')->generateWorflowFromApplication($application);
     }
 
     public function userAddAction(Request $request)
