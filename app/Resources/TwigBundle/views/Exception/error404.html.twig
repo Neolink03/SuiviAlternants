@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Erreur 404 !{% endblock %}
+
+{% block body %}
+    <h1>Erreur 404 !</h1>
+    <div>
+        <p>Désolé mais je crois que vous vous êtes perdu !
+             Nous espérons que vous avez laissé des petits cailloux pour retrouver votre chemin.
+            Si vous n'y avez pas pensé pas de panique vous pouvez cliquer <a href="{{ path('homepage') }}">ICI !</a></p>
+    </div>
+{% endblock %}
