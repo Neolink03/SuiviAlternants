@@ -19,6 +19,7 @@ class Course
     private $secretariatContactDetails;
     private $promotions;
     private $companyContacts;
+    private $workflow;
 
     public function __construct()
     {
@@ -124,6 +125,16 @@ class Course
     public function removeCompanyContacts(CompanyContact $companyContacts)
     {
         $this->companyContacts->removeElement($companyContacts);
+    }
+
+    public function getWorkflow() : \AppBundle\Entity\WorkFlow
+    {
+        return $this->workflow;
+    }
+
+    public function setWorkflow(\AppBundle\Entity\WorkFlow $workflow)
+    {
+        $this->workflow = $workflow;
     }
 }
 

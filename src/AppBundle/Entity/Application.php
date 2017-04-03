@@ -37,7 +37,7 @@ class Application
         $this->student = $student;
     }
 
-    public function getPromotion()
+    public function getPromotion(): Promotion
     {
         return $this->promotion;
     }

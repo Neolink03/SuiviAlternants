@@ -26,17 +26,17 @@ class WorkflowFactory
 
     public function generateWorflowFromApplication(Application $application) : Workflow{
 
-        dump($application->getPromotion()->getCourse());
-        die();
+        $workflow = $application->getPromotion()->getCourse()->getWorkflow();
+
         $builder = new DefinitionBuilder();
 
-        $states = $this->em->getRepository(State::class)->findAll();
+        $states = $workflow->getStates();
         /** @var State $state */
         foreach ($states as $state){
             $builder->addPlace($state->getMachineName());
         }
 
-        $transitions = $this->em->getRepository(Transition::class)->findAll();
+        $transitions = $workflow->getTransitions();
 
         /** @var Transition $transition */
         foreach ($transitions as $transition){

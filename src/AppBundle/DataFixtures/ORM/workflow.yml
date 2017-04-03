@@ -1,6 +1,7 @@
 AppBundle\Entity\WorkFlow:
    WorkFlow_1:
         id: <randomDigitNotNull()>
+        course: '@Course_1'
 
 AppBundle\Entity\State:
    State{10..20}:
