@@ -39,7 +39,7 @@ class AdminController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 
                 $courseDto = $form->getData();
-                $this->get('app.factory.course')->saveFromAdmin($courseDto);
+                $this->get('app.factory.course')->saveNewCourse($courseDto);
                 $this->addFlash("success", "La formation a bien été créée.");
                 
                 return new RedirectResponse($this->generateUrl("admin.home"));
@@ -48,7 +48,7 @@ class AdminController extends Controller
         
         return $this->render('AppBundle:Admin:createCourse.html.twig', [
             "courses" => null,
-            "currentForm" => $form->createView()
+            "courseForm" => $form->createView()
         ]);
     }
 
