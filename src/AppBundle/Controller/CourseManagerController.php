@@ -149,7 +149,7 @@ class CourseManagerController extends Controller
     }
 
     public function studentListAction(Request $request) {
-        $students = $this->getDoctrine()->getManagerForClass(Student::class)
+        $students = $this->getDoctrine()->getManager()
                                         ->getRepository(Student::class)
                                         ->findAll();
         

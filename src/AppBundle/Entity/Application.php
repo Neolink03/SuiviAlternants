@@ -59,7 +59,7 @@ class Application
     }
 
     public function getLastStatusModification(){
-        return $this->statusModifications->last();
+        return $this->statusModifications->first();
     }
 
     public function getCurrentState()

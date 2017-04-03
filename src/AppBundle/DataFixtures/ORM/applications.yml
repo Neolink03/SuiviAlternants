@@ -1,7 +1,7 @@
 AppBundle\Entity\Application:
    Application{1..10}:
         student: '@Student*'
-        promotion: '@Promotion*'
+        promotion: '@Promotion_1'
    Application_1:
         student: '@student_1'
         promotion: '@Promotion_1'

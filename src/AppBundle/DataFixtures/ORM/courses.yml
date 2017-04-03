@@ -8,6 +8,6 @@ AppBundle\Entity\Course:
    Course_1:
         name: METINET
         studentNumber: 15
-        manager: '@Manager*'
+        manager: '@manager_1'
         coManager: '@Manager*'
         secretariatContactDetails: <text(200)>
