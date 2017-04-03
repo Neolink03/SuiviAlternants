@@ -70,5 +70,8 @@ class Application
         $this->statusModifications->removeElement($statusModifications);
     }
 
+    public function getLastStatusModification(){
+        return $this->statusModifications->last();
+    }
 }
 
