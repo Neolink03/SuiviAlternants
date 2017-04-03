@@ -12,4 +12,8 @@
         <default key="_controller">AppBundle:CourseManager:editCourse</default>
     </route>
 
+    <route id="course_manager.promotion.add" path="/course/{courseId}/promotion/add">
+        <default key="_controller">AppBundle:CourseManager:addPromotion</default>
+    </route>
+
 </routes>

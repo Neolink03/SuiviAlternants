@@ -3,9 +3,14 @@
 {% block title %}Modifier formation{% endblock %}
 
 {% block body %}
+    <h1>Editer formation</h1>
+    <div class="row col-12">
+
+    </div>
+
     <h1>Promotions</h1>
     <div class="row col-12">
-        {{ form_start(promotionForm) }}
+        {{ form_start(promotionForm, { 'action': path('course_manager.promotion.add', { 'courseId': app.request.get('courseId') }), 'method': 'POST' }) }}
         <div class="form-group {{ promotionForm.name.vars.valid ?: 'has-danger' }}">
             {{ form_label(promotionForm.name) }}
             {{ form_widget(promotionForm.name, {'attr': {'class': 'form-control'}} ) }}

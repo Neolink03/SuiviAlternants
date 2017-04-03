@@ -12,7 +12,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\User\Student;
-use AppBundle\Forms\Types\PromotionType;
+use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,26 +54,34 @@ class CourseManagerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $course = $em->getRepository(Course::class)->find($request->get('courseId'));
-        $promotion = new Promotion();
-        $promotion->setCourse($course);
-
-        $promotionForm = $this->createForm(PromotionType::class, $promotion);
+        $promotionForm = $this->createForm(AddPromotionType::class);
 
         if ($request->isMethod('post')) {
 
-            $promotionForm->handleRequest($request);
+            /*$promotionForm->handleRequest($request);
 
             if ($promotionForm->isSubmitted() && $promotionForm->isValid()) {
                 $em->persist($promotion);
                 $em->flush();
                 $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
-            }
+            }*/
         }
 
         return $this->render('AppBundle:CourseManager:editCourse.html.twig', [
             'promotionForm' => $promotionForm->createView()
         ]);
+    }
+
+    public function addPromotionAction(Request $request)
+    {
+        $courseId = $request->get('courseId');
+        $data = $request->request->get('add_promotion');
+
+        $this->get('app.factory.promotion')->createPromotionFromForm($courseId, $data);
+
+        $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
+
+        return $this->redirectToRoute('course_manager.course.edit', ['courseId' => $courseId]);
     }
 
 }
