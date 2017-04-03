@@ -23,11 +23,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CourseManagerController extends Controller
 {
-    /**
-     * @ParamConverter("courseManager", options={"mapping": {"managerId" : "id"}})
-     */
-    public function courseManagerIndexAction(CourseManager $courseManager){
+    public function courseManagerIndexAction(){
 
+        $courseManager = $this->getUser();
         $courseManaged = $courseManager->getCourseManaged()->toArray();
         $courseCoManaged = $courseManager->getCourseCoManaged()->toArray();
         $allCourses = array_merge($courseManaged, $courseCoManaged);
@@ -64,7 +62,7 @@ class CourseManagerController extends Controller
 
                 $em->persist($studentInformation);
                 $em->flush();
-                return $this->redirectToRoute('courseManager.home', ['managerId' => $courseManager->getId()]);
+                return $this->redirectToRoute('courseManager.home');
             }
         }
 
