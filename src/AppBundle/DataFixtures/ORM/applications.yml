@@ -3,6 +3,5 @@ AppBundle\Entity\Application:
         student: '@Student*'
         promotion: '@Promotion*'
    Application_1:
-        year: <(new \DateTime())>
         student: '@student_1'
         promotion: '@Promotion_1'
