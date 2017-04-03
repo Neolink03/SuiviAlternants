@@ -49,7 +49,7 @@ class WorkflowFactory
         }
 
         $definition = $builder->build();
-        echo (new StateMachineGraphvizDumper)->dump($definition);
+//        echo (new StateMachineGraphvizDumper)->dump($definition);
         $marking = new SingleStateMarkingStore('currentState');
         return new Workflow($definition, $marking);
     }

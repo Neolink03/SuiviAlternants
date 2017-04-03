@@ -11,8 +11,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
+use AppBundle\Entity\StatusModification;
 use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddPromotionType;
+use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Forms\Types\Courses\EditCourseType;
 use AppBundle\Forms\Types\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -85,9 +87,43 @@ class CourseManagerController extends Controller
     /**
      * @ParamConverter("application", options={"mapping": {"applicationId" : "id"}})
      */
-    public function viewApplicationAction(Application $application)
+    public function viewApplicationAction(Request $request, Application $application)
     {
+        $workflow = $this->get('app.factory.workflow')->generateWorflowFromApplication($application);
+        $transitions = $workflow->getEnabledTransitions($application);
+
+        $stringTransitions = [];
+        foreach ($transitions as $index => $value){
+            $stringTransitions[$value->getName()] = $value;
+        }
+        $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $stringTransitions));
+
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $statusModif = new StatusModification();
+            $statusModif->setApplication($application);
+            $statusModif->setComment($data['comment']);
+            $statusModif->setDateTime(new \DateTime());
+
+            $application->addStatusModification($statusModif);
+            $application->setCurrentState($data['transition']->getTos()[0]);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($application);
+            $em->flush();
+
+            $transitions = $workflow->getEnabledTransitions($application);
+            $stringTransitions = [];
+            foreach ($transitions as $index => $value){
+                $stringTransitions[$value->getName()] = $value;
+            }
+            $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $stringTransitions));
+        }
         return $this->render('AppBundle:CourseManager:viewApplication.html.twig', [
+            'form' => $form->createView(),
             'application' => $application
         ]);
     }
