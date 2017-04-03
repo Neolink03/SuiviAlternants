@@ -79,6 +79,12 @@ class CourseManagerController extends Controller
         ]);
     }
 
+<<<<<<< HEAD
+    public function studentListAction(Request $request) {
+        return $this->render('::base.html.twig', [
+        ]);
+    }
+=======
     public function addPromotionAction(Request $request)
     {
         $courseId = $request->get('courseId');
@@ -91,8 +97,5 @@ class CourseManagerController extends Controller
         return $this->redirectToRoute('course_manager.course.edit', ['courseId' => $courseId]); // Redirect to CourseList
     }
 
-    public function studentListAction(Request $request) {
-        return $this->render('::base.html.twig', [
-        ]);
-    }
+>>>>>>> promotion
 }
