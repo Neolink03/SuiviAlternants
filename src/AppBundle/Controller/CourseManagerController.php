@@ -77,7 +77,12 @@ class CourseManagerController extends Controller
     }
 
     public function studentListAction(Request $request) {
-        return $this->render('::base.html.twig', [
+        $students = $this->getDoctrine()->getManagerForClass(Student::class)
+                                        ->getRepository(Student::class)
+                                        ->findAll();
+        
+        return $this->render('AppBundle:Student:list.html.twig', [
+            "students" => $students
         ]);
     }
 }
