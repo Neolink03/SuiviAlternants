@@ -1,0 +1,25 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Liste des étudiants{% endblock %}
+
+{% block body %}
+    <h1>Liste des étudiants</h1>
+    <hr />
+    
+    <table class="table table-striped table-bordered">
+        <th>#</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Statut</th>
+        
+        {% for student in students %}
+            <tr>
+                <th>{{ loop.index }}</td>
+                <td>{{ student.lastName }}</td>
+                <td>{{ student.firstName }}</td>
+                {# TODO: Show status : will be add directly in Student entity later #}
+                <td></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
