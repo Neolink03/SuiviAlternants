@@ -31,6 +31,11 @@ class MenuBuilder
         else if ($this->securityContext->isGranted('ROLE_MANAGER')) {
             $this->addMenuItem('Liste des étudiants', 'course_manager.students');
         }
+        else if ($this->securityContext->isGranted('ROLE_STUDENT')) {
+            $this->menuItems = [
+                new MenuItem('Informations personnelles', 'student.showPersonalInformation')
+            ];
+        }
     }
 
     public function getMenuItems(): array

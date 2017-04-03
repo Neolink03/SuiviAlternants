@@ -13,7 +13,7 @@
         {% for application in applications %}
             <div>
                 <span>{{ application.promotion.course.name }}</span>
-                <span>{{ dump(application.getLastStatusModification()) }}</span>
+                <span>{{ application.currentState }}</span>
             </div>
         {% endfor %}
     </div>

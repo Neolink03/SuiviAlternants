@@ -12,7 +12,11 @@
     <div id="courseList">
         {% for courseManaged in coursesManaged %}
             <div>
-                <span>{{ courseManaged.name }}</span>
+                <h3>{{ courseManaged.name }}</h3>
+                <span>Nombre maximum d'étudiants : {{ courseManaged.studentNumber }}</span>
+                <button class="btn btn-default">
+                    <a href="">Détail de la formation</a>
+                </button>
             </div>
         {% endfor %}
     </div>

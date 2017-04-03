@@ -19,11 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StudentController extends Controller
 {
-    /**
-     * @ParamConverter("student", options={"mapping": {"studentId" : "id"}})
-     */
-    public function studentIndexAction(Student $student){
+    public function studentIndexAction(){
 
+        $student = $this->getUser();
         $applications = $student->getApplications();
 
         return $this->render('AppBundle:Student:home.html.twig',[
@@ -31,11 +29,9 @@ class StudentController extends Controller
         ]);
     }
 
-    /**
-     * @ParamConverter("student", options={"mapping": {"studentId" : "id"}})
-     */
-    public function displayPersonalInformationsAction(Student $student, Request $request){
+    public function displayPersonalInformationsAction(Request $request){
 
+        $student = $this->getUser();
         $form = $this->createForm(StudentType::class, $student);
 
         if ($request->isMethod('post')) {
