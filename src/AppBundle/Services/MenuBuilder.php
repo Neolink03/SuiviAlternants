@@ -26,13 +26,14 @@ class MenuBuilder
     private function build()
     {
         if ($this->securityContext->isGranted('ROLE_ADMIN')) {
-            $this->menuItems = [
-                new MenuItem('Admin', 'admin.home')
-            ];
+            $this->addMenuItem('Admin', 'admin.home');
         } 
         else if ($this->securityContext->isGranted('ROLE_MANAGER')) {
+            $this->addMenuItem('Liste des étudiants', 'course_manager.students');
+        }
+        else if ($this->securityContext->isGranted('ROLE_STUDENT')) {
             $this->menuItems = [
-                new MenuItem('Liste des étudiants', 'course_manager.students')
+                new MenuItem('Informations personnelles', 'student.showPersonalInformation')
             ];
         }
     }
@@ -40,6 +41,10 @@ class MenuBuilder
     public function getMenuItems(): array
     {
         return $this->menuItems;
+    }
+    
+    public function addMenuItem(string $title, string $path) {
+        $this->menuItems[] = new MenuItem($title, $path);
     }
 
 }

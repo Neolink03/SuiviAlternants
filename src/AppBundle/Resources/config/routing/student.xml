@@ -4,12 +4,11 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="student.home" path="/{studentId}">
-        <default key="_controller">AppBundle:Student:studentIndex</default>
-    </route>
-
-    <route id="student.showPersonalInformation" path="/informations/{studentId}">
+    <route id="student.showPersonalInformation" path="/informations">
         <default key="_controller">AppBundle:Student:displayPersonalInformations</default>
     </route>
 
+    <route id="student.home" path="">
+        <default key="_controller">AppBundle:Student:studentIndex</default>
+    </route>
 </routes>
