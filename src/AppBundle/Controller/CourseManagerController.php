@@ -11,6 +11,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
+use AppBundle\Entity\Promotion;
+use AppBundle\Entity\User\CourseManager;
 use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Courses\EditCourseType;
@@ -18,38 +20,57 @@ use AppBundle\Forms\Types\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class CourseManagerController extends Controller
 {
-    public function addStudentAction(Request $request)
+    /**
+     * @ParamConverter("courseManager", options={"mapping": {"managerId" : "id"}})
+     */
+    public function courseManagerIndexAction(CourseManager $courseManager){
+
+        $courseManaged = $courseManager->getCourseManaged()->toArray();
+        $courseCoManaged = $courseManager->getCourseCoManaged()->toArray();
+        $allCourses = array_merge($courseManaged, $courseCoManaged);
+
+        return $this->render('AppBundle:CourseManager:home.html.twig',[
+            'coursesManaged' => $allCourses,
+        ]);
+    }
+
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     */
+    public function addStudentAction(Promotion $promotion, Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $student = new Student();
         $studentForm = $this->createForm(UserType::class, $student);
+        $courseManager = $this->getUser();
 
         if ($request->isMethod('post')) {
 
             $studentForm->handleRequest($request);
 
             if ($studentForm->isSubmitted() && $studentForm->isValid()) {
-                dump($studentForm);
-                die();
-                /* TO DO
-                $newStudent = $studentForm->getData();
+                $studentInformation = $studentForm->getData();
 
-                $this->get('sign_up')->signUpCustomer($newStudent);
+                //A modifier
+                $application = New Application();
+                $application->setPromotion($promotion);
+                $studentInformation->setUsername($studentInformation->getEmail());
+                $studentInformation->setPlainPassword("FakePassword");
+                $studentInformation->addApplication($application);
 
-                $customer = $this->get('repositories.customers')
-                    ->loadUserByUsername($signUp->email)
-                ;
-
-                return new RedirectResponse('/');
-                */
+                $em->persist($studentInformation);
+                $em->flush();
+                return $this->redirectToRoute('courseManager.home', ['managerId' => $courseManager->getId()]);
             }
         }
 
         return $this->render('AppBundle:CourseManager:createStudent.html.twig', [
             'student' => $studentForm->createView(),
+            'promotion' => $promotion,
         ]);
     }
 

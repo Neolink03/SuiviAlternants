@@ -4,6 +4,10 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
+    <route id="courseManager.home" path="/{managerId}">
+        <default key="_controller">AppBundle:CourseManager:courseManagerIndex</default>
+    </route>
+
     <route id="courseManager.addStudent" path="/promotion/{promotionId}/create/student">
         <default key="_controller">AppBundle:CourseManager:addStudent</default>
     </route>
