@@ -9,6 +9,7 @@ class Application
     private $student;
     private $promotion;
     private $statusModifications;
+    private $currentState = "";
 
     public function getId() : int
     {
@@ -70,5 +71,14 @@ class Application
         $this->statusModifications->removeElement($statusModifications);
     }
 
+    public function getCurrentState()
+    {
+        return $this->currentState;
+    }
+
+    public function setCurrentState($currentState)
+    {
+        $this->currentState = $currentState;
+    }
 }
 
