@@ -8,6 +8,10 @@
         <default key="_controller">AppBundle:CourseManager:addStudent</default>
     </route>
 
+    <route id="course_manager.course" path="/course/{courseId}">
+        <default key="_controller">AppBundle:CourseManager:detailsCourse</default>
+    </route>
+
     <route id="course_manager.course.edit" path="/course/{courseId}/edit">
         <default key="_controller">AppBundle:CourseManager:editCourse</default>
     </route>
