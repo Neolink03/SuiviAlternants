@@ -40,7 +40,7 @@ class Application
         return $this->statusModifications;
     }
 
-    public function setStatusModification($statusModifications)
+    public function setStatusModification(State $statusModifications)
     {
         $this->statusModifications = $statusModifications;
     }

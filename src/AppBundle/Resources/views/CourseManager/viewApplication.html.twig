@@ -27,7 +27,7 @@
             <tbody>
                     {% for statusModification in application.statusModifications %}
                         <tr>
-                            <td>Un status</td>
+                            <td>{{ statusModification.state.name }}</td>
                             <td>{{ statusModification.dateTime | date}}</td>
                             <td>{{ statusModification.comment }}</td>
                         </tr>

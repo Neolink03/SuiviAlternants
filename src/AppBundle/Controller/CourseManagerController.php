@@ -121,17 +121,7 @@ class CourseManagerController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $statusModif = new StatusModification();
-            $statusModif->setApplication($application);
-            $statusModif->setComment($data['comment']);
-            $statusModif->setDateTime(new \DateTime());
-
-            $application->addStatusModification($statusModif);
-            $application->setCurrentState($data['transition']->getTos()[0]);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($application);
-            $em->flush();
+            $application = $this->get('app.application')->setState($application, $data);
 
             $transitions = $workflow->getEnabledTransitions($application);
             $stringTransitions = [];

@@ -8,5 +8,6 @@
     <field name="comment" type="text" column="comment" nullable="true"/>
 
     <many-to-one field="application" target-entity="AppBundle\Entity\Application" inversed-by="statusModifications" />
+    <many-to-one field="state" target-entity="AppBundle\Entity\State" />
   </entity>
 </doctrine-mapping>

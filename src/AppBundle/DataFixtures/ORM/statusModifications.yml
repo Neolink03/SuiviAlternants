@@ -3,3 +3,4 @@ AppBundle\Entity\StatusModification:
         dateTime: <(new \DateTime())>
         comment: <realText(300)>
         application: '@Application_1'
+        state: '@State*'

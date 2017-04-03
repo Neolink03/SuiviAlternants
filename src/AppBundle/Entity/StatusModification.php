@@ -11,6 +11,7 @@ class StatusModification
     private $dateTime;
     private $comment;
     private $application;
+    private $state;
 
     public function getId()
     {
@@ -51,5 +52,14 @@ class StatusModification
         $this->application = $application;
     }
 
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
 }
 
