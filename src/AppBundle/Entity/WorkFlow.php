@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class WorkFlow
 {
     private $id;
+    private $course;
     private $states;
     private $transitions;
 
@@ -21,6 +22,16 @@ class WorkFlow
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getCourse()
+    {
+        return $this->course;
+    }
+
+    public function setCourse($course)
+    {
+        $this->course = $course;
     }
 
     public function getStates()

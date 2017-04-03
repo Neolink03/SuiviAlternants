@@ -4,7 +4,7 @@
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>
-        <field name="year" type="datetime" column="year"/>
+        <field name="currentState" type="string" column="currentState" length="255"/>
         <many-to-one field="student" target-entity="AppBundle\Entity\User\Student" inversed-by="applications" />
         <many-to-one field="promotion" target-entity="AppBundle\Entity\Promotion" inversed-by="applications" />
         <one-to-many field="statusModifications" target-entity="AppBundle\Entity\StatusModification" mapped-by="application">

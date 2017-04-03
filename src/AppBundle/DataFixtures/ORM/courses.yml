@@ -5,3 +5,9 @@ AppBundle\Entity\Course:
         manager: '@Manager*'
         coManager: '@Manager*'
         secretariatContactDetails: <text(200)>
+   Course_1:
+        name: METINET
+        studentNumber: 15
+        manager: '@Manager*'
+        coManager: '@Manager*'
+        secretariatContactDetails: <text(200)>

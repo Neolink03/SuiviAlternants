@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Accueil formateur{% endblock %}
+
+{% block body %}
+    <h1>Formations</h1>
+    <div id="courseList">
+        {% for courseManaged in coursesManaged %}
+            <div>
+                <span>{{ courseManaged.name }}</span>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

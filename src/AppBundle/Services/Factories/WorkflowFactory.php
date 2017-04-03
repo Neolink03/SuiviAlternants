@@ -6,6 +6,7 @@
 namespace AppBundle\Services\Factories;
 
 
+use AppBundle\Entity\Application;
 use AppBundle\Entity\State;
 use AppBundle\Entity\Transition;
 use Doctrine\ORM\EntityManager;
@@ -23,17 +24,19 @@ class WorkflowFactory
         $this->em = $em;
     }
 
-    public function generateWorflowFromTrainging(int $idTraining, int $year) : Workflow{
+    public function generateWorflowFromApplication(Application $application) : Workflow{
+
+        $workflow = $application->getPromotion()->getCourse()->getWorkflow();
 
         $builder = new DefinitionBuilder();
 
-        $states = $this->em->getRepository(State::class)->findAll();
+        $states = $workflow->getStates();
         /** @var State $state */
         foreach ($states as $state){
             $builder->addPlace($state->getMachineName());
         }
 
-        $transitions = $this->em->getRepository(Transition::class)->findAll();
+        $transitions = $workflow->getTransitions();
 
         /** @var Transition $transition */
         foreach ($transitions as $transition){

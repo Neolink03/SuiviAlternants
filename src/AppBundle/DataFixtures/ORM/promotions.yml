@@ -5,3 +5,9 @@ AppBundle\Entity\Promotion:
         endDate: <(new \DateTime())>
         studentNumber: <numberBetween(10,30)>
         course: '@Course*'
+   Promotion_1:
+        name: 2016-2017
+        startDate: <(new \DateTime())>
+        endDate: <(new \DateTime())>
+        studentNumber: 15
+        course: '@Course_1'

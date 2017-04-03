@@ -68,7 +68,7 @@ class Promotion
         return $this->studentNumber;
     }
 
-    public function getCourse()
+    public function getCourse() : Course
     {
         return $this->course;
     }

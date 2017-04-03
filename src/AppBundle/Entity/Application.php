@@ -5,26 +5,14 @@ namespace AppBundle\Entity;
 class Application
 {
     private $id;
-    private $year;
     private $student;
     private $promotion;
     private $statusModifications;
+    private $currentState = "";
 
     public function getId() : int
     {
         return $this->id;
-    }
-
-    public function setYear(\DateTime $year)
-    {
-        $this->year = $year;
-
-        return $this;
-    }
-
-    public function getYear() : \DateTime
-    {
-        return $this->year;
     }
 
     public function getStudent()
@@ -37,7 +25,7 @@ class Application
         $this->student = $student;
     }
 
-    public function getPromotion()
+    public function getPromotion(): Promotion
     {
         return $this->promotion;
     }
@@ -72,6 +60,16 @@ class Application
 
     public function getLastStatusModification(){
         return $this->statusModifications->last();
+    }
+
+    public function getCurrentState()
+    {
+        return $this->currentState;
+    }
+
+    public function setCurrentState($currentState)
+    {
+        $this->currentState = $currentState;
     }
 }
 

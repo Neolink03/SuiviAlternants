@@ -20,10 +20,10 @@ class CommonController extends Controller
             return $this->redirectToRoute('admin.home');
         }
         if ($user->hasRole('ROLE_MANAGER')){
-            return $this->redirectToRoute('admin.home');
+            return $this->redirectToRoute('courseManager.home');
         }
         if ($user->hasRole('ROLE_STUDENT')){
-            return $this->redirectToRoute('admin.home');
+            return $this->redirectToRoute('student.home');
         }
     }
 }
