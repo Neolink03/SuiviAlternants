@@ -17,11 +17,11 @@
                 <th>{{ loop.index }}</td>
                 <td>{{ student.lastName }}</td>
                 <td>{{ student.firstName }}</td>
-                {# TODO: Show status : will be add directly in Student entity later #}
                 <td>
                     <ul>
                         {% for application in student.applications %}
                             <li>
+                                {{ application.promotion.course.name }}:
                                 {% if application.getLastStatusModification() %}
                                     <a href="{{ path('course_manager.application.view', {'applicationId': application.id }) }}"> {{ application.getLastStatusModification().state.name }}</a>
                                 {% else %}
