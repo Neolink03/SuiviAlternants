@@ -5,7 +5,6 @@ namespace AppBundle\Entity;
 class Application
 {
     private $id;
-    private $year;
     private $student;
     private $promotion;
     private $statusModifications;
@@ -14,18 +13,6 @@ class Application
     public function getId() : int
     {
         return $this->id;
-    }
-
-    public function setYear(\DateTime $year)
-    {
-        $this->year = $year;
-
-        return $this;
-    }
-
-    public function getYear() : \DateTime
-    {
-        return $this->year;
     }
 
     public function getStudent()

@@ -10,8 +10,8 @@
 {% block body %}
     <h1>Ajouter un étudiant</h1>
     <hr>
-    <p class="mb-0">Formation : nomFormation</p>
-    <p>Promotion : nomPromo</p>
+    <p class="mb-0">Formation : {{ promotion.course.name }}</p>
+    <p>Promotion : {{ promotion.name }}</p>
     <div id="addStudent">
         {{ form_start(student) }}
         {{ form_widget(student) }}
