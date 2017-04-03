@@ -8,7 +8,7 @@
         <default key="_controller">AppBundle:Admin:courseList</default>
     </route>
     
-    <route id="admin.course_create" path="/course/create">
+    <route id="admin.course.add" path="/course/add">
         <default key="_controller">AppBundle:Admin:createCourse</default>
     </route>
     

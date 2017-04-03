@@ -7,37 +7,37 @@
     
     <div class="row col-md-6">
         
-        {{ form_start(currentForm, {'action': path('admin.course_create')}) }}
+        {{ form_start(courseForm, {'action': path('admin.course.add')}) }}
         
             <div class="form-group">
-                {{ form_label(currentForm.name)}}
-                {{ form_widget(currentForm.name, {'attr': {"class": 'form-control'} }) }}
-                {{ form_errors(currentForm.name)}}
+                {{ form_label(courseForm.name)}}
+                {{ form_widget(courseForm.name, {'attr': {"class": 'form-control'} }) }}
+                {{ form_errors(courseForm.name)}}
             </div>
 
             <div class="form-group">
-                {{ form_label(currentForm.manager)}}
-                {{ form_widget(currentForm.manager.selector, {'attr': {"class": 'form-control custom-select'} }) }}
+                {{ form_label(courseForm.manager)}}
+                {{ form_widget(courseForm.manager.selector, {'attr': {"class": 'form-control custom-select'} }) }}
             </div>
 
             <div class="form-group">
-                {{ form_label(currentForm.coManager, 'Co-responsable de formation (optionnel)') }}
-                {{ form_widget(currentForm.coManager.selector, {'attr': {"class": 'form-control custom-select'} }) }}
+                {{ form_label(courseForm.coManager, 'Co-responsable de formation (optionnel)') }}
+                {{ form_widget(courseForm.coManager.selector, {'attr': {"class": 'form-control custom-select'} }) }}
             </div>
 
             <div class="form-group">
-                {{ form_label(currentForm.secretariatContactDetails)}}
-                {{ form_widget(currentForm.secretariatContactDetails, {'attr': {"class": 'form-control'} }) }}
-                {{ form_errors(currentForm.secretariatContactDetails)}}
+                {{ form_label(courseForm.secretariatContactDetails)}}
+                {{ form_widget(courseForm.secretariatContactDetails, {'attr': {"class": 'form-control'} }) }}
+                {{ form_errors(courseForm.secretariatContactDetails)}}
             </div>
             
             <div class="form-group">
-                {{ form_label(currentForm.submit)}}
+                {{ form_label(courseForm.submit)}}
             </div>
 
-            {{ form_widget(currentForm.submit, {'attr': {"class": 'form-control btn btn-primary'} }) }}
+            {{ form_widget(courseForm.submit, {'attr': {"class": 'form-control btn btn-primary'} }) }}
 
-        {{ form_rest(currentForm) }}
+        {{ form_rest(courseForm) }}
     </div>
     
 {% endblock %}

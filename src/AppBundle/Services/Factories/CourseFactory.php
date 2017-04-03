@@ -15,7 +15,7 @@ class CourseFactory {
         $this->em = $em;
     }
     
-    public function saveFromAdmin(CourseDto $courseDto) {
+    public function saveNewCourse(CourseDto $courseDto) {
         $course = new Course();
         $course->setName($courseDto->getName());
         $course->setManager($courseDto->getManager());
