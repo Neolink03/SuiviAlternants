@@ -100,7 +100,8 @@ class CourseManagerController extends Controller
             ->getForm();
 
         if ($request->get('promotion')) {
-            $promotionsForm->get('promotions')->setData($em->getRepository(Promotion::class)->find($request->get('promotion')));
+            $promotion = $em->getRepository(Promotion::class)->find($request->get('promotion'));
+            $promotionsForm->get('promotions')->setData($promotion);
         }
 
         if ($request->isMethod('post')) {

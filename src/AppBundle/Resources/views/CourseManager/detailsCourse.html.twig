@@ -23,4 +23,27 @@
         {{ form_rest(promotionsForm) }}
         {{ form_end(promotionsForm) }}
     </div>
+
+    <table class="table table-striped table-bordered">
+        <th>#</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Statut</th>
+
+        {% for application in promotion.applications %}
+            <tr>
+                <th>{{ loop.index }}</td>
+                <td>{{ application.student.firstName }}</td>
+                <td>{{ application.student.lastName }}</td>
+                <td>
+                    {% if application.getLastStatusModification() %}
+                        <a href="{{ path('course_manager.application.view', {'applicationId': application.id }) }}"> {{ application.getLastStatusModification().state.name }}</a>
+                    {% else %}
+                        <a href="{{ path('course_manager.application.view', {'applicationId': application.id }) }}">Application with no status</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
 {% endblock %}
