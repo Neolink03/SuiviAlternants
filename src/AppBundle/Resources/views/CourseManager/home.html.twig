@@ -9,13 +9,14 @@
 
 {% block body %}
     <h1>Formations</h1>
+    <hr>
     <div id="courseList">
         {% for courseManaged in coursesManaged %}
             <div>
                 <h3>{{ courseManaged.name }}</h3>
                 <span>Nombre maximum d'étudiants : {{ courseManaged.studentNumber }}</span>
                 <button class="btn btn-default">
-                    <a href="">Détail de la formation</a>
+                    <a href="{{ path('course_manager.course', {'courseId' : courseManaged.id}) }}">Détail de la formation</a>
                 </button>
             </div>
         {% endfor %}
