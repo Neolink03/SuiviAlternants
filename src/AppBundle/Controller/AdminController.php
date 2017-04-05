@@ -70,10 +70,7 @@ class AdminController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $plainpassword = substr(hash('sha512',rand()),0,12);
             $adminNewUserDto->setPassword($plainpassword);
-            $user = $this->get('app.factory.user')->saveFromAdmin($adminNewUserDto);
-            $swiftMessage = $this->get('app.factory.swift_message')->createRegistration($user, $plainpassword);
-            $this->get('mailer')->send($swiftMessage);
-            $this->addFlash("success", "L'utilisateur a bien été créé.");
+            $this->get('app.factory.user')->saveFromAdmin($adminNewUserDto);
         }
 
         return $this->render('AppBundle:Admin:addUser.html.twig', [

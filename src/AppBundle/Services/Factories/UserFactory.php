@@ -5,32 +5,51 @@
 
 namespace AppBundle\Services\Factories;
 
-
-use AppBundle\Entity\User;
 use AppBundle\Entity\User\CourseManager;
 use AppBundle\Entity\User\Jury;
 use AppBundle\Entity\User\Student;
 use AppBundle\Models\AdminNewUserDto;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserFactory
 {
     private $em;
+    private $swiftMessageFactory;
+    private $mailer;
+    private $session;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, SwiftMessageFactory $swiftMessageFactory, \Swift_Mailer $mailer, Session $session)
     {
         $this->em = $em;
+        $this->swiftMessageFactory = $swiftMessageFactory;
+        $this->mailer = $mailer;
+        $this->session = $session;
     }
 
-    public function saveFromAdmin(AdminNewUserDto $adminUserDto) : User{
+    public function saveFromAdmin(AdminNewUserDto $adminUserDto){
 
-        switch ($adminUserDto->getUserType()){
-            case "responsable":
-                return $this->saveCourseManagerFromAdmin($adminUserDto);
-            case "jury":
-                return $this->saveJuryFromAdmin($adminUserDto);
-            default:
-                throw new \Exception("Le type d'utilisateur ". $adminUserDto->getUserType() ." n'existe pas.");
+        $managerDataBase = $this->em->getRepository(CourseManager::class)->findOneBy(array(
+            'email' => $adminUserDto->getUser()->getEmail()
+        ));
+
+        if(is_null($managerDataBase)){
+            switch ($adminUserDto->getUserType()) {
+                case "responsable":
+                    $user = $this->saveCourseManagerFromAdmin($adminUserDto);
+                    $this->session->getFlashBag()->add("success", "L'utilisateur a bien été créé.");
+                    break;
+                case "jury":
+                    $user = $this->saveJuryFromAdmin($adminUserDto);
+                    $this->session->getFlashBag()->add("success", "L'utilisateur a bien été créé.");
+                    break;
+                default:
+                    throw new \Exception("Le type d'utilisateur " . $adminUserDto->getUserType() . " n'existe pas.");
+            }
+            $swiftMessage = $this->swiftMessageFactory->createRegistration($user, $adminUserDto->getPassword());
+            $this->mailer->send($swiftMessage);
+        }else{
+            $this->session->getFlashBag()->add("danger", "Cet email est déjà utilisé pour un autre utilisateur.");
         }
     }
 
@@ -63,7 +82,7 @@ class UserFactory
         return $jury;
     }
 
-    public function checkUser(Student $student){
+    public function checkStudent(Student $student){
 
         $studentDataBase = $this->em->getRepository(Student::class)->findOneBy(array(
             'email' => $student->getEmail()

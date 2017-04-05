@@ -9,6 +9,7 @@ use AppBundle\Entity\User;
 use Swift_Message;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig_Environment;
+
 class SwiftMessageFactory
 {
     private $twig;
