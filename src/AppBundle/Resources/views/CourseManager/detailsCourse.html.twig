@@ -31,7 +31,7 @@
         </div>
 
         <div class="mb-4">
-            <a href="{{ path('courseManager.addStudent', { 'promotionId': promotion.id }) }}"
+            <a href="{{ path('course_manager.student.add', { 'promotionId': promotion.id }) }}"
                class="btn btn-secondary">Ajouter un étudiant</a>
             <a href="{{ path('course_manager.mail.send', { 'promotionId': promotion.id }) }}"
                class="btn btn-secondary">Envoyer un e-mail</a>
