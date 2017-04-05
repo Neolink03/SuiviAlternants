@@ -25,14 +25,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class CourseManagerController extends Controller
 {
-    public function courseManagerIndexAction(){
+    public function courseManagerIndexAction()
+    {
 
         $courseManager = $this->getUser();
         $courseManaged = $courseManager->getCourseManaged()->toArray();
         $courseCoManaged = $courseManager->getCourseCoManaged()->toArray();
         $allCourses = array_merge($courseManaged, $courseCoManaged);
 
-        return $this->render('AppBundle:CourseManager:home.html.twig',[
+        return $this->render('AppBundle:CourseManager:home.html.twig', [
             'coursesManaged' => $allCourses,
         ]);
     }
@@ -85,7 +86,7 @@ class CourseManagerController extends Controller
             ['id' => 'desc']
         );
 
-        $promotion = $promotions[0];
+        $promotions ? $promotion = $promotions[0] : $promotion = null;
 
         $promotionsForm = $this->createFormBuilder()
             ->add('promotions', EntityType::class, [
@@ -156,7 +157,7 @@ class CourseManagerController extends Controller
         $transitions = $workflow->getEnabledTransitions($application);
 
         $stringTransitions = [];
-        foreach ($transitions as $index => $value){
+        foreach ($transitions as $index => $value) {
             $stringTransitions[$value->getName()] = $value;
         }
         $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $stringTransitions));
@@ -170,7 +171,7 @@ class CourseManagerController extends Controller
 
             $transitions = $workflow->getEnabledTransitions($application);
             $stringTransitions = [];
-            foreach ($transitions as $index => $value){
+            foreach ($transitions as $index => $value) {
                 $stringTransitions[$value->getName()] = $value;
             }
             $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $stringTransitions));
