@@ -1,5 +1,11 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ ('/suivi_alternants/web/css/form.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block title %}Créer un utilisateur{% endblock %}
 
 {% block body %}

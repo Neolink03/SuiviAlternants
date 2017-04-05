@@ -8,7 +8,5 @@
         <input type="submit" value="Create" class="btn btn-default"/>
     {{ form_end(form) }}
 
-    <button class="btn btn-default">
-            <a href="{{ path('companycontact_index', {'courseId': course.id}) }}">Back to the list</a>
-    </button>
+    <a href="{{ path('companycontact_index', {'courseId': course.id}) }}" class="btn btn-primary">Back to the list</a>
 {% endblock %}

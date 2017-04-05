@@ -17,6 +17,7 @@
     <import resource="@AppBundle/Resources/config/routing/admin.xml" prefix="/admin"/>
     <import resource="@AppBundle/Resources/config/routing/course_manager.xml" prefix="/course-manager"/>
     <import resource="@AppBundle/Resources/config/routing/student.xml" prefix="/student"/>
+    <import resource="@AppBundle/Resources/config/routing/companycontact.xml" prefix="/course-manager/course/{courseId}/companycontact"/>
 
 </routes>
 

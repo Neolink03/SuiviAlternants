@@ -25,7 +25,5 @@
         {% endfor %}
         </tbody>
     </table>
-    <button class="btn btn-default">
-    <a href="{{ path('companycontact_new', {'courseId': course.id}) }}">Create a new companyContact</a>
-    </button>
+    <a href="{{ path('companycontact_new', {'courseId': course.id}) }}" class="btn btn-primary">Create a new companyContact</a>
 {% endblock %}
