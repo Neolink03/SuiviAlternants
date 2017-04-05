@@ -8,6 +8,7 @@ namespace AppBundle\Services\Factories;
 
 use AppBundle\Entity\User\CourseManager;
 use AppBundle\Entity\User\Jury;
+use AppBundle\Entity\User\Student;
 use AppBundle\Models\AdminNewUserDto;
 use Doctrine\ORM\EntityManager;
 
@@ -59,5 +60,23 @@ class UserFactory
 
         $this->em->persist($jury);
         $this->em->flush();
+    }
+
+    public function checkUser(Student $student){
+
+        $studentDataBase = $this->em->getRepository(Student::class)->findOneBy(array(
+            'email' => $student->getEmail()
+        ));
+
+        if(is_null($studentDataBase)){
+            $studentDataBase = $student;
+            $studentDataBase->setUsername($student->getEmail());
+            $studentDataBase->setPlainPassword("FakePassword");
+
+            $this->em->persist($studentDataBase);
+            $this->em->flush();
+        }
+
+        return $studentDataBase;
     }
 }

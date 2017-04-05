@@ -47,23 +47,20 @@ class CourseManagerController extends Controller
 
         $student = new Student();
         $studentForm = $this->createForm(UserType::class, $student);
-        $courseManager = $this->getUser();
 
         if ($request->isMethod('post')) {
 
             $studentForm->handleRequest($request);
 
             if ($studentForm->isSubmitted() && $studentForm->isValid()) {
-                $studentInformation = $studentForm->getData();
 
+                $student = $this->get('app.factory.user')->checkUser($studentForm->getData());
                 //A modifier
                 $application = New Application();
                 $application->setPromotion($promotion);
-                $studentInformation->setUsername($studentInformation->getEmail());
-                $studentInformation->setPlainPassword("FakePassword");
-                $studentInformation->addApplication($application);
+                $student->addApplication($application);
 
-                $em->persist($studentInformation);
+                $em->persist($student);
                 $em->flush();
                 return $this->redirectToRoute('courseManager.home');
             }
