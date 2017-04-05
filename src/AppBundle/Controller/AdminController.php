@@ -68,7 +68,7 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainpassword = substr(hash('sha512',rand()),0,12);
+            $plainpassword = $this->get('app.password')->generate();
             $adminNewUserDto->setPassword($plainpassword);
             $this->get('app.factory.user')->saveFromAdmin($adminNewUserDto);
         }

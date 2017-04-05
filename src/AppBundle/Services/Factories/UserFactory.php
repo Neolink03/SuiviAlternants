@@ -9,6 +9,7 @@ use AppBundle\Entity\User\CourseManager;
 use AppBundle\Entity\User\Jury;
 use AppBundle\Entity\User\Student;
 use AppBundle\Models\AdminNewUserDto;
+use AppBundle\Services\PasswordService;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -16,13 +17,15 @@ class UserFactory
 {
     private $em;
     private $swiftMessageFactory;
+    private $passwordService;
     private $mailer;
     private $session;
 
-    public function __construct(EntityManager $em, SwiftMessageFactory $swiftMessageFactory, \Swift_Mailer $mailer, Session $session)
+    public function __construct(EntityManager $em, SwiftMessageFactory $swiftMessageFactory, \Swift_Mailer $mailer, Session $session, PasswordService $passwordService)
     {
         $this->em = $em;
         $this->swiftMessageFactory = $swiftMessageFactory;
+        $this->passwordService = $passwordService;
         $this->mailer = $mailer;
         $this->session = $session;
     }
@@ -89,12 +92,17 @@ class UserFactory
         ));
 
         if(is_null($studentDataBase)){
+            $password = $this->passwordService->generate();
+
             $studentDataBase = $student;
             $studentDataBase->setUsername($student->getEmail());
-            $studentDataBase->setPlainPassword("FakePassword");
+            $studentDataBase->setPlainPassword($password);
 
             $this->em->persist($studentDataBase);
             $this->em->flush();
+
+            $swiftMessage = $this->swiftMessageFactory->createRegistration($student, $password);
+            $this->mailer->send($swiftMessage);
         }
 
         return $studentDataBase;
