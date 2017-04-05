@@ -78,7 +78,10 @@ class CompanyContactController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('companycontact_show', array('id' => $companyContact->getId()));
+            return $this->redirectToRoute('companycontact_show', [
+                'courseId' => $course->getId(), 
+                'id' => $companyContact->getId()
+            ]);
         }
 
         return $this->render('@App/companycontact/edit.html.twig', array(
