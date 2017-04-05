@@ -49,7 +49,19 @@ class UserFactory
                 default:
                     throw new \Exception("Le type d'utilisateur " . $adminUserDto->getUserType() . " n'existe pas.");
             }
-            $swiftMessage = $this->swiftMessageFactory->createRegistration($user, $adminUserDto->getPassword());
+
+            $swiftMessage = $this->swiftMessageFactory->create(
+                'New Registration',
+                'send@example.com',
+                [$user->getEmail()],
+                '@App/email/registration.html.twig',
+                [
+                    "email" => $user->getEmail(),
+                    "password" => $adminUserDto->getPassword()
+                ]
+
+            );
+
             $this->mailer->send($swiftMessage);
         }else{
             $this->session->getFlashBag()->add("danger", "Cet email est déjà utilisé pour un autre utilisateur.");
@@ -101,7 +113,18 @@ class UserFactory
             $this->em->persist($studentDataBase);
             $this->em->flush();
 
-            $swiftMessage = $this->swiftMessageFactory->createRegistration($student, $password);
+            $swiftMessage = $this->swiftMessageFactory->create(
+                'New Registration',
+                'send@example.com',
+                [$student->getEmail()],
+                '@App/email/registration.html.twig',
+                [
+                    "email" => $student->getEmail(),
+                    "password" => $password
+                ]
+
+            );
+
             $this->mailer->send($swiftMessage);
         }
 

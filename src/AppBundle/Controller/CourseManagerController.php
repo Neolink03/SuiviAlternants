@@ -213,10 +213,24 @@ class CourseManagerController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $data = $form->getData();
-            dump($data);
-            die();
+
+            $mailRecipients = [];
+            foreach ($data['users'] as $key => $application){
+                $mailRecipients[] = $application->getStudent()->getEmail();
+            };
+
+            $swiftMail = $this->get('app.factory.swift_message')->create(
+                $data['object'],
+                "uneadresse@hotmail.com",
+                $mailRecipients,
+                "AppBundle:email:contact.html.twig",
+                array(
+                    "message" =>  $data['message']
+                )
+            );
+            $this->get('mailer')->send($swiftMail);
+            $this->addFlash("success", "Email envoyé à tous les destinataires");
         }
 
         return $this->render('AppBundle:CourseManager:sendEmail.html.twig', [
