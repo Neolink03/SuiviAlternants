@@ -4,28 +4,32 @@
 
 {% block body %}
     <h1>Liste des étudiants</h1>
-    <hr />
-    
+    <hr/>
+
     <table class="table table-striped table-bordered">
         <th>#</th>
         <th>Nom</th>
         <th>Prénom</th>
         <th>Statut</th>
-        
+
         {% for student in students %}
             <tr>
-                <th>{{ loop.index }}</td>
+                <th>{{ loop.index }}</th>
                 <td>{{ student.lastName }}</td>
                 <td>{{ student.firstName }}</td>
                 <td>
-                    <ul>
+                    <ul class="mb-0">
                         {% for application in student.applications %}
                             <li>
                                 {{ application.promotion.course.name }}:
                                 {% if application.getLastStatusModification() %}
-                                    <a href="{{ path('course_manager.application.view', {'applicationId': application.id }) }}"> {{ application.getLastStatusModification().state.name }}</a>
+                                    <a href="{{ path('course_manager.application.view', {'applicationId': application.id }) }}">
+                                        {{ application.getLastStatusModification().state.name }}
+                                    </a>
                                 {% else %}
-                                    <a href="{{ path('course_manager.application.view', {'applicationId': application.id }) }}">Application with no status</a>
+                                    <a href="{{ path('course_manager.application.view', {'applicationId': application.id }) }}">
+                                        Application with no status
+                                    </a>
                                 {% endif %}
                             </li>
                         {% endfor %}
