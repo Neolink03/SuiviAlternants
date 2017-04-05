@@ -39,4 +39,16 @@ class SwiftMessageFactory
             'text/html'
         );
     }
+
+    public function create(string $subject, string $from, array $recipientsMail, string $templatePath, array $params){
+        return \Swift_Message::newInstance()
+            ->setSubject($subject)
+            ->setFrom($from)
+            ->setTo($recipientsMail)
+            ->setBody($this->createBody($templatePath, $params), 'text/html');
+    }
+
+    private function createBody(string $templatePath, array $params) : string {
+        return $this->twig->render($templatePath, $params);
+    }
 }
