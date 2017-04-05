@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Companycontact</h1>
+{% block title %}Détail contact entreprise{% endblock %}
 
-    <table>
+{% block body %}
+    <h1>{{ companyContact.companyName }}</h1>
+    <hr />
+
+    <table class="mb-3">
         <tbody>
-            <tr>
-                <th>Nom de la société : </th>
-                <td>{{ companyContact.companyName }}</td>
-            </tr>
             <tr>
                 <th>Prénom du contact : </th>
                 <td>{{ companyContact.firstNameContact }}</td>
@@ -27,8 +26,22 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('companycontact_index', {'courseId': course.id}) }}" class="btn btn-primary">Back to the list</a>
-    <a href="{{ path('companycontact_edit', { 'courseId': course.id, 'id': companyContact.id }) }}" class="btn btn-primary">Edit</a>
-    <a href="{{ path('companycontact_delete', { 'courseId': course.id, 'id': companyContact.id }) }}" class="btn btn-primary">Supprimer</a>
+            
+    <div class="form-group">
+        
+        <a href="{{ path('companycontact_index', {'courseId': course.id}) }}" class="btn btn-primary">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            Retourner sur la liste
+        </a>
+        
+        <a href="{{ path('companycontact_edit', { 'courseId': course.id, 'id': companyContact.id }) }}" class="btn btn-primary">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            Modifier
+        </a>
+            
+        <a href="{{ path('companycontact_delete', { 'courseId': course.id, 'id': companyContact.id }) }}" class="btn btn-danger"> 
+            <i class="fa fa-times" aria-hidden="true"></i>
+            Supprimer
+        </a>
+    </div>
 {% endblock %}
