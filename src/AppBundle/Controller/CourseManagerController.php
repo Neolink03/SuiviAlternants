@@ -17,6 +17,8 @@ use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Forms\Types\Courses\EditCourseType;
 use AppBundle\Forms\Types\EmailMessageType;
+use AppBundle\Forms\Types\PromotionFormType;
+use AppBundle\Forms\Types\StudentsCsvType;
 use AppBundle\Forms\Types\UserType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -85,17 +87,9 @@ class CourseManagerController extends Controller
 
         $promotions ? $promotion = $promotions[0] : $promotion = null;
 
-        $promotionsForm = $this->createFormBuilder()
-            ->add('promotions', EntityType::class, [
-                'class' => Promotion::class,
-                'choices' => $promotions,
-                'choice_label' => function (Promotion $promotion) {
-                    return $promotion->getName();
-                },
-                'label' => 'Promotion'
-            ])
-            ->add('submit', SubmitType::class, ['label' => 'Choisir'])
-            ->getForm();
+        $promotionsForm = $this->createForm(PromotionFormType::class, null, [ "promotions" => $promotions ]);
+        $studentsCsvForm = $this->createForm(StudentsCsvType::class);
+
 
         if ($request->get('promotion')) {
             $promotion = $em->getRepository(Promotion::class)->find($request->get('promotion'));
@@ -103,18 +97,24 @@ class CourseManagerController extends Controller
         }
 
         if ($request->isMethod('post')) {
-
             $promotionsForm->handleRequest($request);
+            $studentsCsvForm->handleRequest($request);
 
             if ($promotionsForm->isSubmitted() && $promotionsForm->isValid()) {
                 $promotion = $em->getRepository(Promotion::class)->find($promotionsForm->getData()['promotions']->getId());
+            }
+
+            if($studentsCsvForm->isSubmitted() && $studentsCsvForm->isValid()){
+                dump($studentsCsvForm->getData());
+                die();
             }
         }
 
         return $this->render('@App/CourseManager/detailsCourse.html.twig', [
             'course' => $course,
             'promotion' => $promotion,
-            'promotionsForm' => $promotionsForm->createView()
+            'promotionsForm' => $promotionsForm->createView(),
+            'studentsCsvForm' => $studentsCsvForm->createView()
         ]);
     }
 
