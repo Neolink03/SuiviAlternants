@@ -71,7 +71,6 @@ class CompanyContactController extends Controller
      */
     public function editAction(Request $request, CompanyContact $companyContact, Course $course)
     {
-        $deleteForm = $this->createDeleteForm($course, $companyContact);
         $editForm = $this->createForm(CompanyContactType::class, $companyContact);
         $editForm->handleRequest($request);
 
@@ -87,7 +86,6 @@ class CompanyContactController extends Controller
         return $this->render('@App/companycontact/edit.html.twig', array(
             'companyContact' => $companyContact,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
             'course' => $course,
         ));
     }
