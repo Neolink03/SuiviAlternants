@@ -32,7 +32,6 @@ class AdminController extends Controller
     }
     
     public function createCourseAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(CourseCreateType::class, new CourseDto());
         
         if ($request->isMethod('post')) {
@@ -65,14 +64,12 @@ class AdminController extends Controller
     public function userAddAction(Request $request)
     {
         $adminNewUserDto = new AdminNewUserDto();
-
         $form = $this->createForm(AdminNewUserType::class,$adminNewUserDto);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->get('app.factory.user')->saveFromAdmin($adminNewUserDto);
-            //return $this->redirectToRoute('homepage');
+            $this->addFlash("success", "L'utilisateur a bien été créé.");
         }
 
         return $this->render('AppBundle:Admin:addUser.html.twig', [
