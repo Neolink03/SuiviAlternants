@@ -16,6 +16,7 @@ use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Forms\Types\Courses\EditCourseType;
+use AppBundle\Forms\Types\EmailMessageType;
 use AppBundle\Forms\Types\UserType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,7 +28,6 @@ class CourseManagerController extends Controller
 {
     public function courseManagerIndexAction()
     {
-
         $courseManager = $this->getUser();
         $courseManaged = $courseManager->getCourseManaged()->toArray();
         $courseCoManaged = $courseManager->getCourseCoManaged()->toArray();
@@ -205,10 +205,37 @@ class CourseManagerController extends Controller
     /**
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      */
-    public function sendMailAction(Promotion $promotion)
+    public function sendMailAction(Request $request, Promotion $promotion)
     {
+        $form = $this->createForm(EmailMessageType::class, null, array(
+            'applications' => $promotion->getApplications()->toArray()
+        ));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $mailRecipients = [];
+            foreach ($data['users'] as $key => $application){
+                $mailRecipients[] = $application->getStudent()->getEmail();
+            };
+
+            $swiftMail = $this->get('app.factory.swift_message')->create(
+                $data['object'],
+                "uneadresse@hotmail.com",
+                $mailRecipients,
+                "AppBundle:email:contact.html.twig",
+                array(
+                    "message" =>  $data['message']
+                )
+            );
+            $this->get('mailer')->send($swiftMail);
+            $this->addFlash("success", "Email envoyé à tous les destinataires");
+        }
+
         return $this->render('AppBundle:CourseManager:sendEmail.html.twig', [
-            'promotion' => $promotion
+            'promotion' => $promotion,
+            'form' => $form->createView()
         ]);
     }
 }
