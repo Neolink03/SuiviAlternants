@@ -33,9 +33,7 @@ class MenuBuilder
             $this->addMenuItem('Liste des étudiants', 'course_manager.students');
         }
         else if ($this->securityContext->isGranted('ROLE_STUDENT')) {
-            $this->menuItems = [
-                new MenuItem('Informations personnelles', 'student.showPersonalInformation')
-            ];
+            $this->addMenuItem('Informations personnelles', 'student.showPersonalInformation');
         }
     }
 

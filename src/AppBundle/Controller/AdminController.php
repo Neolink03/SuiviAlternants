@@ -12,7 +12,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
 use AppBundle\Forms\Types\AdminNewUserType;
-use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Models\AdminNewUserDto;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
