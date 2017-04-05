@@ -5,23 +5,25 @@
 {% block body %}
     <h1>Formations</h1>
     <hr>
+    <a href="{{ path('admin.course.add') }}" class="btn btn-success mb-3">
+        <i class="fa fa-plus" aria-hidden="true"></i> Ajouter une formation
+    </a>
     {% for course in courses %}
         <div class="card mb-4">
             <div class="card-header">
                 <h4 class="d-inline" style="line-height: inherit;">{{ course.name }}</h4>
+                <span><span class="badge badge-default ml-2 mr-1">{{ course.studentNumber }}</span>étudiants</span>
                 <a href="{{ path('course_manager.course', { 'courseId': course.id }) }}"
                    class="float-right btn btn-primary">Détails
                 </a>
+
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item border-top-0">
-                    Résponsable : {{ course.manager.firstname }} {{ course.manager.lastname }}
+                    Responsable : {{ course.manager.firstname }} {{ course.manager.lastname }}
                 </li>
                 <li class="list-group-item">
-                    Co-résponsable : {{ course.coManager.firstname }} {{ course.coManager.lastname }}
-                </li>
-                <li class="list-group-item">
-                    <span class="badge badge-default mr-1">{{ course.studentNumber }}</span>étudiants
+                    Co-responsable : {{ course.coManager.firstname }} {{ course.coManager.lastname }}
                 </li>
             </ul>
         </div>
