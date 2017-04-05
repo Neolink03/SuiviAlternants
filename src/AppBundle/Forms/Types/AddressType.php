@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class AddressType extends AbstractType
 {
@@ -23,7 +24,11 @@ class AddressType extends AbstractType
         $builder
             ->add('street', TextType::class, array('label' => 'Adresse'))
             ->add('city', TextType::class, array('label' => 'Ville'))
-            ->add('postalCode', IntegerType::class, array('label' => 'Code Postal'))
+            ->add('postalCode', IntegerType::class, array('label' => 'Code Postal', 'constraints' => array(new Regex(
+                    array(
+                        'pattern' => "/^[0-9][0-9][0-9][0-9][0-9]$/",
+                        'message' => 'Le code postal ne comporte pas 5 chiffres',)
+            ))))
             ->add('country', TextType::class, array('label' => 'Pays'))
         ;
     }

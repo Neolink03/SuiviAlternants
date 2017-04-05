@@ -47,6 +47,11 @@ class StudentController extends Controller
                     'success',
                     'Vos informations ont bien été mises a jour!'
                 );
+            }elseif($form->isSubmitted() && !$form->isValid()){
+                $this->addFlash(
+                    'danger',
+                    'Une ou plusieurs informations sont manquantes et/ou non valides    '
+                );
             }
         }
 
