@@ -9,7 +9,11 @@
     <div class="form-group">
         {{ form_start(form) }}
             {{ form_widget(form) }}
-            <input type="submit" value="Valider" class="btn btn-success"/>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-check" aria-hidden="true"></i> Valider
+                </button>   
+            </div>
         {{ form_end(form) }}
     </div>
 
