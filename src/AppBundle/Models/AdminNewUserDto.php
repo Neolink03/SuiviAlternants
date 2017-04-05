@@ -11,6 +11,7 @@ class AdminNewUserDto
     private $userType;
     private $user;
     private $phoneNumber;
+    private $password;
 
     public function getUserType()
     {
@@ -42,4 +43,12 @@ class AdminNewUserDto
         $this->phoneNumber = $phoneNumber;
     }
 
+    public function getPassword()
+    {
+        return $this->password;
+    }
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
 }

@@ -6,6 +6,7 @@
 namespace AppBundle\Services\Factories;
 
 
+use AppBundle\Entity\User;
 use AppBundle\Entity\User\CourseManager;
 use AppBundle\Entity\User\Jury;
 use AppBundle\Entity\User\Student;
@@ -21,45 +22,45 @@ class UserFactory
         $this->em = $em;
     }
 
-    public function saveFromAdmin(AdminNewUserDto $adminUserDto){
+    public function saveFromAdmin(AdminNewUserDto $adminUserDto) : User{
 
         switch ($adminUserDto->getUserType()){
             case "responsable":
-                $this->saveCourseManagerFromAdmin($adminUserDto);
-                break;
+                return $this->saveCourseManagerFromAdmin($adminUserDto);
             case "jury":
-                $this->saveJuryFromAdmin($adminUserDto);
-                break;
+                return $this->saveJuryFromAdmin($adminUserDto);
             default:
                 throw new \Exception("Le type d'utilisateur ". $adminUserDto->getUserType() ." n'existe pas.");
         }
     }
 
-    public function saveCourseManagerFromAdmin(AdminNewUserDto $adminUserDto){
+    public function saveCourseManagerFromAdmin(AdminNewUserDto $adminUserDto) : CourseManager{
         $courseManager = new CourseManager();
         $courseManager->setFirstName($adminUserDto->getUser()->getFirstName());
         $courseManager->setLastName($adminUserDto->getUser()->getLastName());
         $courseManager->setEmail($adminUserDto->getUser()->getEmail());
         $courseManager->setUsername($adminUserDto->getUser()->getEmail());
         $courseManager->setPhoneNumber($adminUserDto->getPhoneNumber());
-
-        $courseManager->setPlainPassword("FakePassword");
+        $courseManager->setPlainPassword($adminUserDto->getPassword());
 
         $this->em->persist($courseManager);
         $this->em->flush();
+
+        return $courseManager;
     }
 
-    public function saveJuryFromAdmin(AdminNewUserDto $adminUserDto){
+    public function saveJuryFromAdmin(AdminNewUserDto $adminUserDto) : Jury{
         $jury = new Jury();
         $jury->setFirstName($adminUserDto->getUser()->getFirstName());
         $jury->setLastName($adminUserDto->getUser()->getLastName());
         $jury->setEmail($adminUserDto->getUser()->getEmail());
         $jury->setUsername($adminUserDto->getUser()->getEmail());
-
-        $jury->setPlainPassword("FakePassword");
+        $jury->setPlainPassword($adminUserDto->getPassword());
 
         $this->em->persist($jury);
         $this->em->flush();
+
+        return $jury;
     }
 
     public function checkUser(Student $student){

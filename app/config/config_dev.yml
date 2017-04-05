@@ -35,3 +35,6 @@ monolog:
 
 twig:
     cache: false
+
+swiftmailer:
+    disable_delivery:  true
