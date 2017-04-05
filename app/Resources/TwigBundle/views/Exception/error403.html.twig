@@ -3,10 +3,18 @@
 {% block title %}Erreur 403 !{% endblock %}
 
 {% block body %}
-    <h1>Erreur 403 !</h1>
-    <div>
-        <p>Oups ! Vous n'avez pas les droits pour acceder à cette page ! Si vous voulez quand même y acceder il vous faut aller demander les droits. Sinon on ne peut rien faire pour vous.
-        En attendant si vous voulez retourner sur votre page d'accueil c'est par <a href="{{ path('homepage') }}">ICI !</a></p>
-
+    <div class="jumbotron">
+        <h1 class="display-3">Erreur 403 !</h1>
+        <p class="lead text-justify">
+            Oups ! Vous n'avez pas les droits d'accés à cette page !<br>
+            Si vous voulez quand même y accéder, il vous faut demander les droits. Sinon, on ne peut rien faire pour vous.
+        </p>
+        <hr class="my-4">
+        <p>En attendant, vous pouvez retourner sur votre page d'accueil.</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{{ path('homepage') }}" role="button">
+                <i class="fa fa-home" aria-hidden="true"></i> Acceuil
+            </a>
+        </p>
     </div>
 {% endblock %}
