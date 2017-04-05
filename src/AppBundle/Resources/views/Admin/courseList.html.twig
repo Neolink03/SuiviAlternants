@@ -22,9 +22,11 @@
                 <li class="list-group-item border-top-0">
                     Responsable : {{ course.manager.firstname }} {{ course.manager.lastname }}
                 </li>
-                <li class="list-group-item">
-                    Co-responsable : {{ course.coManager.firstname }} {{ course.coManager.lastname }}
-                </li>
+                {% if course.coManager %}
+                    <li class="list-group-item">
+                        Co-responsable : {{ course.coManager.firstname }} {{ course.coManager.lastname }}
+                    </li>
+                {% endif %}
             </ul>
         </div>
     {% endfor %}
