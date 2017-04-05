@@ -54,7 +54,7 @@ class CourseManagerController extends Controller
 
             if ($studentForm->isSubmitted() && $studentForm->isValid()) {
 
-                $student = $this->get('app.factory.user')->checkUser($studentForm->getData());
+                $student = $this->get('app.factory.user')->checkStudent($studentForm->getData());
                 //A modifier
                 $application = New Application();
                 $application->setPromotion($promotion);
