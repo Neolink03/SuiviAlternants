@@ -35,6 +35,11 @@
                class="btn btn-secondary">Ajouter un étudiant</a>
             <a href="{{ path('course_manager.mail.send', { 'promotionId': promotion.id }) }}"
                class="btn btn-secondary">Envoyer un e-mail</a>
+            {{ form_start(studentsCsvForm) }}
+            {{ form_widget(studentsCsvForm.file) }}
+            <input type="submit" value="Ajouter liste d'étudiants"
+                   class="btn btn-primary" />
+            {{ form_end(studentsCsvForm) }}
         </div>
 
         <h4>Liste des étudiants</h4>
