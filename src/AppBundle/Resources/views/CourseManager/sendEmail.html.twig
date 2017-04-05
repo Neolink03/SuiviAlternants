@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Ajouter un étudiant{% endblock %}
+
+{% block body %}
+    <h1>Envoyer e-mail</h1>
+    <hr>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Status</th>
+            <th>Selectionner</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for application in promotion.applications %}
+            <tr>
+                <td>{{  application.student.firstName }} {{  application.student.lastName }}</td>
+                {% if application.getLastStatusModification() %}
+                    <td>{{ application.getLastStatusModification().state.name }}</td>
+                    {% else %}
+                        <td>Il n'y a pas de latest status, ce qui n'est pas trop logique</td>
+                {% endif %}
+                <td>check</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

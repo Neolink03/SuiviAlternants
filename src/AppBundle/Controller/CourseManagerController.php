@@ -11,27 +11,29 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
-use AppBundle\Entity\StatusModification;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Forms\Types\Courses\EditCourseType;
 use AppBundle\Forms\Types\UserType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class CourseManagerController extends Controller
 {
-    public function courseManagerIndexAction(){
+    public function courseManagerIndexAction()
+    {
 
         $courseManager = $this->getUser();
         $courseManaged = $courseManager->getCourseManaged()->toArray();
         $courseCoManaged = $courseManager->getCourseCoManaged()->toArray();
         $allCourses = array_merge($courseManaged, $courseCoManaged);
 
-        return $this->render('AppBundle:CourseManager:home.html.twig',[
+        return $this->render('AppBundle:CourseManager:home.html.twig', [
             'coursesManaged' => $allCourses,
         ]);
     }
@@ -45,23 +47,20 @@ class CourseManagerController extends Controller
 
         $student = new Student();
         $studentForm = $this->createForm(UserType::class, $student);
-        $courseManager = $this->getUser();
 
         if ($request->isMethod('post')) {
 
             $studentForm->handleRequest($request);
 
             if ($studentForm->isSubmitted() && $studentForm->isValid()) {
-                $studentInformation = $studentForm->getData();
 
+                $student = $this->get('app.factory.user')->checkStudent($studentForm->getData());
                 //A modifier
                 $application = New Application();
                 $application->setPromotion($promotion);
-                $studentInformation->setUsername($studentInformation->getEmail());
-                $studentInformation->setPlainPassword("FakePassword");
-                $studentInformation->addApplication($application);
+                $student->addApplication($application);
 
-                $em->persist($studentInformation);
+                $em->persist($student);
                 $em->flush();
                 return $this->redirectToRoute('courseManager.home');
             }
@@ -73,14 +72,58 @@ class CourseManagerController extends Controller
         ]);
     }
 
-    public function editCourseAction(Request $request)
+    /**
+     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
+     */
+    public function detailsCourseAction(Request $request, Course $course)
     {
         $em = $this->getDoctrine()->getManager();
-        $course = $em->getRepository(Course::class)->find($request->get('courseId'));
-        if (!$course) {
-            $this->addFlash('danger', 'La formation est introuvable.');
-            // return $this->redirectToRoute(''); Redirect to CourseList
+        $promotions = $em->getRepository(Promotion::class)->findBy(
+            ['course' => $course],
+            ['id' => 'desc']
+        );
+
+        $promotions ? $promotion = $promotions[0] : $promotion = null;
+
+        $promotionsForm = $this->createFormBuilder()
+            ->add('promotions', EntityType::class, [
+                'class' => Promotion::class,
+                'choices' => $promotions,
+                'choice_label' => function (Promotion $promotion) {
+                    return $promotion->getName();
+                },
+                'label' => 'Promotion'
+            ])
+            ->add('submit', SubmitType::class, ['label' => 'Choisir'])
+            ->getForm();
+
+        if ($request->get('promotion')) {
+            $promotion = $em->getRepository(Promotion::class)->find($request->get('promotion'));
+            $promotionsForm->get('promotions')->setData($promotion);
         }
+
+        if ($request->isMethod('post')) {
+
+            $promotionsForm->handleRequest($request);
+
+            if ($promotionsForm->isSubmitted() && $promotionsForm->isValid()) {
+                $promotion = $em->getRepository(Promotion::class)->find($promotionsForm->getData()['promotions']->getId());
+            }
+        }
+
+        return $this->render('@App/CourseManager/detailsCourse.html.twig', [
+            'course' => $course,
+            'promotion' => $promotion,
+            'promotionsForm' => $promotionsForm->createView()
+        ]);
+    }
+
+    /**
+     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
+     */
+    public function editCourseAction(Request $request, Course $course)
+    {
+        $em = $this->getDoctrine()->getManager();
 
         $editCourseForm = $this->createForm(EditCourseType::class, $course);
         $addPromotionForm = $this->createForm(AddPromotionType::class);
@@ -111,7 +154,7 @@ class CourseManagerController extends Controller
         $transitions = $workflow->getEnabledTransitions($application);
 
         $stringTransitions = [];
-        foreach ($transitions as $index => $value){
+        foreach ($transitions as $index => $value) {
             $stringTransitions[$value->getName()] = $value;
         }
         $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $stringTransitions));
@@ -125,7 +168,7 @@ class CourseManagerController extends Controller
 
             $transitions = $workflow->getEnabledTransitions($application);
             $stringTransitions = [];
-            foreach ($transitions as $index => $value){
+            foreach ($transitions as $index => $value) {
                 $stringTransitions[$value->getName()] = $value;
             }
             $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $stringTransitions));
@@ -148,13 +191,24 @@ class CourseManagerController extends Controller
         return $this->redirectToRoute('course_manager.course.edit', ['courseId' => $courseId]); // Redirect to CourseList
     }
 
-    public function studentListAction(Request $request) {
+    public function studentListAction(Request $request)
+    {
         $students = $this->getDoctrine()->getManager()
-                                        ->getRepository(Student::class)
-                                        ->findAll();
-        
+            ->getRepository(Student::class)
+            ->findAll();
+
         return $this->render('AppBundle:Student:list.html.twig', [
             "students" => $students
+        ]);
+    }
+
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     */
+    public function sendMailAction(Promotion $promotion)
+    {
+        return $this->render('AppBundle:CourseManager:sendEmail.html.twig', [
+            'promotion' => $promotion
         ]);
     }
 }

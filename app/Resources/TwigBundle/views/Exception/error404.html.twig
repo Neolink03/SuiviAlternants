@@ -1,16 +1,16 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Erreur 403 !{% endblock %}
+{% block title %}Erreur 404 !{% endblock %}
 
 {% block body %}
     <div class="jumbotron">
-        <h1 class="display-3">Erreur 403 !</h1>
+        <h1 class="display-3">Erreur 404 !</h1>
         <p class="lead text-justify">
-            Oups ! Vous n'avez pas les droits d'accés à cette page !<br>
-            Si vous voulez quand même y accéder, il vous faut demander les droits. Sinon, on ne peut rien faire pour vous.
+            Désolé mais je crois que vous vous êtes perdu !<br>
+            Nous espérons que vous avez laissé des petits cailloux pour retrouver votre chemin.<br>
         </p>
         <hr class="my-4">
-        <p>En attendant, vous pouvez retourner sur votre page d'accueil.</p>
+        <p>Si vous n'y avez pas pensé, pas de panique, vous pouvez retourner à l'acceuil.</p>
         <p class="lead">
             <a class="btn btn-primary btn-lg" href="{{ path('homepage') }}" role="button">
                 <i class="fa fa-home" aria-hidden="true"></i> Acceuil

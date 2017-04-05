@@ -3,7 +3,7 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="/"><i class="fa fa-home" aria-hidden="true"></i></a>
+    <a class="navbar-brand" href="{{ path('homepage') }}"><i class="fa fa-home" aria-hidden="true"></i></a>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             {% for item in menuItems %}
@@ -18,7 +18,7 @@
                 <a class="nav-link">{{ app.user.firstName }} {{ app.user.lastName }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+                <a class="nav-link" href="{{ path('fos_user_security_logout') }}">Déconnexion <i class="fa fa-sign-out" aria-hidden="true"></i></a>
             </li>
         </ul>
     </div>

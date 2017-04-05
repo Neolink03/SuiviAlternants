@@ -8,8 +8,10 @@ namespace AppBundle\Services\Factories;
 
 use AppBundle\Entity\User\CourseManager;
 use AppBundle\Entity\User\Jury;
+use AppBundle\Entity\User\Student;
 use AppBundle\Models\AdminNewUserDto;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserFactory
 {
@@ -22,15 +24,25 @@ class UserFactory
 
     public function saveFromAdmin(AdminNewUserDto $adminUserDto){
 
-        switch ($adminUserDto->getUserType()){
-            case "responsable":
-                $this->saveCourseManagerFromAdmin($adminUserDto);
-                break;
-            case "jury":
-                $this->saveJuryFromAdmin($adminUserDto);
-                break;
-            default:
-                throw new \Exception("Le type d'utilisateur ". $adminUserDto->getUserType() ." n'existe pas.");
+        $session = new Session();
+
+        $managerDataBase = $this->em->getRepository(CourseManager::class)->findOneBy(array(
+            'email' => $adminUserDto->getUser()->getEmail()
+        ));
+
+        if(is_null($managerDataBase)){
+            switch ($adminUserDto->getUserType()){
+                case "responsable":
+                    $this->saveCourseManagerFromAdmin($adminUserDto);
+                    break;
+                case "jury":
+                    $this->saveJuryFromAdmin($adminUserDto);
+                    break;
+                default:
+                    throw new \Exception("Le type d'utilisateur ". $adminUserDto->getUserType() ." n'existe pas.");
+            }
+        }else{
+            $session->getFlashBag()->add("danger", "Cet email est déjà utilisé pour un autre utilisateur.");
         }
     }
 
@@ -59,5 +71,23 @@ class UserFactory
 
         $this->em->persist($jury);
         $this->em->flush();
+    }
+
+    public function checkStudent(Student $student){
+
+        $studentDataBase = $this->em->getRepository(Student::class)->findOneBy(array(
+            'email' => $student->getEmail()
+        ));
+
+        if(is_null($studentDataBase)){
+            $studentDataBase = $student;
+            $studentDataBase->setUsername($student->getEmail());
+            $studentDataBase->setPlainPassword("FakePassword");
+
+            $this->em->persist($studentDataBase);
+            $this->em->flush();
+        }
+
+        return $studentDataBase;
     }
 }
