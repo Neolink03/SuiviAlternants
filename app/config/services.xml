@@ -12,6 +12,10 @@
 
         <service id="app.factory.user" class="AppBundle\Services\Factories\UserFactory">
             <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="app.factory.swift_message"/>
+            <argument type="service" id="swiftmailer.mailer"/>
+            <argument type="service" id="session"/>
+            <argument type="service" id="app.password"/>
         </service>
         
         <service id="app.factory.course" class="AppBundle\Services\Factories\CourseFactory">
@@ -33,6 +37,13 @@
         <service id="app.application" class="AppBundle\Services\ApplicationService">
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
+
+        <service id="app.factory.swift_message" class="AppBundle\Services\Factories\SwiftMessageFactory">
+            <argument type="service" id="twig" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="app.password" class="AppBundle\Services\PasswordService" />
 
     </services>
 

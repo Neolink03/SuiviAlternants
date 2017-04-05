@@ -12,7 +12,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
 use AppBundle\Forms\Types\AdminNewUserType;
-use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Models\AdminNewUserDto;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -68,8 +67,9 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $plainpassword = $this->get('app.password')->generate();
+            $adminNewUserDto->setPassword($plainpassword);
             $this->get('app.factory.user')->saveFromAdmin($adminNewUserDto);
-            $this->addFlash("success", "L'utilisateur a bien été créé.");
         }
 
         return $this->render('AppBundle:Admin:addUser.html.twig', [
