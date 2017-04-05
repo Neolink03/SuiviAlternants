@@ -1,7 +1,7 @@
 <div class="card mb-4">
     <div class="card-header">
         <h4 class="d-inline" style="line-height: inherit;">{{ course.name }}</h4>
-        <span><span class="badge badge-default ml-2 mr-1">{{ course.studentNumber }}</span>étudiants</span>
+        <span><span class="badge badge-default ml-2 mr-1">{{ course.studentNumber }}</span>places</span>
         <a href="{{ path('course_manager.course', { 'courseId': course.id }) }}"
            class="float-right btn btn-primary">Détails
         </a>
