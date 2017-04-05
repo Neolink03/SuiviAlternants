@@ -3,15 +3,27 @@
 {% block title %}Liste des formations{% endblock %}
 
 {% block body %}
-    <h1>Liste des formations</h1>
-    <section id="accommodations">
-        {% for course in courses %}
-            <div class="row">
-                <div class="col-md-6">
-                    <strong><span>{{ course.name }}</span></strong>
-                    <p>Nombre d'étudiant : {{ course.studentNumber }}</p>
-                    </div>
+    <h1>Formations</h1>
+    <hr>
+    {% for course in courses %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="d-inline" style="line-height: inherit;">{{ course.name }}</h4>
+                <a href="{{ path('course_manager.course', { 'courseId': course.id }) }}"
+                   class="float-right btn btn-primary">Détails
+                </a>
             </div>
-        {% endfor %}
-    </section>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item border-top-0">
+                    Résponsable : {{ course.manager.firstname }} {{ course.manager.lastname }}
+                </li>
+                <li class="list-group-item">
+                    Co-résponsable : {{ course.coManager.firstname }} {{ course.coManager.lastname }}
+                </li>
+                <li class="list-group-item">
+                    <span class="badge badge-default mr-1">{{ course.studentNumber }}</span>étudiants
+                </li>
+            </ul>
+        </div>
+    {% endfor %}
 {% endblock %}
