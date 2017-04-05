@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Companycontacts list</h1>
+{% block title %}Liste des contacts entreprise{% endblock %}
 
-    <table class="table">
+{% block body %}
+    <h1>Liste des contacts entreprise</h1>
+    <hr />
+
+    <table class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th>Nom de la société</th>
@@ -25,5 +28,7 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('companycontact_new', {'courseId': course.id}) }}" class="btn btn-primary">Create a new companyContact</a>
+    <a href="{{ path('companycontact_new', {'courseId': course.id}) }}" class="btn btn-primary">
+        <i class="fa fa-plus" aria-hidden="true"></i> Ajouter un contact
+    </a>
 {% endblock %}
