@@ -28,13 +28,7 @@
         </tbody>
     </table>
 
-    <button class="btn btn-default">
-        <a href="{{ path('companycontact_index', {'courseId': course.id}) }}">Back to the list</a>
-    </button>
-    <button class="btn btn-default">
-        <a href="{{ path('companycontact_edit', { 'courseId': course.id, 'id': companyContact.id }) }}">Edit</a>
-    </button>
-    <button class="btn btn-default">
-        <a href="{{ path('companycontact_delete', { 'courseId': course.id, 'id': companyContact.id }) }}">Supprimer</a>
-    </button>
+    <a href="{{ path('companycontact_index', {'courseId': course.id}) }}" class="btn btn-primary">Back to the list</a>
+    <a href="{{ path('companycontact_edit', { 'courseId': course.id, 'id': companyContact.id }) }}" class="btn btn-primary">Edit</a>
+    <a href="{{ path('companycontact_delete', { 'courseId': course.id, 'id': companyContact.id }) }}" class="btn btn-primary">Supprimer</a>
 {% endblock %}

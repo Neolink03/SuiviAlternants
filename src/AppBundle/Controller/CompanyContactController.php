@@ -38,10 +38,12 @@ class CompanyContactController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $companyContact = $form->getData();
+            $companyContact->setCourse($course);
             $em->persist($companyContact);
             $em->flush();
 
-            return $this->redirectToRoute('companycontact_show', array('id' => $companyContact->getId()));
+            return $this->redirectToRoute('companycontact_show', array('courseId' => $course->getId(), 'id' => $companyContact->getId()));
         }
 
         return $this->render('AppBundle:companycontact:new.html.twig', array(
@@ -69,7 +71,7 @@ class CompanyContactController extends Controller
      */
     public function editAction(Request $request, CompanyContact $companyContact, Course $course)
     {
-        $deleteForm = $this->createDeleteForm($companyContact);
+        $deleteForm = $this->createDeleteForm($course, $companyContact);
         $editForm = $this->createForm(CompanyContactType::class, $companyContact);
         $editForm->handleRequest($request);
 
@@ -110,10 +112,10 @@ class CompanyContactController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(CompanyContact $companyContact)
+    private function createDeleteForm(Course $course, CompanyContact $companyContact)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('companycontact_delete', array('id' => $companyContact->getId())))
+            ->setAction($this->generateUrl('companycontact_delete', array('courseId' => $course->getId(), 'id' => $companyContact->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;
