@@ -10,6 +10,7 @@ namespace AppBundle\Forms\Types;
 
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,7 +23,7 @@ class StudentType extends AbstractType
             ->add('address', AddressType::class, array('required' => false))
             ->add('phone', TextType::class, array('label' => 'Téléphone fixe', 'required' => false))
             ->add('cellphone', TextType::class, array('label' => 'Téléphone portable', 'required' => false))
-            ->add('birthday', DateType::class, array('label' => 'Date de naissance', 'required' => false))
+            ->add('birthday', BirthdayType::class, array('label' => 'Date de naissance', 'required' => false))
         ;
     }
 
