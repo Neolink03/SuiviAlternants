@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1>Liste des formations</h1>
+    <a href="{{ path('admin.course.add') }}" class="btn btn-primary">Créer une formation</a>
     <section id="accommodations">
         {% for course in courses %}
             <div class="row">
