@@ -24,11 +24,9 @@ class AddressType extends AbstractType
         $builder
             ->add('street', TextType::class, array('label' => 'Adresse'))
             ->add('city', TextType::class, array('label' => 'Ville'))
-            ->add('postalCode', IntegerType::class, array('label' => 'Code Postal', 'constraints' => array(new Regex(
-                    array(
-                        'pattern' => "/^[0-9][0-9][0-9][0-9][0-9]$/",
-                        'message' => 'Le code postal ne comporte pas 5 chiffres',)
-            ))))
+            ->add('postalCode', IntegerType::class, array('label' => 'Code Postal', 'attr' => [
+                'min' => 0
+            ]))
             ->add('country', TextType::class, array('label' => 'Pays'))
         ;
     }
