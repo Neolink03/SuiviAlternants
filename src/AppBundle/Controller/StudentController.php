@@ -14,6 +14,7 @@ use AppBundle\Forms\Types\StudentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
 
@@ -29,7 +30,7 @@ class StudentController extends Controller
         ]);
     }
 
-    public function displayPersonalInformationsAction(Request $request){
+    public function displayPersonalInformationsAction(Request $request) {
 
         $student = $this->getUser();
         $form = $this->createForm(StudentType::class, $student);
@@ -47,7 +48,11 @@ class StudentController extends Controller
                     'success',
                     'Vos informations ont bien été mises a jour!'
                 );
-            }elseif($form->isSubmitted() && !$form->isValid()){
+                
+                return new RedirectResponse($this->generateUrl("student.home"));
+            }
+            
+            elseif ($form->isSubmitted() && !$form->isValid()){
                 $this->addFlash(
                     'danger',
                     'Une ou plusieurs informations sont manquantes et/ou non valides    '

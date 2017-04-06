@@ -4,6 +4,7 @@
         <field name="phone" type="string" column="phone" length="255" nullable="true"/>
         <field name="cellphone" type="string" column="cellphone" length="255" nullable="true"/>
         <field name="birthday" type="date" column="birthday" length="255" nullable="true"/>
+        <field name="professionnalSocialNetworkLink" type="string" nullable="true"/>
         <one-to-one field="address" target-entity="AppBundle\Entity\Address" >
             <cascade>
                 <cascade-persist/>
