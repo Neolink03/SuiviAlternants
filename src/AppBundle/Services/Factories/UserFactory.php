@@ -127,7 +127,7 @@ class UserFactory
 
             $this->mailer->send($swiftMessage);
         }
-
         return $studentDataBase;
     }
+
 }

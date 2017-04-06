@@ -23,6 +23,7 @@ use AppBundle\Forms\Types\UserType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -57,7 +58,7 @@ class CourseManagerController extends Controller
             if ($studentForm->isSubmitted() && $studentForm->isValid()) {
 
                 $student = $this->get('app.factory.user')->checkStudent($studentForm->getData());
-                //A modifier
+
                 $application = New Application();
                 $application->setPromotion($promotion);
                 $student->addApplication($application);
@@ -105,8 +106,24 @@ class CourseManagerController extends Controller
             }
 
             if($studentsCsvForm->isSubmitted() && $studentsCsvForm->isValid()){
-                dump($studentsCsvForm->getData());
-                die();
+                /** @var UploadedFile $file */
+                $file =$studentsCsvForm->getData()['file'];
+
+                $csvFile = file($file->getPathname());
+                foreach ($csvFile as $line) {
+                    $studentArray = explode(';', str_replace("\r\n",'', $line));
+                    $student = new Student();
+                    $student->setLastName($studentArray[0]);
+                    $student->setFirstName($studentArray[1]);
+                    $student->setEmail($studentArray[2]);
+                    $student = $this->get('app.factory.user')->checkStudent($student);
+
+                    $application = New Application();
+                    $application->setPromotion($promotion);
+                    $student->addApplication($application);
+                    $em->persist($student);
+                    $em->flush();
+                }
             }
         }
 
