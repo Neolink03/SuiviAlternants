@@ -12,12 +12,14 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\Promotion;
+use AppBundle\Entity\State;
 use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Forms\Types\Courses\EditCourseType;
 use AppBundle\Forms\Types\EmailMessageType;
 use AppBundle\Forms\Types\PromotionFormType;
+use AppBundle\Forms\Types\SearchStudentType;
 use AppBundle\Forms\Types\StudentsCsvType;
 use AppBundle\Forms\Types\UserType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -65,7 +67,7 @@ class CourseManagerController extends Controller
 
                 $em->persist($student);
                 $em->flush();
-                return $this->redirectToRoute('courseManager.home');
+                return $this->redirectToRoute('course_manager.course', ['courseId' => $promotion->getCourse()->getId()]);
             }
         }
 
@@ -88,9 +90,15 @@ class CourseManagerController extends Controller
 
         $promotions ? $promotion = $promotions[0] : $promotion = null;
 
-        $promotionsForm = $this->createForm(PromotionFormType::class, null, [ "promotions" => $promotions ]);
+        $promotionsForm = $this->createForm(PromotionFormType::class, null, ["promotions" => $promotions]);
+
         $studentsCsvForm = $this->createForm(StudentsCsvType::class);
 
+        $states = $em->getRepository(State::class)->findBy(
+            ['workflow' => $course->getWorkflow()]
+        );
+
+        $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
 
         if ($request->get('promotion')) {
             $promotion = $em->getRepository(Promotion::class)->find($request->get('promotion'));
@@ -105,9 +113,9 @@ class CourseManagerController extends Controller
                 $promotion = $em->getRepository(Promotion::class)->find($promotionsForm->getData()['promotions']->getId());
             }
 
-            if($studentsCsvForm->isSubmitted() && $studentsCsvForm->isValid()){
+            if ($studentsCsvForm->isSubmitted() && $studentsCsvForm->isValid()) {
                 /** @var UploadedFile $file */
-                $file =$studentsCsvForm->getData()['file'];
+                $file = $studentsCsvForm->getData()['file'];
                 $this->get('app.factory.user')->saveStudentsfromCsvFile($file->getPathname(), $promotion);
             }
         }
@@ -116,8 +124,14 @@ class CourseManagerController extends Controller
             'course' => $course,
             'promotion' => $promotion,
             'promotionsForm' => $promotionsForm->createView(),
-            'studentsCsvForm' => $studentsCsvForm->createView()
+            'studentsCsvForm' => $studentsCsvForm->createView(),
+            'searchForm' => $searchForm->createView()
         ]);
+    }
+
+    public function searchStudentAction(Request $request)
+    {
+        
     }
 
     /**
@@ -190,7 +204,7 @@ class CourseManagerController extends Controller
 
         $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
 
-        return $this->redirectToRoute('course_manager.course.edit', ['courseId' => $courseId]); // Redirect to CourseList
+        return $this->redirectToRoute('course_manager.course.edit', ['courseId' => $courseId]);
     }
 
     public function studentListAction(Request $request)
@@ -218,7 +232,7 @@ class CourseManagerController extends Controller
             $data = $form->getData();
 
             $mailRecipients = [];
-            foreach ($data['users'] as $key => $application){
+            foreach ($data['users'] as $key => $application) {
                 $mailRecipients[] = $application->getStudent()->getEmail();
             };
 
@@ -228,7 +242,7 @@ class CourseManagerController extends Controller
                 $mailRecipients,
                 "AppBundle:email:contact.html.twig",
                 array(
-                    "message" =>  $data['message']
+                    "message" => $data['message']
                 )
             );
             $this->get('mailer')->send($swiftMail);
