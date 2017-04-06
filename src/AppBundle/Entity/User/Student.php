@@ -15,6 +15,7 @@ class Student extends User
     private $cellphone;
     private $birthday;
     private $applications;
+    private $linkedinLink;
 
     public function __construct()
     {
@@ -80,6 +81,16 @@ class Student extends User
     public function setApplication($application)
     {
         $this->applications = $application;
+    }
+
+    public function getLinkedinLink()
+    {
+        return $this->linkedinLink;
+    }
+
+    public function setLinkedinLink($linkedinLink)
+    {
+        $this->linkedinLink = $linkedinLink;
     }
 
     public function addApplication(Application $application)
