@@ -22,8 +22,24 @@ class StudentType extends AbstractType
     {
         $builder
             ->add('address', AddressType::class, array('required' => false))
-            ->add('phone', TextType::class, array('label' => 'Téléphone fixe', 'required' => false))
-            ->add('cellphone', TextType::class, array('label' => 'Téléphone portable', 'required' => false))
+            ->add('phone', TextType::class, array(
+                'label' => 'Téléphone fixe',
+                'required' => false,
+                'constraints' => array(new Regex(
+                    array(
+                        'pattern' => "/^((0|\\(\\+33\\))[0-9]{9})?$/",
+                        'message' => 'Le numéro de téléphone doit être de format 0xxxxxxxxx ou (+33)xxxxxxxxx',)
+                ))
+            ))
+            ->add('cellphone', TextType::class, array(
+                'label' => 'Téléphone portable',
+                'required' => false,
+                'constraints' => array(new Regex(
+                    array(
+                        'pattern' => "/^(0|\\(\\+33\\))[0-9]{9}$/",
+                        'message' => 'Le numéro de téléphone doit être de format 0xxxxxxxxx ou (+33)xxxxxxxxx',)
+                ))
+            ))
             ->add('birthday', BirthdayType::class, array('label' => 'Date de naissance', 'required' => false))
         ;
     }

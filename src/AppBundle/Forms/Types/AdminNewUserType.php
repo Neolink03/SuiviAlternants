@@ -27,9 +27,10 @@ class AdminNewUserType extends AbstractType
         $builder->add('user', UserType::class);
         $builder->add('phoneNumber', TextType::class, array(
             'label' => "Numéro de téléphone",
-            'required' => false, 'constraints' => array(new Regex(
+            'required' => false,
+            'constraints' => array(new Regex(
                 array(
-                    'pattern' => "/^(0|\\(\\+33\\))[0-9]{9}$/",
+                    'pattern' => "/^((0|\\(\\+33\\))[0-9]{9})?$/",
                     'message' => 'Le numéro de téléphone doit être de format 0xxxxxxxxx ou (+33)xxxxxxxxx',)
             ))
         ));

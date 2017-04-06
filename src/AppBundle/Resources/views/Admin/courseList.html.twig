@@ -9,25 +9,6 @@
         <i class="fa fa-plus" aria-hidden="true"></i> Ajouter une formation
     </a>
     {% for course in courses %}
-        <div class="card mb-4">
-            <div class="card-header">
-                <h4 class="d-inline" style="line-height: inherit;">{{ course.name }}</h4>
-                <span><span class="badge badge-default ml-2 mr-1">{{ course.studentNumber }}</span>étudiants</span>
-                <a href="{{ path('course_manager.course', { 'courseId': course.id }) }}"
-                   class="float-right btn btn-primary">Détails
-                </a>
-
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item border-top-0">
-                    Responsable : {{ course.manager.firstname }} {{ course.manager.lastname }}
-                </li>
-                {% if course.coManager %}
-                    <li class="list-group-item">
-                        Co-responsable : {{ course.coManager.firstname }} {{ course.coManager.lastname }}
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
+        {% include "AppBundle:Course:show.html.twig" with {"courseId": course.id} %}
     {% endfor %}
 {% endblock %}
