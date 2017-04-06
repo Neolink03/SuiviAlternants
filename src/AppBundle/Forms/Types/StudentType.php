@@ -41,6 +41,7 @@ class StudentType extends AbstractType
                 ))
             ))
             ->add('birthday', BirthdayType::class, array('label' => 'Date de naissance', 'required' => false))
+            ->add('linkedinLink', TextType::class, array('label' => 'Lien Linkedin', 'required' => false))
         ;
     }
 
