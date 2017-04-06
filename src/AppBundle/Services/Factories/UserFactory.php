@@ -106,7 +106,7 @@ class UserFactory
         return $jury;
     }
 
-    public function checkStudent(Student $student){
+    public function getOrCreateStudentIfNotExist(Student $student){
 
         $studentDataBase = $this->em->getRepository(Student::class)->findOneBy(array(
             'email' => $student->getEmail()
@@ -147,28 +147,31 @@ class UserFactory
             $student->setLastName($studentArray[0]);
             $student->setFirstName($studentArray[1]);
             $student->setEmail($studentArray[2]);
-            $student = $this->checkStudent($student);
 
-            /*
-             * Set application with status modification
-             */
-            $application = New Application();
-            $statusModif = new StatusModification();
-            $statusModif->setApplication($application);
-            $statusModif->setComment("");
-            $statusModif->setDateTime(new \DateTime());
+            $student = $this->getOrCreateStudentIfNotExist($student);
+            $student = $this->createStudentApplicationFromPromotion($student, $promotion);
 
-            $state = $promotion->getCourse()->getWorkflow()->getFirstState();
-
-            $statusModif->setState($state);
-            $application->addStatusModification($statusModif);
-            $application->setCurrentState($state->getMachineName());
-
-            $application->setPromotion($promotion);
-            $student->addApplication($application);
             $this->em->persist($student);
         }
 
         $this->em->flush();
+    }
+
+    public function createStudentApplicationFromPromotion(Student $student, Promotion $promotion) : Student{
+        $application = New Application();
+        $statusModif = new StatusModification();
+        $statusModif->setApplication($application);
+        $statusModif->setComment("");
+        $statusModif->setDateTime(new \DateTime());
+
+        $state = $promotion->getCourse()->getWorkflow()->getFirstState();
+
+        $statusModif->setState($state);
+        $application->addStatusModification($statusModif);
+        $application->setCurrentState($state->getMachineName());
+
+        $application->setPromotion($promotion);
+        $student->addApplication($application);
+        return $student;
     }
 }
