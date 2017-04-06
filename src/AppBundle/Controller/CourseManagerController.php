@@ -57,12 +57,10 @@ class CourseManagerController extends Controller
 
             if ($studentForm->isSubmitted() && $studentForm->isValid()) {
 
-                $student = $this->get('app.factory.user')->checkStudent($studentForm->getData());
+                $userFactory = $this->get('app.factory.user');
 
-                $application = New Application();
-                $application->setPromotion($promotion);
-                $student->addApplication($application);
-
+                $student = $userFactory->getOrCreateStudentIfNotExist($student);
+                $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
                 $em->persist($student);
                 $em->flush();
                 return $this->redirectToRoute('courseManager.home');
