@@ -5,6 +5,9 @@
 
 namespace AppBundle\Services\Factories;
 
+use AppBundle\Entity\Application;
+use AppBundle\Entity\Promotion;
+use AppBundle\Entity\StatusModification;
 use AppBundle\Entity\User\CourseManager;
 use AppBundle\Entity\User\Jury;
 use AppBundle\Entity\User\Student;
@@ -21,7 +24,13 @@ class UserFactory
     private $mailer;
     private $session;
 
-    public function __construct(EntityManager $em, SwiftMessageFactory $swiftMessageFactory, \Swift_Mailer $mailer, Session $session, PasswordService $passwordService)
+    public function __construct(
+        EntityManager $em,
+        SwiftMessageFactory $swiftMessageFactory,
+        \Swift_Mailer $mailer,
+        Session $session,
+        PasswordService $passwordService
+    )
     {
         $this->em = $em;
         $this->swiftMessageFactory = $swiftMessageFactory;
@@ -127,7 +136,39 @@ class UserFactory
 
             $this->mailer->send($swiftMessage);
         }
-
         return $studentDataBase;
+    }
+
+    public function saveStudentsfromCsvFile(string $filePath, Promotion $promotion){
+        $csvFile = file($filePath);
+        foreach ($csvFile as $line) {
+            $studentArray = explode(';', str_replace("\r\n",'', $line));
+            $student = new Student();
+            $student->setLastName($studentArray[0]);
+            $student->setFirstName($studentArray[1]);
+            $student->setEmail($studentArray[2]);
+            $student = $this->checkStudent($student);
+
+            /*
+             * Set application with status modification
+             */
+            $application = New Application();
+            $statusModif = new StatusModification();
+            $statusModif->setApplication($application);
+            $statusModif->setComment("");
+            $statusModif->setDateTime(new \DateTime());
+
+            $state = $promotion->getCourse()->getWorkflow()->getFirstState();
+
+            $statusModif->setState($state);
+            $application->addStatusModification($statusModif);
+            $application->setCurrentState($state->getMachineName());
+
+            $application->setPromotion($promotion);
+            $student->addApplication($application);
+            $this->em->persist($student);
+        }
+
+        $this->em->flush();
     }
 }

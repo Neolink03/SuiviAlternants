@@ -52,6 +52,10 @@ class WorkFlow
         return $this;
     }
 
+    public function getFirstState(){
+        return $this->states->first();
+    }
+
     public function removeState(State $state)
     {
         $this->states->removeElement($state);
