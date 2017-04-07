@@ -40,10 +40,10 @@ class AdminController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 
                 $courseDto = $form->getData();
-                $this->get('app.factory.course')->saveNewCourse($courseDto);
-                $this->addFlash("success", "La formation a bien été créée.");
-                
-                return new RedirectResponse($this->generateUrl("admin.home"));
+                if($this->get('app.factory.course')->saveNewCourse($courseDto) == true){
+                    $this->addFlash("success", "La formation a bien été créée.");
+                    return new RedirectResponse($this->generateUrl("admin.home"));
+                }
             }
         }
         

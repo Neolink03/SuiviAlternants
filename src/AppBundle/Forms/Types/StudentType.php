@@ -11,7 +11,6 @@ namespace AppBundle\Forms\Types;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -41,7 +40,7 @@ class StudentType extends AbstractType
                 ))
             ))
             ->add('birthday', BirthdayType::class, array('label' => 'Date de naissance', 'required' => false))
-            ->add('linkedinLink', TextType::class, array('label' => 'Lien Linkedin', 'required' => false))
+            ->add('professionnalSocialNetworkLink', TextType::class, array('label' => 'Lien réseau social professionnel', 'required' => false))
         ;
     }
 

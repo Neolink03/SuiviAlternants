@@ -24,6 +24,7 @@
         
         <service id="app.factory.course" class="AppBundle\Services\Factories\CourseFactory">
             <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="session"/>
         </service>
 
         <service id="app.factory.promotion" class="AppBundle\Services\Factories\PromotionFactory">

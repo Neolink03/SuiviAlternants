@@ -13,24 +13,21 @@ use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
-use AppBundle\Entity\Transition;
 use AppBundle\Entity\User\Student;
-use AppBundle\Entity\WorkFlow;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
+use AppBundle\Forms\Types\CourseManagerType;
 use AppBundle\Forms\Types\Courses\EditCourseType;
 use AppBundle\Forms\Types\EmailMessageType;
 use AppBundle\Forms\Types\PromotionFormType;
+use AppBundle\Forms\Types\SearchStudentType;
 use AppBundle\Forms\Types\StudentsCsvType;
 use AppBundle\Forms\Types\UserType;
 use AppBundle\Forms\Types\WorkflowYmlType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Yaml\Yaml;
 
 class CourseManagerController extends Controller
 {
@@ -68,7 +65,7 @@ class CourseManagerController extends Controller
                 $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
                 $em->persist($student);
                 $em->flush();
-                return $this->redirectToRoute('courseManager.home');
+                return $this->redirectToRoute('course_manager.course', ['courseId' => $promotion->getCourse()->getId()]);
             }
         }
 
@@ -91,9 +88,15 @@ class CourseManagerController extends Controller
 
         $promotions ? $promotion = $promotions[0] : $promotion = null;
 
-        $promotionsForm = $this->createForm(PromotionFormType::class, null, [ "promotions" => $promotions ]);
+        $promotionsForm = $this->createForm(PromotionFormType::class, null, ["promotions" => $promotions]);
+
         $studentsCsvForm = $this->createForm(StudentsCsvType::class);
 
+        $states = $em->getRepository(State::class)->findBy(
+            ['workflow' => $course->getWorkflow()]
+        );
+
+        $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
 
         if ($request->get('promotion')) {
             $promotion = $em->getRepository(Promotion::class)->find($request->get('promotion'));
@@ -108,9 +111,9 @@ class CourseManagerController extends Controller
                 $promotion = $em->getRepository(Promotion::class)->find($promotionsForm->getData()['promotions']->getId());
             }
 
-            if($studentsCsvForm->isSubmitted() && $studentsCsvForm->isValid()){
+            if ($studentsCsvForm->isSubmitted() && $studentsCsvForm->isValid()) {
                 /** @var UploadedFile $file */
-                $file =$studentsCsvForm->getData()['file'];
+                $file = $studentsCsvForm->getData()['file'];
                 $this->get('app.factory.user')->saveStudentsfromCsvFile($file->getPathname(), $promotion);
             }
         }
@@ -119,8 +122,14 @@ class CourseManagerController extends Controller
             'course' => $course,
             'promotion' => $promotion,
             'promotionsForm' => $promotionsForm->createView(),
-            'studentsCsvForm' => $studentsCsvForm->createView()
+            'studentsCsvForm' => $studentsCsvForm->createView(),
+            'searchForm' => $searchForm->createView()
         ]);
+    }
+
+    public function searchStudentAction(Request $request)
+    {
+        
     }
 
     /**
@@ -193,7 +202,7 @@ class CourseManagerController extends Controller
 
         $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
 
-        return $this->redirectToRoute('course_manager.course.edit', ['courseId' => $courseId]); // Redirect to CourseList
+        return $this->redirectToRoute('course_manager.course.edit', ['courseId' => $courseId]);
     }
 
     public function studentListAction(Request $request)
@@ -221,7 +230,7 @@ class CourseManagerController extends Controller
             $data = $form->getData();
 
             $mailRecipients = [];
-            foreach ($data['users'] as $key => $application){
+            foreach ($data['users'] as $key => $application) {
                 $mailRecipients[] = $application->getStudent()->getEmail();
             };
 
@@ -231,7 +240,7 @@ class CourseManagerController extends Controller
                 $mailRecipients,
                 "AppBundle:email:contact.html.twig",
                 array(
-                    "message" =>  $data['message']
+                    "message" => $data['message']
                 )
             );
             $this->get('mailer')->send($swiftMail);
@@ -263,6 +272,37 @@ class CourseManagerController extends Controller
 
         return $this->render('AppBundle:CourseManager:addWorkflowFromYml.html.twig', [
             'form' => $form->createView()
+            ]);
+    }
+
+    public function displayPersonalInformationsAction(Request $request){
+
+        $courseManager = $this->getUser();
+        $form = $this->createForm(CourseManagerType::class, $courseManager, ['isDisabled' => true]);
+
+        if ($request->isMethod('post')) {
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($courseManager);
+                $em->flush();
+                $this->addFlash(
+                    'success',
+                    'Vos informations ont bien été mises a jour!'
+                );
+            }elseif($form->isSubmitted() && !$form->isValid()){
+                $this->addFlash(
+                    'danger',
+                    'Une ou plusieurs informations sont manquantes et/ou non valides    '
+                );
+            }
+        }
+
+        return $this->render('AppBundle:CourseManager:personalInformations.html.twig',[
+            'courseManager' => $form->createView(),
         ]);
     }
 }

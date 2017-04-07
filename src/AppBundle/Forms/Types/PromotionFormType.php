@@ -24,8 +24,7 @@ class PromotionFormType extends AbstractType
                 return $promotion->getName();
             },
             'label' => 'Promotion'
-        ])
-            ->add('submit', SubmitType::class, ['label' => 'Choisir']);
+        ])->add('submit', SubmitType::class, ['label' => 'Choisir']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

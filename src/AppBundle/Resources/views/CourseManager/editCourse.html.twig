@@ -4,7 +4,8 @@
 
 {% block body %}
     <h1>Editer formation</h1>
-    <div class="row col-12">
+    <hr>
+    <div class="row col-12 mb-4">
         {{ form_start(editCourseForm, { 'attr': { 'class': 'form-inline' } }) }}
         <div class="form-group {{ editCourseForm.name.vars.valid ?: 'has-danger' }}">
             {{ form_label(editCourseForm.name, null, { 'label_attr': { 'class': 'mr-sm-2' } }) }}
@@ -24,7 +25,8 @@
         {{ form_end(editCourseForm) }}
     </div>
 
-    <h1>Promotions</h1>
+    <h4>Promotions</h4>
+    <hr>
     <div class="row col-12">
         {{ form_start(addPromotionForm, { 'action': path('course_manager.promotion.add', { 'courseId': app.request.get('courseId') }), 'method': 'POST' }) }}
         <div class="form-group {{ addPromotionForm.name.vars.valid ?: 'has-danger' }}">
