@@ -23,9 +23,9 @@ class AdminNewUserType extends AbstractType
             ),
             'expanded' => true,
             'label' => "Type utilisateur"
-        ));
-        $builder->add('user', UserType::class);
-        $builder->add('phoneNumber', TextType::class, array(
+        ))
+        ->add('user', UserType::class, array('label' => ' '))
+        ->add('phoneNumber', TextType::class, array(
             'label' => "Numéro de téléphone",
             'required' => false,
             'constraints' => array(new Regex(

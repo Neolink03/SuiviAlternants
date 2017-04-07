@@ -32,6 +32,9 @@
         <default key="_controller">AppBundle:CourseManager:sendMail</default>
     </route>
 
+    <route id="course_manager.showPersonalInformation" path="/informations">
+        <default key="_controller">AppBundle:CourseManager:displayPersonalInformations</default>
+    </route>
 
     <route id="courseManager.home" path="">
         <default key="_controller">AppBundle:CourseManager:courseManagerIndex</default>

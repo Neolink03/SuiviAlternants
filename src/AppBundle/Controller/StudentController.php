@@ -33,7 +33,7 @@ class StudentController extends Controller
     public function displayPersonalInformationsAction(Request $request) {
 
         $student = $this->getUser();
-        $form = $this->createForm(StudentType::class, $student);
+        $form = $this->createForm(StudentType::class, $student, ['isDiabled' => true]);
 
         if ($request->isMethod('post')) {
 
