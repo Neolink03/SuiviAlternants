@@ -87,6 +87,7 @@ class CourseManagerController extends Controller
         );
 
         $promotions ? $promotion = $promotions[0] : $promotion = null;
+        $applications = $promotion->getApplications();
 
         $promotionsForm = $this->createForm(PromotionFormType::class, null, ["promotions" => $promotions]);
 
@@ -106,9 +107,11 @@ class CourseManagerController extends Controller
         if ($request->isMethod('post')) {
             $promotionsForm->handleRequest($request);
             $studentsCsvForm->handleRequest($request);
+            $searchForm->handleRequest($request);
 
             if ($promotionsForm->isSubmitted() && $promotionsForm->isValid()) {
                 $promotion = $em->getRepository(Promotion::class)->find($promotionsForm->getData()['promotions']->getId());
+                $applications = $promotion->getApplications();
             }
 
             if ($studentsCsvForm->isSubmitted() && $studentsCsvForm->isValid()) {
@@ -116,20 +119,20 @@ class CourseManagerController extends Controller
                 $file = $studentsCsvForm->getData()['file'];
                 $this->get('app.factory.user')->saveStudentsfromCsvFile($file->getPathname(), $promotion);
             }
+
+            if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+                $applications = $em->getRepository(Application::class)->findAllByFilters($searchForm->getData());
+            }
         }
 
         return $this->render('@App/CourseManager/detailsCourse.html.twig', [
             'course' => $course,
             'promotion' => $promotion,
+            'applications' => $applications,
             'promotionsForm' => $promotionsForm->createView(),
             'studentsCsvForm' => $studentsCsvForm->createView(),
             'searchForm' => $searchForm->createView()
         ]);
-    }
-
-    public function searchStudentAction(Request $request)
-    {
-        
     }
 
     /**

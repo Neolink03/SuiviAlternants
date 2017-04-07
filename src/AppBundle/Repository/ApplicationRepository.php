@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Application;
+
 /**
  * ApplicationRepository
  *
@@ -10,4 +12,39 @@ namespace AppBundle\Repository;
  */
 class ApplicationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllByFilters(array $data)
+    {
+        //dump($data['currentState']->getName()); die;
+
+        $parameters = [];
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('a')->from(Application::class, 'a')
+            ->andWhere('s.lastName LIKE :lastName')
+            ->andWhere('s.firstName LIKE :firstName')
+            ->andWhere('a.currentState LIKE :currentState')
+            ->join('a.student', 's');
+
+        $qb->setParameter('lastName', '%'.$data['lastName'].'%');
+        $qb->setParameter('firstName', '%'.$data['firstName'].'%');
+        $qb->setParameter('currentState', $data['currentState'] ? $data['currentState']->getMachineName() : '%%');
+
+        return $qb->getQuery()->getResult();
+
+        /*$parameters = array();
+
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('a')->from(Application::class, 'a');
+
+        foreach ($data as $key => $value) {
+            if (!is_null($data[$key])) {
+                $qb->andWhere('a.' . $key . ' = :' . $key);
+                $parameters[$key] = $data[$key];
+            }
+        }
+
+        $qb->setParameters($parameters);
+
+        return $qb->getQuery()->getResult();*/
+    }
 }
