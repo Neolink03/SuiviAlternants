@@ -57,7 +57,7 @@ class AdminController extends Controller
      * @ParamConverter("application")
      */
     public function dumpWorkflowAction(Request $request, Application $application){
-        $workflow = $this->get('app.factory.workflow')->generateWorflowFromApplication($application);
+        $this->get('app.factory.workflow')->generateWorflowFromApplication($application);
     }
 
     public function userAddAction(Request $request)

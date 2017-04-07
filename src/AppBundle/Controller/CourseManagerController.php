@@ -12,7 +12,10 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\Promotion;
+use AppBundle\Entity\State;
+use AppBundle\Entity\Transition;
 use AppBundle\Entity\User\Student;
+use AppBundle\Entity\WorkFlow;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Forms\Types\Courses\EditCourseType;
@@ -20,12 +23,14 @@ use AppBundle\Forms\Types\EmailMessageType;
 use AppBundle\Forms\Types\PromotionFormType;
 use AppBundle\Forms\Types\StudentsCsvType;
 use AppBundle\Forms\Types\UserType;
+use AppBundle\Forms\Types\WorkflowYmlType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Yaml\Yaml;
 
 class CourseManagerController extends Controller
 {
@@ -235,6 +240,28 @@ class CourseManagerController extends Controller
 
         return $this->render('AppBundle:CourseManager:sendEmail.html.twig', [
             'promotion' => $promotion,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
+     */
+    public function addWorkflowFromYmlAction(Course $course, Request $request){
+        $form = $this->createForm(WorkflowYmlType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file =$form->getData()['file'];
+            $this->get('app.factory.workflow.custom')->createAppWorflowFromYml($course, $file->getPathname());
+
+            $this->addFlash('success', 'La workflow a été ajouté à la formation');
+
+            return $this->redirectToRoute('course_manager.course', ['courseId' => $course->getId()]);
+
+        }
+
+        return $this->render('AppBundle:CourseManager:addWorkflowFromYml.html.twig', [
             'form' => $form->createView()
         ]);
     }

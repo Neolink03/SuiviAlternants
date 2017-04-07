@@ -32,6 +32,9 @@
         <default key="_controller">AppBundle:CourseManager:sendMail</default>
     </route>
 
+    <route id="course_manager.workflow.add" path="/course/{courseId}/workflow/add">
+        <default key="_controller">AppBundle:CourseManager:addWorkflowFromYml</default>
+    </route>
 
     <route id="courseManager.home" path="">
         <default key="_controller">AppBundle:CourseManager:courseManagerIndex</default>
