@@ -30,6 +30,7 @@ class MenuBuilder
         } 
         else if ($this->securityContext->isGranted('ROLE_MANAGER')) {
             $this->addMenuItem('Liste des étudiants', 'course_manager.students');
+            $this->addMenuItem('Informations personnelles', 'course_manager.showPersonalInformation');
         }
         else if ($this->securityContext->isGranted('ROLE_STUDENT')) {
             $this->addMenuItem('Informations personnelles', 'student.showPersonalInformation');

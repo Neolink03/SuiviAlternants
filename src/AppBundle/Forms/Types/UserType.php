@@ -21,15 +21,15 @@ class UserType extends AbstractType
     {
         $builder->add('firstName', TextType::class, array(
             'label' => "Prénom",
-            'disabled' => false,
+            'disabled' => $options['isDisabled'],
         ));
         $builder->add('lastName', TextType::class, array(
             'label' => "Nom",
-            'disabled' => false,
+            'disabled' => $options['isDisabled'],
         ));
         $builder->add('email', EmailType::class, array(
             'label' => "E-mail",
-            'disabled' => false,
+            'disabled' => $options['isDisabled'],
         ));
     }
 
@@ -37,6 +37,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => User::class,
+            'isDisabled' => false
         ));
     }
 

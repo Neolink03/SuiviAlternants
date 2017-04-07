@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Add workflow{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form.file) }}
+    <input type="submit" value="Ajouter le workflow"
+           class="btn btn-primary" />
+    {{ form_end(form) }}
+{% endblock %}
