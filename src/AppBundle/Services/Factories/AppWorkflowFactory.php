@@ -32,17 +32,15 @@ class AppWorkflowFactory
         foreach ($states as $state){
             $stateEntity = new State();
             $stateEntity->setName($state["name"]);
-            $stateEntity->setMachineName($state["machineName"]);
             $workflow->addState($stateEntity);
-            $stateDictionary[$state["machineName"]] = $stateEntity;
+            $stateDictionary[$state["name"]] = $stateEntity;
         }
 
         foreach ($transitions as $transition){
             $transitionEntity = new Transition();
             $transitionEntity->setName($transition["name"]);
-            $transitionEntity->setMachineName($transition["machineName"]);
-            $transitionEntity->setStartState($stateDictionary[$transition["startStateMachineName"]]);
-            $transitionEntity->setEndState($stateDictionary[$transition["endStateMachineName"]]);
+            $transitionEntity->setStartState($stateDictionary[$transition["startStateName"]]);
+            $transitionEntity->setEndState($stateDictionary[$transition["endStateName"]]);
 
             $workflow->addTransition($transitionEntity);
         }

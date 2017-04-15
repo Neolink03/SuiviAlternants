@@ -14,32 +14,24 @@ Example de format d'import d'un workflow yml :
 
 ```yaml
 states:
-     - name: Dossier
-       machineName : dossier
+     - name: Dossiér
      - name: En attente
-       machineName : attente
      - name: Etude
-       machineName : etude
  
 transitions:
      - name: Complet
-       machineName : complet
-       startStateMachineName : dossier
-       endStateMachineName : etude
+       startStateName : Dossiér
+       endStateName : Etude
      - name: Incomplet
-       machineName : incomplet
-       startStateMachineName : dossier
-       endStateMachineName : attente
+       startStateName : Dossiér
+       endStateName : En attente
      - name: Relance
-       machineName : relance
-       startStateMachineName : attente
-       endStateMachineName : attente
+       startStateName : En attente
+       endStateName : En attente
      - name: Complet
-       machineName : completfromattente
-       startStateMachineName : attente
-       endStateMachineName : etude
+       startStateName : En attente
+       endStateName : Etude
 ```
 
 nb:
-- Les machines name ne doivent contenir que des lettres en miniscule et aucun espace.
-- startStateMachineName et endStateMachineName doivent être un machineName donné à un état précédemment
+- startStateName et endStateName doivent être un name donné à un état précédemment
