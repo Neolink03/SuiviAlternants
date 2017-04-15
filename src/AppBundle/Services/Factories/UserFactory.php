@@ -164,7 +164,7 @@ class UserFactory
         $statusModif->setComment("");
         $statusModif->setDateTime(new \DateTime());
 
-        $state = $promotion->getCourse()->getWorkflow()->getFirstState();
+        $state = $promotion->getWorkflow()->getFirstState();
 
         $statusModif->setState($state);
         $application->addStatusModification($statusModif);

@@ -94,7 +94,7 @@ class CourseManagerController extends Controller
         $studentsCsvForm = $this->createForm(StudentsCsvType::class);
 
         $states = $em->getRepository(State::class)->findBy(
-            ['workflow' => $course->getWorkflow()]
+            ['workflow' => $promotion->getWorkflow()]
         );
 
         $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);

@@ -26,7 +26,7 @@ class WorkflowFactory
 
     public function generateWorflowFromApplication(Application $application) : Workflow{
 
-        $workflow = $application->getPromotion()->getCourse()->getWorkflow();
+        $workflow = $application->getPromotion()->getWorkflow();
 
         $builder = new DefinitionBuilder();
 

@@ -42,7 +42,7 @@ class ApplicationService
     private function getStateFromString(Application $application, string $stateString){
         $state = $this->em->getRepository(State::class)->findOneBy(
             array(
-                'workflow' => $application->getPromotion()->getCourse()->getWorkflow(),
+                'workflow' => $application->getPromotion()->getWorkflow(),
                 'machineName' => $stateString
                 )
         );
