@@ -37,7 +37,8 @@
         </div>
 
         {% if promotion.workflow %}
-            Workflow existant -> lien modification
+            <a href="{{ path('course_manager.promotion.workflow.edit', { 'promotionId': promotion.id }) }}"
+               class="btn btn-secondary">Modifier le workflow</a>
             <div class="mb-4">
                 <a href="{{ path('course_manager.student.add', { 'promotionId': promotion.id }) }}"
                    class="btn btn-secondary">Ajouter un étudiant</a>
@@ -87,7 +88,9 @@
                 {% endfor %}
             </table>
         {% else %}
-            Pas de workflow -> lien de création
+            Aucun workflow existant pour cette promotion.
+            <a href="{{ path('course_manager.promotion.workflow.add', { 'promotionId': promotion.id }) }}"
+               class="btn btn-secondary">Ajouter un workflow</a>
         {% endif %}
     {% else %}
         <a href="{{ path('course_manager.course.edit', { 'courseId': course.id }) }}" class="btn btn-success">

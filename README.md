@@ -21,7 +21,7 @@ states:
      - name: Etude
        machineName : etude
  
- transitions:
+transitions:
      - name: Complet
        machineName : complet
        startStateMachineName : dossier

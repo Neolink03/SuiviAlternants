@@ -3,9 +3,21 @@
 {% block title %}Add workflow{% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_widget(form.file) }}
-    <input type="submit" value="Ajouter le workflow"
-           class="btn btn-primary" />
-    {{ form_end(form) }}
+    <h2>Ajout d'un worflow</h2>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Depuis un fichier au format yml</h3>
+            {{ form_start(form) }}
+            {{ form_widget(form.file) }}
+            <input type="submit" value="Ajouter le workflow"
+                   class="btn btn-primary" />
+            {{ form_end(form) }}
+        </div>
+        <div class="col-sm-6">
+            <h3>A partir de rien</h3>
+            <a href=""
+               class="btn btn-primary">Créer</a>
+        </div>
+    </div>
 {% endblock %}

@@ -23,6 +23,7 @@ use AppBundle\Forms\Types\PromotionFormType;
 use AppBundle\Forms\Types\SearchStudentType;
 use AppBundle\Forms\Types\StudentsCsvType;
 use AppBundle\Forms\Types\UserType;
+use AppBundle\Forms\Types\Workflow\StateType;
 use AppBundle\Forms\Types\WorkflowYmlType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -257,25 +258,68 @@ class CourseManagerController extends Controller
     }
 
     /**
-     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      */
-    public function addWorkflowFromYmlAction(Course $course, Request $request){
+    public function addApplicationWorkflowAction(Promotion $promotion, Request $request)
+    {
         $form = $this->createForm(WorkflowYmlType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $file =$form->getData()['file'];
-            $this->get('app.factory.workflow.custom')->createAppWorflowFromYml($course, $file->getPathname());
+            $file = $form->getData()['file'];
+            $this->get('app.factory.workflow.custom')->createAppWorflowFromYml($promotion, $file->getPathname());
 
             $this->addFlash('success', 'La workflow a été ajouté à la formation');
 
-            return $this->redirectToRoute('course_manager.course', ['courseId' => $course->getId()]);
-
+            return $this->redirectToRoute('course_manager.promotion.workflow.edit', [
+                'promotionId' => $promotion->getId()
+            ]);
         }
 
         return $this->render('AppBundle:CourseManager:addWorkflowFromYml.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     */
+    public function editApplicationWorkflowAction(Request $request, Promotion $promotion)
+    {
+        $state = new State();
+        $form = $this->createForm(StateType::class, $state);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $state->setWorkflow($promotion->getWorkflow());
+            $em->persist($state);
+            $em->flush();
+            $this->addFlash('success', 'L\'état à était ajouté au workflow');
+            $referer = $request->headers->get('referer');
+            return $this->redirect($referer);
+        }
+
+        return $this->render('AppBundle:CourseManager:editWorkflow.html.twig',
+            [
+                'promotion' => $promotion,
+                'formState' => $form->createView()
             ]);
+    }
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     * @ParamConverter("state", options={"mapping": {"stateId" : "id"}})
+     */
+    public function deleteStateWorkflowAction(Request $request ,Promotion $promotion, State $state)
+    {
+        $em =$this->getDoctrine()->getManager();
+        $promotion->getWorkflow()->removeState($state);
+        $em->persist($promotion);
+        $em->flush();
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 
     public function displayPersonalInformationsAction(Request $request){
@@ -308,4 +352,7 @@ class CourseManagerController extends Controller
             'courseManager' => $form->createView(),
         ]);
     }
+
+
+
 }

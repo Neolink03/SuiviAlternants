@@ -32,8 +32,16 @@
         <default key="_controller">AppBundle:CourseManager:sendMail</default>
     </route>
 
-    <route id="course_manager.workflow.add" path="/course/{courseId}/workflow/add">
-        <default key="_controller">AppBundle:CourseManager:addWorkflowFromYml</default>
+    <route id="course_manager.promotion.workflow.add" path="/promotion/{promotionId}/workflow/add">
+        <default key="_controller">AppBundle:CourseManager:addApplicationWorkflow</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.edit" path="/promotion/{promotionId}/workflow/edit">
+        <default key="_controller">AppBundle:CourseManager:editApplicationWorkflow</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.state.delete" path="/promotion/{promotionId}/workflow/state/{stateId}/delete">
+        <default key="_controller">AppBundle:CourseManager:deleteStateWorkflow</default>
     </route>
 
     <route id="course_manager.showPersonalInformation" path="/informations">

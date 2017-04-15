@@ -7,6 +7,7 @@ namespace AppBundle\Services\Factories;
 
 
 use AppBundle\Entity\Course;
+use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
 use AppBundle\Entity\Transition;
 use AppBundle\Entity\WorkFlow;
@@ -22,7 +23,7 @@ class AppWorkflowFactory
         $this->em = $em;
     }
 
-    public function createAppWorflowFromYml(Course $course, string $workflowYmlPath){
+    public function createAppWorflowFromYml(Promotion $promotion, string $workflowYmlPath){
         $stateDictionary = [];
         list($states, $transitions) =array_values(Yaml::parse(file_get_contents($workflowYmlPath)));
 
@@ -46,7 +47,7 @@ class AppWorkflowFactory
             $workflow->addTransition($transitionEntity);
         }
 
-        $workflow->setCourse($course);
+        $workflow->setPromotion($promotion);
 
         $this->em->persist($workflow);
         $this->em->flush();
