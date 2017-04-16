@@ -9,6 +9,7 @@
         Exporter le workflow
     </a>
     <h2>Modification du workflow</h2>
+    <div id="workflow" style="display: none">{{ workflowDump }}</div>
     <div>
         <h3>Etats</h3>
         <ul>
@@ -78,4 +79,10 @@
         {{ form_end(formTransition) }}
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/viz.js') }}"></script>
+    <script src="{{ asset('js/workflowDisplay.js') }}"></script>
 {% endblock %}

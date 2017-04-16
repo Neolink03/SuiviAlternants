@@ -15,6 +15,7 @@ use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
 use AppBundle\Entity\Transition;
 use AppBundle\Entity\User\Student;
+use AppBundle\Entity\WorkFlow;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Forms\Types\CourseManagerType;
@@ -286,9 +287,28 @@ class CourseManagerController extends Controller
         }
 
         return $this->render('AppBundle:CourseManager:addWorkflowFromYml.html.twig', [
+            'promotion' => $promotion,
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     */
+    public function addApplicationWorkflowFromNothingAction(Promotion $promotion, Request $request)
+    {
+        $workflow = new WorkFlow();
+        $workflow->setPromotion($promotion);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($workflow);
+        $em->flush();
+
+        return $this->redirectToRoute('course_manager.promotion.workflow.edit', [
+            'promotionId' => $promotion->getId()
+        ]);
+    }
+
 
     /**
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
@@ -327,6 +347,7 @@ class CourseManagerController extends Controller
 
         return $this->render('AppBundle:CourseManager:editWorkflow.html.twig',
             [
+                'workflowDump' => $this->get('app.factory.workflow')->dumpWorflowFromPromotion($promotion),
                 'promotion' => $promotion,
                 'formState' => $formState->createView(),
                 'formTransition' => $formTransition->createView()

@@ -36,6 +36,10 @@
         <default key="_controller">AppBundle:CourseManager:addApplicationWorkflow</default>
     </route>
 
+    <route id="course_manager.promotion.workflow.create" path="/promotion/{promotionId}/workflow/create">
+        <default key="_controller">AppBundle:CourseManager:addApplicationWorkflowFromNothing</default>
+    </route>
+
     <route id="course_manager.promotion.workflow.edit" path="/promotion/{promotionId}/workflow/edit">
         <default key="_controller">AppBundle:CourseManager:editApplicationWorkflow</default>
     </route>
