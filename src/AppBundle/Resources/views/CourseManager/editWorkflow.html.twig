@@ -40,7 +40,7 @@
         {{ form_start(formState) }}
         {{ form_widget(formState) }}
         <input type="submit" value="Ajouter cet état" class="btn btn-primary">
-        {{ form_rest(formState) }}
+        {{ form_end(formState) }}
     </div>
 
     <div>
@@ -71,6 +71,11 @@
                 </tr>
             {% endfor %}
         </table>
+
+        {{ form_start(formTransition) }}
+        {{ form_widget(formTransition) }}
+        <input type="submit" value="Ajouter cette transition" class="btn btn-primary">
+        {{ form_end(formTransition) }}
     </div>
 
 {% endblock %}

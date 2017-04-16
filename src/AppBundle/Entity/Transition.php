@@ -34,7 +34,7 @@ class Transition
         return $this;
     }
 
-    public function getName() : string
+    public function getName()
     {
         return $this->name;
     }
@@ -46,13 +46,13 @@ class Transition
         return $this;
     }
 
-    public function getMachineName() : string
+    public function getMachineName()
     {
         return $this->machineName;
     }
 
 
-    public function getStartState() : State
+    public function getStartState()
     {
         return $this->startState;
     }
@@ -63,7 +63,7 @@ class Transition
         $this->startState = $startState;
     }
 
-    public function getEndState() : State
+    public function getEndState()
     {
         return $this->endState;
     }

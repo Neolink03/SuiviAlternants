@@ -15,9 +15,6 @@ class StateType extends AbstractType
         $builder
             ->add('name', TextType::class, array(
                 'label' => "Nom de l'état"
-            ))
-            ->add('machineName', TextType::class, array(
-                'label' => "Nom du machine name"
             ));
     }
 }

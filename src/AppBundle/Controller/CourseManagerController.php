@@ -13,6 +13,7 @@ use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
+use AppBundle\Entity\Transition;
 use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
@@ -24,6 +25,7 @@ use AppBundle\Forms\Types\SearchStudentType;
 use AppBundle\Forms\Types\StudentsCsvType;
 use AppBundle\Forms\Types\UserType;
 use AppBundle\Forms\Types\Workflow\StateType;
+use AppBundle\Forms\Types\Workflow\TransitionType;
 use AppBundle\Forms\Types\WorkflowYmlType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -294,25 +296,40 @@ class CourseManagerController extends Controller
     public function editApplicationWorkflowAction(Request $request, Promotion $promotion)
     {
         $state = new State();
-        $form = $this->createForm(StateType::class, $state);
-        $form->handleRequest($request);
+        $transition = new Transition();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+        $formState = $this->createForm(StateType::class, $state);
+        $formTransition = $this->createForm(TransitionType::class, $transition, array(
+            'states' => $promotion->getWorkflow()->getStates()
+        ));
 
+        $formState->handleRequest($request);
+        $formTransition->handleRequest($request);
+
+        $referer = $request->headers->get('referer');
+        if ($formState->isSubmitted() && $formState->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $state->setWorkflow($promotion->getWorkflow());
             $em->persist($state);
             $em->flush();
-            $this->addFlash('success', 'L\'état à était ajouté au workflow');
-            $referer = $request->headers->get('referer');
+            $this->addFlash('success', 'L\'état a été ajouté au workflow');
+            return $this->redirect($referer);
+        }
+
+        if ($formTransition->isSubmitted() && $formTransition->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $transition->setWorkflow($promotion->getWorkflow());
+            $em->persist($transition);
+            $em->flush();
+            $this->addFlash('success', 'La transition a été ajoutée au workflow');
             return $this->redirect($referer);
         }
 
         return $this->render('AppBundle:CourseManager:editWorkflow.html.twig',
             [
                 'promotion' => $promotion,
-                'formState' => $form->createView()
+                'formState' => $formState->createView(),
+                'formTransition' => $formTransition->createView()
             ]);
     }
 
