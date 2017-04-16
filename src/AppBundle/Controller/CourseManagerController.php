@@ -29,6 +29,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\YamlEncoder;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\XmlFileLoader;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class CourseManagerController extends Controller
 {
@@ -280,6 +287,7 @@ class CourseManagerController extends Controller
             'form' => $form->createView()
         ]);
     }
+
     /**
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      */
@@ -307,6 +315,21 @@ class CourseManagerController extends Controller
                 'formState' => $form->createView()
             ]);
     }
+
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     */
+    public function exportApplicationWorkflowAction(Request $request, Promotion $promotion)
+    {
+        $serializer = $this->get('jms_serializer');
+        $data = $serializer->serialize($promotion->getWorkflow(), 'yml');
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/yaml');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $promotion->getCourse()->getName() . '.yml";');
+        return $response;
+    }
+
     /**
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      * @ParamConverter("state", options={"mapping": {"stateId" : "id"}})

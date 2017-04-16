@@ -40,9 +40,14 @@
         <default key="_controller">AppBundle:CourseManager:editApplicationWorkflow</default>
     </route>
 
+    <route id="course_manager.promotion.workflow.export" path="/promotion/{promotionId}/workflow/export">
+        <default key="_controller">AppBundle:CourseManager:exportApplicationWorkflow</default>
+    </route>
+
     <route id="course_manager.promotion.workflow.state.delete" path="/promotion/{promotionId}/workflow/state/{stateId}/delete">
         <default key="_controller">AppBundle:CourseManager:deleteStateWorkflow</default>
     </route>
+
 
     <route id="course_manager.showPersonalInformation" path="/informations">
         <default key="_controller">AppBundle:CourseManager:displayPersonalInformations</default>

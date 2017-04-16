@@ -3,6 +3,11 @@
 {% block title %}Edit workflow{% endblock %}
 
 {% block body %}
+    <a href="{{ path('course_manager.promotion.workflow.export',
+    { 'promotionId': promotion.id }) }}" class="btn btn-secondary pull-right">
+        <i class="fa fa-download" aria-hidden="true"></i>
+        Exporter le workflow
+    </a>
     <h2>Modification du workflow</h2>
     <div>
         <h3>Etats</h3>

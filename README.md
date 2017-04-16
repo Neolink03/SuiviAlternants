@@ -14,23 +14,38 @@ Example de format d'import d'un workflow yml :
 
 ```yaml
 states:
-     - name: Dossiér
-     - name: En attente
-     - name: Etude
- 
+    -
+        name: 'Dossiér'
+    -
+        name: 'En attente'
+    -
+        name: 'Etude'
+         
 transitions:
-     - name: Complet
-       startStateName : Dossiér
-       endStateName : Etude
-     - name: Incomplet
-       startStateName : Dossiér
-       endStateName : En attente
-     - name: Relance
-       startStateName : En attente
-       endStateName : En attente
-     - name: Complet
-       startStateName : En attente
-       endStateName : Etude
+    -
+        name: 'Complet'
+        startStateName:
+            name: 'Dossiér'
+        endStateName:
+            name: 'Etude'
+    -
+        name: 'Incomplet'
+        startStateName:
+            name: 'Dossiér'
+        endStateName:
+            name: 'En attente'
+    -
+        name: 'Relance'
+        startStateName:
+            name: 'En attente'
+        endStateName:
+            name: 'En attente'
+    -
+        name: 'Complet'
+        startStateName:
+            name: 'En attente'
+        endStateName:
+            name: 'Etude'
 ```
 
 nb:

@@ -2,13 +2,23 @@
 
 namespace AppBundle\Entity;
 
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\SerializedName;
+
 class Transition
 {
+    /** @Exclude */
     private $id;
+    /** @Exclude */
     private $workflow;
     private $name;
+    /** @Exclude */
     private $machineName;
+    /**
+     * @SerializedName("startStateName")
+     */
     private $startState;
+    /** @SerializedName("endStateName") */
     private $endState;
 
 

@@ -39,12 +39,10 @@ class AppWorkflowFactory
         foreach ($transitions as $transition){
             $transitionEntity = new Transition();
             $transitionEntity->setName($transition["name"]);
-            $transitionEntity->setStartState($stateDictionary[$transition["startStateName"]]);
-            $transitionEntity->setEndState($stateDictionary[$transition["endStateName"]]);
-
+            $transitionEntity->setStartState($stateDictionary[$transition["startStateName"]["name"]]);
+            $transitionEntity->setEndState($stateDictionary[$transition["endStateName"]["name"]]);
             $workflow->addTransition($transitionEntity);
         }
-
         $workflow->setPromotion($promotion);
 
         $this->em->persist($workflow);

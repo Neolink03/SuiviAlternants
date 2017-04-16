@@ -3,13 +3,16 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * WorkFlow
  */
 class WorkFlow
 {
+    /** @Exclude */
     private $id;
+    /** @Exclude */
     private $promotion;
     private $states;
     private $transitions;
