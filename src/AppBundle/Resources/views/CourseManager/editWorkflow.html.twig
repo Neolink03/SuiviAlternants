@@ -1,82 +1,130 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Edit workflow{% endblock %}
+{% block title %}Modification du workflow{% endblock %}
 
 {% block body %}
-    <a href="{{ path('course_manager.promotion.workflow.export',
-    { 'promotionId': promotion.id }) }}" class="btn btn-secondary pull-right">
-        <i class="fa fa-download" aria-hidden="true"></i>
-        Exporter le workflow
+    <a href="{{ path('course_manager.promotion.workflow.export', { 'promotionId': promotion.id }) }}"
+       class="btn btn-secondary pull-right">
+        <i class="fa fa-download" aria-hidden="true"></i> Exporter le workflow
     </a>
-    <h2>Modification du workflow</h2>
-    <div id="workflow" style="display: none">{{ workflowDump }}</div>
-    <div>
-        <h3>Etats</h3>
-        <ul>
+    <h2 class="mb-4">Modification du workflow</h2>
+    <div id="workflow" class="mb-4" style="display: none">{{ workflowDump }}</div>
 
-        </ul>
-        <table class="table">
-            <tr>
-                <th>Etat</th>
-                <th>Opération</th>
-            </tr>
-            {% for state in promotion.workflow.states %}
-                <tr>
-                    <td>{{ state.name }}</td>
-                    <td>
-                        <div class="btn-group">
-                            <a class="btn btn-primary" href="{{ path('course_manager.promotion.workflow.state.rename', { 'promotionId': promotion.id, 'stateId': state.id }) }}">Renommer</a>
-                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a href="{{ path('course_manager.promotion.workflow.state.delete', { 'promotionId': promotion.id, 'stateId': state.id }) }}"
-                                   class="dropdown-item">Supprimer</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-        {{ form_start(formState) }}
-        {{ form_widget(formState) }}
-        <input type="submit" value="Ajouter cet état" class="btn btn-primary">
-        {{ form_end(formState) }}
-    </div>
+    <div id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="card mb-3">
+            <h4 class="card-header" data-toggle="collapse" data-parent="#accordion" href="#collapseStates"
+                aria-expanded="true" aria-controls="collapseStates" role="button">
+                Etats <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
+            </h4>
+            <div id="collapseStates" class="collapse" role="tabpanel">
+                <div class="card-block">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Etat</th>
+                            <th>Opération</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for state in promotion.workflow.states %}
+                            <tr>
+                                <td>{{ state.name }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary"
+                                           href="{{ path('course_manager.promotion.workflow.state.rename',
+                                           { 'promotionId': promotion.id, 'stateId': state.id }) }}">
+                                            Renommer
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a href="{{ path('course_manager.promotion.workflow.state.delete',
+                                            { 'promotionId': promotion.id, 'stateId': state.id }) }}"
+                                               class="dropdown-item">
+                                                Supprimer
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-    <div>
-        <h3>Transition</h3>
-        <table class="table">
-            <tr>
-                <th>Etiquette</th>
-                <th>De</th>
-                <th>A</th>
-                <th>Opération</th>
-            </tr>
-            {% for transition in promotion.workflow.transitions %}
-                <tr>
-                    <td>{{ transition.name }}</td>
-                    <td>{{ transition.startState.name }}</td>
-                    <td>{{ transition.endState.name }}</td>
-                    <td>
-                        <div class="btn-group">
-                            <a class="btn btn-primary" href="{{ path('course_manager.promotion.workflow.transition.rename', { 'promotionId': promotion.id, 'transitionId': transition.id }) }}">Modifier</a>
-                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Supprimer</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+        <div class="card mb-4">
+            <h5 class="card-header">Ajouter un état</h5>
+            <div class="card-block">
+                {{ form_start(formState) }}
+                {{ form_widget(formState) }}
+                <button type="submit" class="btn btn-success pull-right">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Ajouter
+                </button>
+                {{ form_end(formState) }}
+            </div>
+        </div>
 
-        {{ form_start(formTransition) }}
-        {{ form_widget(formTransition) }}
-        <input type="submit" value="Ajouter cette transition" class="btn btn-primary">
-        {{ form_end(formTransition) }}
+        <div class="card mb-4">
+            <h4 class="card-header" data-toggle="collapse" data-parent="#accordion" href="#collapseTransition"
+                aria-expanded="true" aria-controls="collapseTransition" role="button">
+                Transitions <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
+            </h4>
+            <div id="collapseTransition" class="collapse" role="tabpanel">
+                <div class="card-block">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Etiquette</th>
+                            <th>De</th>
+                            <th>A</th>
+                            <th>Opération</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for transition in promotion.workflow.transitions %}
+                            <tr>
+                                <td>{{ transition.name }}</td>
+                                <td>{{ transition.startState.name }}</td>
+                                <td>{{ transition.endState.name }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary"
+                                           href="{{ path('course_manager.promotion.workflow.transition.rename', { 'promotionId': promotion.id, 'transitionId': transition.id }) }}">Modifier</a>
+                                        <button type="button"
+                                                class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">Supprimer</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <h5 class="card-header">Ajouter une transition</h5>
+            <div class="card-block">
+                {{ form_start(formTransition) }}
+                {{ form_widget(formTransition) }}
+                <button type="submit" class="btn btn-success pull-right">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Ajouter
+                </button>
+                {{ form_end(formTransition) }}
+            </div>
+        </div>
     </div>
 
 {% endblock %}
