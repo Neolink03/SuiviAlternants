@@ -29,7 +29,7 @@ class CourseCreateType extends AbstractType{
             ->add('secretariatContactDetails', TextareaType::class, [
                 'label' => 'Coordonnées secrétariat'
             ])
-            ->add('submit', SubmitType::class, ['label' => 'Créer'])
+            ->add('submit', SubmitType::class, ['label' => 'Valider'])
         ;
         
         // Data transformers

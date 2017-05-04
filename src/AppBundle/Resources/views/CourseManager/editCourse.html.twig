@@ -6,7 +6,7 @@
     <h1>Editer formation</h1>
     <hr>
     <div class="row col-12 mb-4">
-        {{ form_start(editCourseForm, {'action': path('admin.course.add')}) }}
+        {{ form_start(editCourseForm, {'action': path('course_manager.course.edit', {'courseId' : course.id } )}) }}
 
         <div class="form-group">
             {{ form_label(editCourseForm.name)}}

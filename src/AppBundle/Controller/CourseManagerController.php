@@ -143,25 +143,11 @@ class CourseManagerController extends Controller
     public function editCourseAction(Request $request, Course $course)
     {
         $em = $this->getDoctrine()->getManager();
-        $manager = $course->getManager();
-        $coManager = $course->getCoManager();
-        if(!is_array($manager))
-            $manager = ['selector' => $manager];
-        if(!is_array($coManager))
-            $coManager = ['selector' => $coManager];
-
-        $courseDto = new CourseDto();
-        $courseDto->setName($course->getName());
-        $courseDto->setManager($manager);
-        $courseDto->setCoManager($coManager);
-        $courseDto->setSecretariatContactDetails($course->getSecretariatContactDetails());
-        $courseDto->setStudentNumber($course->getStudentNumber());
-      //  dump($courseDto);die();
-        $editCourseForm = $this->createForm(CourseCreateType::class, $courseDto);
+        $editCourseForm = $this->createForm(CourseCreateType::class, $course);
         $addPromotionForm = $this->createForm(AddPromotionType::class);
 
         if ($request->isMethod('post')) {
-
+            
             $editCourseForm->handleRequest($request);
 
             if ($editCourseForm->isSubmitted() && $editCourseForm->isValid()) {
@@ -173,7 +159,8 @@ class CourseManagerController extends Controller
 
         return $this->render('AppBundle:CourseManager:editCourse.html.twig', [
             'editCourseForm' => $editCourseForm->createView(),
-            'addPromotionForm' => $addPromotionForm->createView()
+            'addPromotionForm' => $addPromotionForm->createView(),
+            'course' => $course
         ]);
     }
 
