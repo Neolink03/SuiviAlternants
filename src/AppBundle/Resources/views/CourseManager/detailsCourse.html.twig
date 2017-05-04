@@ -9,12 +9,11 @@
     <hr>
 
     <div class="mb-4">
-        <a href="{{ path('course_manager.course.edit', { 'courseId': course.id }) }}" class="btn btn-secondary">
-            Modifier la formation
+        <a href="{{ path('course_manager.course.edit', { 'courseId': course.id }) }}" class="btn btn-primary">
+            <i class="fa fa-pencil" aria-hidden="true"></i> Modifier la formation
         </a>
-
-        <a href="{{ path('companycontact_index', { 'courseId': course.id }) }}" class="btn btn-secondary">
-            Liste des contacts entreprise
+        <a href="{{ path('companycontact_index', { 'courseId': course.id }) }}" class="btn btn-primary">
+            <i class="fa fa-address-book" aria-hidden="true"></i> Liste des contacts entreprise
         </a>
     </div>
 
@@ -46,7 +45,7 @@
 
             {{ form_start(studentsCsvForm, { 'attr': { 'class': 'mb-4' } }) }}
             {{ form_widget(studentsCsvForm.file, { 'attr': { 'class': 'btn-sm' } }) }}
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-success" role="button">
                 <i class="fa fa-users" aria-hidden="true"></i> Ajouter liste d'étudiants
             </button>
             <a href="{{ path('course_manager.student.add', { 'promotionId': promotion.id }) }}"
