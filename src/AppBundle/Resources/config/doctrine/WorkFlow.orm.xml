@@ -15,6 +15,6 @@
         <cascade-persist/>
       </cascade>
     </one-to-many>
-    <one-to-one field="course" target-entity="AppBundle\Entity\Course" inversed-by="workflow" />
+    <one-to-one field="promotion" target-entity="AppBundle\Entity\Promotion" inversed-by="workflow" />
   </entity>
 </doctrine-mapping>

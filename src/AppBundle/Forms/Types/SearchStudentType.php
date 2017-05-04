@@ -12,6 +12,7 @@ namespace AppBundle\Forms\Types;
 use AppBundle\Entity\State;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,20 +21,28 @@ class SearchStudentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, [
+        $builder->add('lastName', TextType::class, [
             'label' => false,
+            'required' => false,
             'attr' => [
-                'placeholder' => 'Rechercher un étudiant...'
+                'placeholder' => 'Nom...'
             ]
         ]);
-        $builder->add('status', EntityType::class, [
-            'class' => State::class,
+        $builder->add('firstName', TextType::class, [
+            'label' => false,
+            'required' => false,
+            'attr' => [
+                'placeholder' => 'Prénom...'
+            ]
+        ]);
+        $builder->add('currentState', ChoiceType::class, [
             'choices' => $options['states'],
             'choice_label' => function (State $state) {
                 return $state->getName();
             },
             'placeholder' => 'Trier par statut...',
-            'label' => false
+            'label' => false,
+            'required' => false
         ]);
     }
 

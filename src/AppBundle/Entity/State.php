@@ -2,14 +2,19 @@
 
 namespace AppBundle\Entity;
 
+use JMS\Serializer\Annotation\Exclude;
+
 /**
  * State
  */
 class State
 {
+    /** @Exclude */
     private $id;
     private $name;
+    /** @Exclude */
     private $machineName;
+    /** @Exclude */
     private $workflow;
 
     public function getId()

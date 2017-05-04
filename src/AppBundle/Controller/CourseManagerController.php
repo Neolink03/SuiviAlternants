@@ -17,18 +17,19 @@ use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Forms\Types\CourseManagerType;
-use AppBundle\Forms\Types\Courses\EditCourseType;
+use AppBundle\Forms\Types\Courses\CourseCreateType;
 use AppBundle\Forms\Types\EmailMessageType;
 use AppBundle\Forms\Types\PromotionFormType;
 use AppBundle\Forms\Types\SearchStudentType;
 use AppBundle\Forms\Types\StudentsCsvType;
 use AppBundle\Forms\Types\UserType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Models\Dtos\Courses\Course as CourseDto;
+
 
 class CourseManagerController extends Controller
 {
@@ -88,13 +89,14 @@ class CourseManagerController extends Controller
         );
 
         $promotions ? $promotion = $promotions[0] : $promotion = null;
+        $applications = $promotion->getApplications();
 
         $promotionsForm = $this->createForm(PromotionFormType::class, null, ["promotions" => $promotions]);
 
         $studentsCsvForm = $this->createForm(StudentsCsvType::class);
 
         $states = $em->getRepository(State::class)->findBy(
-            ['workflow' => $course->getWorkflow()]
+            ['workflow' => $promotion->getWorkflow()]
         );
 
         $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
@@ -107,9 +109,11 @@ class CourseManagerController extends Controller
         if ($request->isMethod('post')) {
             $promotionsForm->handleRequest($request);
             $studentsCsvForm->handleRequest($request);
+            $searchForm->handleRequest($request);
 
             if ($promotionsForm->isSubmitted() && $promotionsForm->isValid()) {
                 $promotion = $em->getRepository(Promotion::class)->find($promotionsForm->getData()['promotions']->getId());
+                $applications = $promotion->getApplications();
             }
 
             if ($studentsCsvForm->isSubmitted() && $studentsCsvForm->isValid()) {
@@ -117,20 +121,20 @@ class CourseManagerController extends Controller
                 $file = $studentsCsvForm->getData()['file'];
                 $this->get('app.factory.user')->saveStudentsfromCsvFile($file->getPathname(), $promotion);
             }
+
+            if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+                $applications = $em->getRepository(Application::class)->findAllByFilters($searchForm->getData());
+            }
         }
 
         return $this->render('@App/CourseManager/detailsCourse.html.twig', [
             'course' => $course,
             'promotion' => $promotion,
+            'applications' => $applications,
             'promotionsForm' => $promotionsForm->createView(),
             'studentsCsvForm' => $studentsCsvForm->createView(),
             'searchForm' => $searchForm->createView()
         ]);
-    }
-
-    public function searchStudentAction(Request $request)
-    {
-        
     }
 
     /**
@@ -139,8 +143,21 @@ class CourseManagerController extends Controller
     public function editCourseAction(Request $request, Course $course)
     {
         $em = $this->getDoctrine()->getManager();
+        $manager = $course->getManager();
+        $coManager = $course->getCoManager();
+        if(!is_array($manager))
+            $manager = ['selector' => $manager];
+        if(!is_array($coManager))
+            $coManager = ['selector' => $coManager];
 
-        $editCourseForm = $this->createForm(EditCourseType::class, $course);
+        $courseDto = new CourseDto();
+        $courseDto->setName($course->getName());
+        $courseDto->setManager($manager);
+        $courseDto->setCoManager($coManager);
+        $courseDto->setSecretariatContactDetails($course->getSecretariatContactDetails());
+        $courseDto->setStudentNumber($course->getStudentNumber());
+      //  dump($courseDto);die();
+        $editCourseForm = $this->createForm(CourseCreateType::class, $courseDto);
         $addPromotionForm = $this->createForm(AddPromotionType::class);
 
         if ($request->isMethod('post')) {
@@ -284,4 +301,7 @@ class CourseManagerController extends Controller
             'courseManager' => $form->createView(),
         ]);
     }
+
+
+
 }

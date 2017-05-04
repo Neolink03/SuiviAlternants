@@ -10,6 +10,10 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
 
+        <service id="app.factory.workflow.custom" class="AppBundle\Services\Factories\AppWorkflowFactory">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+
         <service id="app.factory.user" class="AppBundle\Services\Factories\UserFactory">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="app.factory.swift_message"/>

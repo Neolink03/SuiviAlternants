@@ -14,6 +14,7 @@ class Promotion
     private $studentNumber;
     private $course;
     private $applications;
+    private $workflow;
 
     public function getId()
     {
@@ -99,6 +100,18 @@ class Promotion
     public function removeApplication(Application $application)
     {
         $this->applications->removeElement($application);
+    }
+
+    public function getWorkflow() {
+        return $this->workflow;
+    }
+
+    /**
+     * @param WorkFlow $workflow
+     */
+    public function setWorkflow($workflow)
+    {
+        $this->workflow = $workflow;
     }
 }
 

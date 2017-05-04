@@ -80,3 +80,8 @@ fos_user:
     registration:
         form:
             type: AppBundle\Forms\Types\RegistrationType
+
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable:   true

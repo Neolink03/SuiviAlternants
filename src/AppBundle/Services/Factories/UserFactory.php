@@ -8,6 +8,7 @@ namespace AppBundle\Services\Factories;
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\StatusModification;
+use AppBundle\Entity\User\Administrator;
 use AppBundle\Entity\User\CourseManager;
 use AppBundle\Entity\User\Jury;
 use AppBundle\Entity\User\Student;
@@ -47,6 +48,10 @@ class UserFactory
 
         if(is_null($managerDataBase)){
             switch ($adminUserDto->getUserType()) {
+                case "administrateur":
+                    $user = $this->saveAdministratorFromAdmin($adminUserDto);
+                    $this->session->getFlashBag()->add("success", "L'utilisateur a bien été créé.");
+                    break;
                 case "responsable":
                     $user = $this->saveCourseManagerFromAdmin($adminUserDto);
                     $this->session->getFlashBag()->add("success", "L'utilisateur a bien été créé.");
@@ -104,6 +109,20 @@ class UserFactory
         $this->em->flush();
 
         return $jury;
+    }
+
+    public function saveAdministratorFromAdmin(AdminNewUserDto $adminUserDto) : Administrator{
+        $administrator = new Administrator();
+        $administrator->setFirstName($adminUserDto->getUser()->getFirstName());
+        $administrator->setLastName($adminUserDto->getUser()->getLastName());
+        $administrator->setEmail($adminUserDto->getUser()->getEmail());
+        $administrator->setUsername($adminUserDto->getUser()->getEmail());
+        $administrator->setPlainPassword($adminUserDto->getPassword());
+
+        $this->em->persist($administrator);
+        $this->em->flush();
+
+        return $administrator;
     }
 
     public function getOrCreateStudentIfNotExist(Student $student){
@@ -164,7 +183,7 @@ class UserFactory
         $statusModif->setComment("");
         $statusModif->setDateTime(new \DateTime());
 
-        $state = $promotion->getCourse()->getWorkflow()->getFirstState();
+        $state = $promotion->getWorkflow()->getFirstState();
 
         $statusModif->setState($state);
         $application->addStatusModification($statusModif);

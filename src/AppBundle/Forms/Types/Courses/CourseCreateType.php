@@ -36,7 +36,4 @@ class CourseCreateType extends AbstractType{
         $builder->get('manager')->addModelTransformer(new CourseManagerSingleSelectDataTransformer());
         $builder->get('coManager')->addModelTransformer(new CourseManagerSingleSelectDataTransformer());
     }
-    
-    
-    
 }

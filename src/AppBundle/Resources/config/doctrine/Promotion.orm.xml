@@ -22,6 +22,6 @@
                 <cascade-persist/>
             </cascade>
         </one-to-many>
-
+        <one-to-one field="workflow" target-entity="AppBundle\Entity\WorkFlow" mapped-by="promotion" />
     </entity>
 </doctrine-mapping>

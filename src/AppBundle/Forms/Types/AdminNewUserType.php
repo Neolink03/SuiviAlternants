@@ -20,6 +20,7 @@ class AdminNewUserType extends AbstractType
             'choices'  => array(
                 'Responsable formation' => "responsable",
                 'Jury' => "jury",
+                'Administrateur' => "administrateur",
             ),
             'expanded' => true,
             'label' => "Type utilisateur"

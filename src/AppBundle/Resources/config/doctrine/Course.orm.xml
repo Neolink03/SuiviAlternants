@@ -16,6 +16,5 @@
         <cascade-persist/>
       </cascade>
     </one-to-many>
-    <one-to-one field="workflow" target-entity="AppBundle\Entity\WorkFlow" mapped-by="course" />
   </entity>
 </doctrine-mapping>

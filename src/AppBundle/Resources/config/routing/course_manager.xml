@@ -32,6 +32,34 @@
         <default key="_controller">AppBundle:CourseManager:sendMail</default>
     </route>
 
+    <route id="course_manager.promotion.workflow.add" path="/promotion/{promotionId}/workflow/add">
+        <default key="_controller">AppBundle:Workflow:addApplicationWorkflow</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.create" path="/promotion/{promotionId}/workflow/create">
+        <default key="_controller">AppBundle:Workflow:addApplicationWorkflowFromNothing</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.edit" path="/promotion/{promotionId}/workflow/edit">
+        <default key="_controller">AppBundle:Workflow:editApplicationWorkflow</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.export" path="/promotion/{promotionId}/workflow/export">
+        <default key="_controller">AppBundle:Workflow:exportApplicationWorkflow</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.state.delete" path="/promotion/{promotionId}/workflow/state/{stateId}/delete">
+        <default key="_controller">AppBundle:Workflow:deleteStateWorkflow</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.state.rename" path="/promotion/{promotionId}/workflow/state/{stateId}/rename">
+        <default key="_controller">AppBundle:Workflow:renameStateWorkflow</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.transition.rename" path="/promotion/{promotionId}/workflow/transition/{transitionId}/rename">
+        <default key="_controller">AppBundle:Workflow:renameTransitionWorkflow</default>
+    </route>
+
     <route id="course_manager.showPersonalInformation" path="/informations">
         <default key="_controller">AppBundle:CourseManager:displayPersonalInformations</default>
     </route>

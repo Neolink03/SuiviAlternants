@@ -3,14 +3,17 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * WorkFlow
  */
 class WorkFlow
 {
+    /** @Exclude */
     private $id;
-    private $course;
+    /** @Exclude */
+    private $promotion;
     private $states;
     private $transitions;
 
@@ -24,14 +27,14 @@ class WorkFlow
         return $this->id;
     }
 
-    public function getCourse()
+    public function getPromotion()
     {
-        return $this->course;
+        return $this->promotion;
     }
 
-    public function setCourse($course)
+    public function setPromotion($promotion)
     {
-        $this->course = $course;
+        $this->promotion = $promotion;
     }
 
     public function getStates()

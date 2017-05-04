@@ -3,17 +3,17 @@
         <h4 class="d-inline" style="line-height: inherit;">{{ course.name }}</h4>
         <span><span class="badge badge-default ml-2 mr-1">{{ course.studentNumber }}</span>places</span>
         <a href="{{ path('course_manager.course', { 'courseId': course.id }) }}"
-           class="float-right btn btn-primary">Détails <i class="fa fa-chevron-right" aria-hidden="true"></i>
+           class="float-right btn btn-primary">Détails <i class="fa fa-angle-right" aria-hidden="true"></i>
         </a>
 
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item border-top-0">
-            Responsable : {{ course.manager.firstname }} {{ course.manager.lastname }}
+            <strong>Responsable :</strong>&nbsp;{{ course.manager.firstname }} {{ course.manager.lastname }}
         </li>
         {% if course.coManager %}
             <li class="list-group-item">
-                Co-responsable : {{ course.coManager.firstname }} {{ course.coManager.lastname }}
+                <strong>Co-responsable :</strong>&nbsp;{{ course.coManager.firstname }} {{ course.coManager.lastname }}
             </li>
         {% endif %}
     </ul>
