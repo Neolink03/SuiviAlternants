@@ -17,6 +17,7 @@ class CourseManagerSingleSelectType extends AbstractType{
                 return $courseManager->getFullName();
             },
             'placeholder' => ""
-        ]);
+        ])
+        ;
     }
 }
