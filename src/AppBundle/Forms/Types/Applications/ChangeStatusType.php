@@ -18,10 +18,10 @@ class ChangeStatusType extends AbstractType
     {
         $builder->add('transition', ChoiceType::class, array(
             'choices'  => $options['transitions'],
-            'label' => 'Changer le status'
+            'label' => 'Changer le statut'
         ));
         $builder->add('comment', TextareaType::class, array(
-            'label' => 'Commentaire',
+            'label' => 'Commentaires',
             'required' => false
         ));
     }
