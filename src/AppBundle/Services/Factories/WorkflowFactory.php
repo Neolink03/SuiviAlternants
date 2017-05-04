@@ -58,9 +58,25 @@ class WorkflowFactory
     public function dumpWorflowFromPromotion(Promotion $promotion) : string
     {
         $workflow = $promotion->getWorkflow();
+        $builder = $this->definitionBuilderFromWorkflow($workflow);
+        $definition = $builder->build();
 
+        return (new StateMachineGraphvizDumper)->dump($definition);
+    }
+
+    public function dumpWorflowFromApplication(Application $application) : string
+    {
+        $workflow = $application->getPromotion()->getWorkflow();
+
+        $builder = $this->definitionBuilderFromWorkflow($workflow);
+        $builder->setInitialPlace($application->getCurrentState());
+
+        $definition = $builder->build();
+        return (new StateMachineGraphvizDumper)->dump($definition);
+    }
+
+    private function definitionBuilderFromWorkflow(\AppBundle\Entity\WorkFlow $workflow) : DefinitionBuilder {
         $builder = new DefinitionBuilder();
-
         $states = $workflow->getStates();
         /** @var State $state */
         foreach ($states as $state){
@@ -79,7 +95,6 @@ class WorkflowFactory
             );
         }
 
-        $definition = $builder->build();
-        return (new StateMachineGraphvizDumper)->dump($definition);
+        return $builder;
     }
 }

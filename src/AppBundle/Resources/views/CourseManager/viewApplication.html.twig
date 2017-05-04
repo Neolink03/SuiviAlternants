@@ -5,9 +5,7 @@
 {% block body %}
     <h1>{{ application.student.firstName }} {{ application.student.lastName }}</h1>
     <h2>Status : {{ application.lastStatusModification.state.name }}</h2>
-    <div>
-        TODO Graphe status
-    </div>
+    <div id="workflow" style="display: none">{{ workflowDump }}</div>
     <div>
         {{ form_start(form) }}
         {{ form_widget(form) }}
@@ -37,4 +35,10 @@
         </table>
 
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/viz.js') }}"></script>
+    <script src="{{ asset('js/workflowDisplay.js') }}"></script>
 {% endblock %}
