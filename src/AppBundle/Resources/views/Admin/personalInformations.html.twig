@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ ('/suivi_alternants/web/css/form.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Informations personnelles{% endblock %}
+
+{% block body %}
+    <h1>Mes informations personnelles</h1>
+    <div id="administratorInformation">
+        {{ form_start(administrator) }}
+        {{ form_widget(administrator) }}
+        <input type="submit" value="Valider" class="btn btn-primary">
+        {{ form_end(administrator) }}
+    </div>
+{% endblock %}

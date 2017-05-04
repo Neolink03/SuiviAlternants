@@ -27,6 +27,7 @@ class MenuBuilder
     {
         if ($this->securityContext->isGranted('ROLE_ADMIN')) {
             $this->addMenuItem('Ajouter un utilisateur', 'admin.user.add');
+            $this->addMenuItem('Informations personnelles', 'admin.showPersonalInformation');
         } 
         else if ($this->securityContext->isGranted('ROLE_MANAGER')) {
             $this->addMenuItem('Liste des étudiants', 'course_manager.students');
