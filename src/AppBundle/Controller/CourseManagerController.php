@@ -17,7 +17,7 @@ use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Forms\Types\CourseManagerType;
-use AppBundle\Forms\Types\Courses\CourseCreateType;
+use AppBundle\Forms\Types\Courses\CourseType;
 use AppBundle\Forms\Types\EmailMessageType;
 use AppBundle\Forms\Types\PromotionFormType;
 use AppBundle\Forms\Types\SearchStudentType;
@@ -143,7 +143,7 @@ class CourseManagerController extends Controller
     public function editCourseAction(Request $request, Course $course)
     {
         $em = $this->getDoctrine()->getManager();
-        $editCourseForm = $this->createForm(CourseCreateType::class, $course);
+        $editCourseForm = $this->createForm(CourseType::class, $course);
         $addPromotionForm = $this->createForm(AddPromotionType::class);
 
         if ($request->isMethod('post')) {

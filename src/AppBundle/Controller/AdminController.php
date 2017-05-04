@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-use AppBundle\Forms\Types\Courses\CourseCreateType;
+use AppBundle\Forms\Types\Courses\CourseType;
 use AppBundle\Models\Dtos\Courses\Course as CourseDto;
 
 class AdminController extends Controller
@@ -32,7 +32,7 @@ class AdminController extends Controller
     }
     
     public function createCourseAction(Request $request) {
-        $form = $this->createForm(CourseCreateType::class, new CourseDto());
+        $form = $this->createForm(CourseType::class, new CourseDto());
 
         if ($request->isMethod('post')) {
 
