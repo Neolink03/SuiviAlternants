@@ -25,7 +25,7 @@
                     <td>{{ state.name }}</td>
                     <td>
                         <div class="btn-group">
-                            <a class="btn btn-primary" href="#">Renommer</a>
+                            <a class="btn btn-primary" href="{{ path('course_manager.promotion.workflow.state.rename', { 'promotionId': promotion.id, 'stateId': state.id }) }}">Renommer</a>
                             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -60,7 +60,7 @@
                     <td>{{ transition.endState.name }}</td>
                     <td>
                         <div class="btn-group">
-                            <a class="btn btn-primary" href="#">Renommer</a>
+                            <a class="btn btn-primary" href="{{ path('course_manager.promotion.workflow.transition.rename', { 'promotionId': promotion.id, 'transitionId': transition.id }) }}">Modifier</a>
                             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
