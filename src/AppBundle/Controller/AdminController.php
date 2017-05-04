@@ -12,6 +12,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
 use AppBundle\Forms\Types\AdminNewUserType;
+use AppBundle\Forms\Types\UserType;
 use AppBundle\Models\AdminNewUserDto;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -32,7 +33,7 @@ class AdminController extends Controller
     
     public function createCourseAction(Request $request) {
         $form = $this->createForm(CourseCreateType::class, new CourseDto());
-        
+
         if ($request->isMethod('post')) {
 
             $form->handleRequest($request);
@@ -40,6 +41,7 @@ class AdminController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 
                 $courseDto = $form->getData();
+                dump($courseDto);die;
                 if($this->get('app.factory.course')->saveNewCourse($courseDto) == true){
                     $this->addFlash("success", "La formation a bien été créée.");
                     return new RedirectResponse($this->generateUrl("admin.home"));
@@ -48,8 +50,38 @@ class AdminController extends Controller
         }
         
         return $this->render('AppBundle:Admin:createCourse.html.twig', [
-            "courses" => null,
             "courseForm" => $form->createView()
+        ]);
+    }
+
+    public function displayPersonalInformationsAction(Request $request){
+
+        $administrator = $this->getUser();
+        $form = $this->createForm(UserType::class, $administrator, ['isDisabled' => true]);
+
+        if ($request->isMethod('post')) {
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($administrator);
+                $em->flush();
+                $this->addFlash(
+                    'success',
+                    'Vos informations ont bien été mises a jour!'
+                );
+            }elseif($form->isSubmitted() && !$form->isValid()){
+                $this->addFlash(
+                    'danger',
+                    'Une ou plusieurs informations sont manquantes et/ou non valides    '
+                );
+            }
+        }
+
+        return $this->render('AppBundle:Admin:personalInformations.html.twig',[
+            'administrator' => $form->createView(),
         ]);
     }
 

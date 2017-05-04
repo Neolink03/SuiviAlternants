@@ -17,7 +17,7 @@ use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Forms\Types\CourseManagerType;
-use AppBundle\Forms\Types\Courses\EditCourseType;
+use AppBundle\Forms\Types\Courses\CourseCreateType;
 use AppBundle\Forms\Types\EmailMessageType;
 use AppBundle\Forms\Types\PromotionFormType;
 use AppBundle\Forms\Types\SearchStudentType;
@@ -28,12 +28,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Encoder\YamlEncoder;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\XmlFileLoader;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
+use AppBundle\Models\Dtos\Courses\Course as CourseDto;
+
 
 class CourseManagerController extends Controller
 {
@@ -147,8 +143,21 @@ class CourseManagerController extends Controller
     public function editCourseAction(Request $request, Course $course)
     {
         $em = $this->getDoctrine()->getManager();
+        $manager = $course->getManager();
+        $coManager = $course->getCoManager();
+        if(!is_array($manager))
+            $manager = ['selector' => $manager];
+        if(!is_array($coManager))
+            $coManager = ['selector' => $coManager];
 
-        $editCourseForm = $this->createForm(EditCourseType::class, $course);
+        $courseDto = new CourseDto();
+        $courseDto->setName($course->getName());
+        $courseDto->setManager($manager);
+        $courseDto->setCoManager($coManager);
+        $courseDto->setSecretariatContactDetails($course->getSecretariatContactDetails());
+        $courseDto->setStudentNumber($course->getStudentNumber());
+      //  dump($courseDto);die();
+        $editCourseForm = $this->createForm(CourseCreateType::class, $courseDto);
         $addPromotionForm = $this->createForm(AddPromotionType::class);
 
         if ($request->isMethod('post')) {
