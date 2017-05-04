@@ -32,7 +32,7 @@ class AdminController extends Controller
     
     public function createCourseAction(Request $request) {
         $form = $this->createForm(CourseCreateType::class, new CourseDto());
-        
+
         if ($request->isMethod('post')) {
 
             $form->handleRequest($request);
@@ -40,6 +40,7 @@ class AdminController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 
                 $courseDto = $form->getData();
+                dump($courseDto);die;
                 if($this->get('app.factory.course')->saveNewCourse($courseDto) == true){
                     $this->addFlash("success", "La formation a bien été créée.");
                     return new RedirectResponse($this->generateUrl("admin.home"));
@@ -48,7 +49,6 @@ class AdminController extends Controller
         }
         
         return $this->render('AppBundle:Admin:createCourse.html.twig', [
-            "courses" => null,
             "courseForm" => $form->createView()
         ]);
     }

@@ -8,6 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use AppBundle\Forms\Types\CourseManagers\CourseManagerSingleSelectType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use AppBundle\Models\Dtos\Courses\Course as CourseDto;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CourseCreateType extends AbstractType{
     
@@ -30,5 +32,4 @@ class CourseCreateType extends AbstractType{
             ->add('submit', SubmitType::class, ['label' => 'Créer'])
         ;
     }
-    
 }

@@ -6,23 +6,37 @@
     <h1>Editer formation</h1>
     <hr>
     <div class="row col-12 mb-4">
-        {{ form_start(editCourseForm, { 'attr': { 'class': 'form-inline' } }) }}
-        <div class="form-group {{ editCourseForm.name.vars.valid ?: 'has-danger' }}">
-            {{ form_label(editCourseForm.name, null, { 'label_attr': { 'class': 'mr-sm-2' } }) }}
-            {{ form_widget(editCourseForm.name, { 'attr': { 'class': 'form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
-            {% if not editCourseForm.name.vars.valid %}
-                <ul>
-                    {% for error in editCourseForm.name.vars.errors %}
-                        <p class="form-control-feedback">{{ error.message }}</p>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+        {{ form_start(editCourseForm, {'action': path('admin.course.add')}) }}
+
+        <div class="form-group">
+            {{ form_label(editCourseForm.name)}}
+            {{ form_widget(editCourseForm.name, {'attr': {"class": 'form-control'} }) }}
+            {{ form_errors(editCourseForm.name)}}
         </div>
-        <div class="form-group text-right">
-            {{ form_widget(editCourseForm.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+
+        <div class="form-group">
+            {{ form_label(editCourseForm.manager)}}
+            {{ form_widget(editCourseForm.manager.selector, {'attr': {"class": 'form-control custom-select'} }) }}
         </div>
+
+        <div class="form-group">
+            {{ form_label(editCourseForm.coManager, 'Co-responsable de formation (optionnel)') }}
+            {{ form_widget(editCourseForm.coManager.selector, {'attr': {"class": 'form-control custom-select'} }) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(editCourseForm.secretariatContactDetails)}}
+            {{ form_widget(editCourseForm.secretariatContactDetails, {'attr': {"class": 'form-control'} }) }}
+            {{ form_errors(editCourseForm.secretariatContactDetails)}}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(editCourseForm.submit)}}
+        </div>
+
+        {{ form_widget(editCourseForm.submit, {'attr': {"class": 'form-control btn btn-primary'} }) }}
+
         {{ form_rest(editCourseForm) }}
-        {{ form_end(editCourseForm) }}
     </div>
 
     <h4>Promotions</h4>
