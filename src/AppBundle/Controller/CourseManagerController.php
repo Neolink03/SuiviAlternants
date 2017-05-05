@@ -87,21 +87,21 @@ class CourseManagerController extends Controller
             ['id' => 'desc']
         );
 
+        $states = null;
+        $applications = null;
+
         if ($promotions) {
             $promotion = $promotions[0];
             $applications = $promotion->getApplications();
+            $states = $em->getRepository(State::class)->findBy(
+                ['workflow' => $promotion->getWorkflow()]
+            );
         } else {
             $promotion = null;
         }
 
         $promotionsForm = $this->createForm(PromotionFormType::class, null, ["promotions" => $promotions]);
-
         $studentsCsvForm = $this->createForm(StudentsCsvType::class);
-
-        $states = $em->getRepository(State::class)->findBy(
-            ['workflow' => $promotion->getWorkflow()]
-        );
-
         $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
 
         if ($request->get('promotion')) {
@@ -149,7 +149,7 @@ class CourseManagerController extends Controller
         $editCourseForm = $this->createForm(CourseType::class, $course);
 
         if ($request->isMethod('post')) {
-            
+
             $editCourseForm->handleRequest($request);
 
             if ($editCourseForm->isSubmitted() && $editCourseForm->isValid()) {
@@ -177,9 +177,9 @@ class CourseManagerController extends Controller
         $realTransitions = $application->getPromotion()->getWorkflow()->getTransitions()->toArray();
 
         $result = [];
-        foreach ($realTransitions as $realTransition){
-            foreach ($transitions as $workflowTransition){
-                if($realTransition->getMachineName() == $workflowTransition->getName()){
+        foreach ($realTransitions as $realTransition) {
+            foreach ($transitions as $workflowTransition) {
+                if ($realTransition->getMachineName() == $workflowTransition->getName()) {
                     $result[] = $realTransition;
                 }
             }
@@ -195,9 +195,9 @@ class CourseManagerController extends Controller
 
             $transitions = $workflow->getEnabledTransitions($application);
             $result = [];
-            foreach ($realTransitions as $realTransition){
-                foreach ($transitions as $workflowTransition){
-                    if($realTransition->getMachineName() == $workflowTransition->getName()){
+            foreach ($realTransitions as $realTransition) {
+                foreach ($transitions as $workflowTransition) {
+                    if ($realTransition->getMachineName() == $workflowTransition->getName()) {
                         $result[] = $realTransition;
                     }
                 }
@@ -216,18 +216,18 @@ class CourseManagerController extends Controller
     public function addPromotionAction(Request $request, Course $course)
     {
         $addPromotionForm = $this->createForm(AddPromotionType::class);
-        
+
         if ($request->isMethod('post')) {
             $data = $request->request->get('add_promotion');
             $addPromotionForm->handleRequest($request);
-            
+
             if ($addPromotionForm->isSubmitted() && $addPromotionForm->isValid()) {
                 $this->get('app.factory.promotion')->createPromotionFromForm($course->getId(), $data);
                 $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
                 return $this->redirectToRoute('course_manager.course', ['courseId' => $course->getId()]);
             }
         }
-        
+
         return $this->render('AppBundle:CourseManager:addPromotion.html.twig', [
             'addPromotionForm' => $addPromotionForm->createView(),
             'course' => $course
@@ -252,7 +252,10 @@ class CourseManagerController extends Controller
         if ($request->isMethod('post')) {
             $searchForm->handleRequest($request);
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-                $students = $em->getRepository(Student::class)->findAllByFilters($searchForm->getData());
+                $students = $em->getRepository(Student::class)->findByCoursesWithFilters(
+                    $courses,
+                    $searchForm->getData()
+                );
             }
         }
 

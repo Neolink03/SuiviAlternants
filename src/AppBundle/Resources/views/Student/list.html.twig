@@ -9,7 +9,7 @@
     {{ form_start(searchForm, { 'attr': { 'class': 'form-inline mb-4' } }) }}
     {{ form_widget(searchForm.lastName, { 'attr': { 'class': 'form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
     {{ form_widget(searchForm.firstName, { 'attr': { 'class': 'form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
-    <button type="submit" class="btn btn-secondary form-control mb-2 mr-sm-2 mb-sm-0">
+    <button type="submit" class="btn btn-secondary form-control mb-2 mr-sm-2 mb-sm-0" role="button">
         Rechercher <i class="fa fa-search" aria-hidden="true"></i>
     </button>
     {{ form_end(searchForm) }}

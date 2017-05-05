@@ -21,17 +21,25 @@ class StudentRepository extends \Doctrine\ORM\EntityRepository
             ->join('a.promotion', 'p')
             ->join('p.course', 'c');
 
-        $qb->setParameter('courses', ['METINET']);
+        $coursesNames = [];
+        foreach ($courses as $course) {
+            $coursesNames[] = $course->getName();
+        }
+        $qb->setParameter('courses', $coursesNames);
 
-        dump($qb->getQuery()->getResult()); die;
+        return $qb->getQuery()->getResult();
     }
 
-    public function findAllByFilters(array $data)
+    public function findByCoursesWithFilters(array $courses, array $data)
     {
-        $parameters = array();
+        $parameters = [];
 
         $qb = $this->_em->createQueryBuilder();
-        $qb->select('s')->from(Student::class, 's');
+        $qb->select('s')->from(Student::class, 's')
+            ->andWhere('c.name IN (:courses)')
+            ->join('s.applications', 'a')
+            ->join('a.promotion', 'p')
+            ->join('p.course', 'c');
 
         foreach ($data as $key => $value) {
             if (!is_null($data[$key])) {
@@ -39,6 +47,13 @@ class StudentRepository extends \Doctrine\ORM\EntityRepository
                 $parameters[$key] = '%' . $data[$key] . '%';
             }
         }
+
+        $coursesNames = [];
+        foreach ($courses as $course) {
+            $coursesNames[] = $course->getName();
+        }
+
+        $parameters['courses'] = $coursesNames;
 
         $qb->setParameters($parameters);
 
