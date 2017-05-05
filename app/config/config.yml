@@ -40,6 +40,8 @@ twig:
     strict_variables: "%kernel.debug%"
     form_themes:
         - '%kernel.root_dir%/Resources/views/Form/bootstrap_4_layout.html.twig'
+    globals:
+            app_factory_workflow: "@app.factory.workflow"
 # Doctrine Configuration
 doctrine:
     dbal:

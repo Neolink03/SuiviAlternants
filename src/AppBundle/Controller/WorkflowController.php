@@ -96,7 +96,6 @@ class WorkflowController extends Controller
 
         return $this->render('AppBundle:CourseManager:editWorkflow.html.twig',
             [
-                'workflowDump' => $this->get('app.factory.workflow')->dumpWorflowFromPromotion($promotion),
                 'promotion' => $promotion,
                 'formState' => $formState->createView(),
                 'formTransition' => $formTransition->createView()

@@ -5,7 +5,7 @@
 {% block body %}
     <h1>{{ application.student.firstName }} {{ application.student.lastName }}</h1>
     <h2>Status : {{ application.lastStatusModification.state.name }}</h2>
-    <div id="workflow" style="display: none">{{ workflowDump }}</div>
+    <div id="workflow" style="display: none">{{ app_factory_workflow.dumpWorflowFromApplication(application) }}</div>
     <div>
         {{ form_start(form) }}
         {{ form_widget(form) }}

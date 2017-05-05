@@ -189,6 +189,18 @@ class CourseManagerController extends Controller
         foreach ($transitions as $index => $value) {
             $stringTransitions[$value->getName()] = $value;
         }
+
+        $realTransitions = $application->getPromotion()->getWorkflow()->getTransitions()->toArray();
+
+        $result = [];
+        foreach ($realTransitions as $realTransition){
+            foreach ($transitions as $workflowTransition){
+                if($realTransition->getMachineName() == $workflowTransition->getName()){
+                    $result[] = $realTransition;
+                }
+            }
+        }
+
         $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $stringTransitions));
 
 
@@ -207,8 +219,7 @@ class CourseManagerController extends Controller
         }
         return $this->render('AppBundle:CourseManager:viewApplication.html.twig', [
             'form' => $form->createView(),
-            'application' => $application,
-            'workflowDump' => $this->get('app.factory.workflow')->dumpWorflowFromApplication($application),
+            'application' => $application
         ]);
     }
 
