@@ -171,11 +171,6 @@ class CourseManagerController extends Controller
         $workflow = $this->get('app.factory.workflow')->generateWorflowFromApplication($application);
         $transitions = $workflow->getEnabledTransitions($application);
 
-        $stringTransitions = [];
-        foreach ($transitions as $index => $value) {
-            $stringTransitions[$value->getName()] = $value;
-        }
-
         $realTransitions = $application->getPromotion()->getWorkflow()->getTransitions()->toArray();
 
         $result = [];
@@ -187,7 +182,7 @@ class CourseManagerController extends Controller
             }
         }
 
-        $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $stringTransitions));
+        $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $result));
 
         $form->handleRequest($request);
 
@@ -196,11 +191,15 @@ class CourseManagerController extends Controller
             $application = $this->get('app.application')->setState($application, $data);
 
             $transitions = $workflow->getEnabledTransitions($application);
-            $stringTransitions = [];
-            foreach ($transitions as $index => $value) {
-                $stringTransitions[$value->getName()] = $value;
+            $result = [];
+            foreach ($realTransitions as $realTransition){
+                foreach ($transitions as $workflowTransition){
+                    if($realTransition->getMachineName() == $workflowTransition->getName()){
+                        $result[] = $realTransition;
+                    }
+                }
             }
-            $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $stringTransitions));
+            $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $result));
         }
         return $this->render('AppBundle:CourseManager:viewApplication.html.twig', [
             'form' => $form->createView(),
