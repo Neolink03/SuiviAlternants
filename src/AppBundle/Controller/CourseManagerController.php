@@ -17,7 +17,7 @@ use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Forms\Types\CourseManagerType;
-use AppBundle\Forms\Types\Courses\CourseCreateType;
+use AppBundle\Forms\Types\Courses\CourseType;
 use AppBundle\Forms\Types\EmailMessageType;
 use AppBundle\Forms\Types\PromotionFormType;
 use AppBundle\Forms\Types\SearchStudentType;
@@ -142,37 +142,23 @@ class CourseManagerController extends Controller
     public function editCourseAction(Request $request, Course $course)
     {
         $em = $this->getDoctrine()->getManager();
-        $manager = $course->getManager();
-        $coManager = $course->getCoManager();
-        if(!is_array($manager))
-            $manager = ['selector' => $manager];
-        if(!is_array($coManager))
-            $coManager = ['selector' => $coManager];
-
-        $courseDto = new CourseDto();
-        $courseDto->setName($course->getName());
-        $courseDto->setManager($manager);
-        $courseDto->setCoManager($coManager);
-        $courseDto->setSecretariatContactDetails($course->getSecretariatContactDetails());
-        $courseDto->setStudentNumber($course->getStudentNumber());
-      //  dump($courseDto);die();
-        $editCourseForm = $this->createForm(CourseCreateType::class, $courseDto);
-        $addPromotionForm = $this->createForm(AddPromotionType::class);
+        $editCourseForm = $this->createForm(CourseType::class, $course);
 
         if ($request->isMethod('post')) {
-
+            
             $editCourseForm->handleRequest($request);
 
             if ($editCourseForm->isSubmitted() && $editCourseForm->isValid()) {
                 $em->persist($course);
                 $em->flush();
                 $this->addFlash('success', 'La formation a été modifiée avec succès.');
+                return $this->redirectToRoute('course_manager.course', ['courseId' => $course->getId()]);
             }
         }
 
         return $this->render('AppBundle:CourseManager:editCourse.html.twig', [
             'editCourseForm' => $editCourseForm->createView(),
-            'addPromotionForm' => $addPromotionForm->createView()
+            'course' => $course
         ]);
     }
 
@@ -197,7 +183,6 @@ class CourseManagerController extends Controller
 
         $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $result));
 
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -221,16 +206,28 @@ class CourseManagerController extends Controller
         ]);
     }
 
-    public function addPromotionAction(Request $request)
+    /**
+     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
+     */
+    public function addPromotionAction(Request $request, Course $course)
     {
-        $courseId = $request->get('courseId');
-        $data = $request->request->get('add_promotion');
-
-        $this->get('app.factory.promotion')->createPromotionFromForm($courseId, $data);
-
-        $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
-
-        return $this->redirectToRoute('course_manager.course.edit', ['courseId' => $courseId]);
+        $addPromotionForm = $this->createForm(AddPromotionType::class);
+        
+        if ($request->isMethod('post')) {
+            $data = $request->request->get('add_promotion');
+            $addPromotionForm->handleRequest($request);
+            
+            if ($addPromotionForm->isSubmitted() && $addPromotionForm->isValid()) {
+                $this->get('app.factory.promotion')->createPromotionFromForm($course->getId(), $data);
+                $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
+                return $this->redirectToRoute('course_manager.course', ['courseId' => $course->getId()]);
+            }
+        }
+        
+        return $this->render('AppBundle:CourseManager:addPromotion.html.twig', [
+            'addPromotionForm' => $addPromotionForm->createView(),
+            'course' => $course
+        ]);
     }
 
     public function studentListAction(Request $request)

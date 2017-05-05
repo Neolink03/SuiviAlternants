@@ -38,11 +38,11 @@ class Course {
     }
 
     function setManager($managerSelector) {
-        $this->manager = $managerSelector['selector'];
+        $this->manager = $managerSelector;
     }
 
     function setCoManager($coManagerSelector) {
-        $this->coManager = $coManagerSelector['selector'];
+        $this->coManager = $coManagerSelector;
     }
 
     function setSecretariatContactDetails($secretariatContactDetails) {
