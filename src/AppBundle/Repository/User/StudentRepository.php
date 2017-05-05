@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository\User;
 
+use AppBundle\Entity\User\Student;
+
 /**
  * StudentRepository
  *
@@ -10,4 +12,36 @@ namespace AppBundle\Repository\User;
  */
 class StudentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByCourses(array $courses)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('s')->from(Student::class, 's')
+            ->andWhere('c.name IN (:courses)')
+            ->join('s.applications', 'a')
+            ->join('a.promotion', 'p')
+            ->join('p.course', 'c');
+
+        $qb->setParameter('courses', ['METINET']);
+
+        dump($qb->getQuery()->getResult()); die;
+    }
+
+    public function findAllByFilters(array $data)
+    {
+        $parameters = array();
+
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('s')->from(Student::class, 's');
+
+        foreach ($data as $key => $value) {
+            if (!is_null($data[$key])) {
+                $qb->andWhere('s.' . $key . ' LIKE :' . $key);
+                $parameters[$key] = '%' . $data[$key] . '%';
+            }
+        }
+
+        $qb->setParameters($parameters);
+
+        return $qb->getQuery()->getResult();
+    }
 }

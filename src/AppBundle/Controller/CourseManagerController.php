@@ -41,7 +41,7 @@ class CourseManagerController extends Controller
         $allCourses = array_merge($courseManaged, $courseCoManaged);
 
         return $this->render('AppBundle:CourseManager:home.html.twig', [
-            'coursesManaged' => $allCourses,
+            'coursesManaged' => $allCourses
         ]);
     }
 
@@ -88,8 +88,12 @@ class CourseManagerController extends Controller
             ['id' => 'desc']
         );
 
-        $promotions ? $promotion = $promotions[0] : $promotion = null;
-        $applications = $promotion->getApplications();
+        if ($promotions) {
+            $promotion = $promotions[0];
+            $applications = $promotion->getApplications();
+        } else {
+            $promotion = null;
+        }
 
         $promotionsForm = $this->createForm(PromotionFormType::class, null, ["promotions" => $promotions]);
 
@@ -145,9 +149,9 @@ class CourseManagerController extends Controller
         $em = $this->getDoctrine()->getManager();
         $manager = $course->getManager();
         $coManager = $course->getCoManager();
-        if(!is_array($manager))
+        if (!is_array($manager))
             $manager = ['selector' => $manager];
-        if(!is_array($coManager))
+        if (!is_array($coManager))
             $coManager = ['selector' => $coManager];
 
         $courseDto = new CourseDto();
@@ -156,7 +160,7 @@ class CourseManagerController extends Controller
         $courseDto->setCoManager($coManager);
         $courseDto->setSecretariatContactDetails($course->getSecretariatContactDetails());
         $courseDto->setStudentNumber($course->getStudentNumber());
-      //  dump($courseDto);die();
+        //  dump($courseDto);die();
         $editCourseForm = $this->createForm(CourseCreateType::class, $courseDto);
         $addPromotionForm = $this->createForm(AddPromotionType::class);
 
@@ -226,12 +230,29 @@ class CourseManagerController extends Controller
 
     public function studentListAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $courseManager = $this->getUser();
+        $courseManaged = $courseManager->getCourseManaged()->toArray();
+        $courseCoManaged = $courseManager->getCourseCoManaged()->toArray();
+        $courses = array_merge($courseManaged, $courseCoManaged);
+
         $students = $this->getDoctrine()->getManager()
             ->getRepository(Student::class)
-            ->findAll();
+            ->findByCourses($courses);
+
+        $searchForm = $this->createForm(SearchStudentType::class, null, []);
+
+        if ($request->isMethod('post')) {
+            $searchForm->handleRequest($request);
+            if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+                $students = $em->getRepository(Student::class)->findAllByFilters($searchForm->getData());
+            }
+        }
 
         return $this->render('AppBundle:Student:list.html.twig', [
-            "students" => $students
+            "students" => $students,
+            "searchForm" => $searchForm->createView()
         ]);
     }
 
@@ -272,7 +293,8 @@ class CourseManagerController extends Controller
         ]);
     }
 
-    public function displayPersonalInformationsAction(Request $request){
+    public function displayPersonalInformationsAction(Request $request)
+    {
 
         $courseManager = $this->getUser();
         $form = $this->createForm(CourseManagerType::class, $courseManager, ['isDisabled' => true]);
@@ -290,7 +312,7 @@ class CourseManagerController extends Controller
                     'success',
                     'Vos informations ont bien été mises a jour!'
                 );
-            }elseif($form->isSubmitted() && !$form->isValid()){
+            } elseif ($form->isSubmitted() && !$form->isValid()) {
                 $this->addFlash(
                     'danger',
                     'Une ou plusieurs informations sont manquantes et/ou non valides    '
@@ -298,11 +320,10 @@ class CourseManagerController extends Controller
             }
         }
 
-        return $this->render('AppBundle:CourseManager:personalInformations.html.twig',[
+        return $this->render('AppBundle:CourseManager:personalInformations.html.twig', [
             'courseManager' => $form->createView(),
         ]);
     }
-
 
 
 }

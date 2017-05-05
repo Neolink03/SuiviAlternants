@@ -14,9 +14,6 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
 {
     public function findAllByFilters(array $data)
     {
-        //dump($data['currentState']->getName()); die;
-
-        $parameters = [];
         $qb = $this->_em->createQueryBuilder();
 
         $qb->select('a')->from(Application::class, 'a')
