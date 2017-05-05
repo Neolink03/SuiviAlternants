@@ -21,7 +21,7 @@ class ApplicationService
     }
 
     public function setState(Application $application, array $data){
-        $state = $this->getStateFromString($application, $data['transition']->getTos()[0]);
+        $state = $data['transition']->getEndState();
 
         $statusModif = new StatusModification();
         $statusModif->setApplication($application);
@@ -37,15 +37,5 @@ class ApplicationService
         $this->em->flush();
 
         return $application;
-    }
-
-    private function getStateFromString(Application $application, string $stateString){
-        $state = $this->em->getRepository(State::class)->findOneBy(
-            array(
-                'workflow' => $application->getPromotion()->getWorkflow(),
-                'machineName' => $stateString
-                )
-        );
-        return $state;
     }
 }
