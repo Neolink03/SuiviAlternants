@@ -301,9 +301,5 @@ class CourseManagerController extends Controller
             'form' => $form->createView()
         ]);
     }
-
-    public function displayPersonalInformationsAction(Request $request)
-    {
-            } elseif ($form->isSubmitted() && !$form->isValid()) {
-        return $this->render('AppBundle:CourseManager:personalInformations.html.twig', [
+    
 }
