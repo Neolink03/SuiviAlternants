@@ -144,7 +144,6 @@ class CourseManagerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $editCourseForm = $this->createForm(CourseType::class, $course);
-        $addPromotionForm = $this->createForm(AddPromotionType::class);
 
         if ($request->isMethod('post')) {
             
@@ -154,12 +153,12 @@ class CourseManagerController extends Controller
                 $em->persist($course);
                 $em->flush();
                 $this->addFlash('success', 'La formation a été modifiée avec succès.');
+                return $this->redirectToRoute('course_manager.course', ['courseId' => $course->getId()]);
             }
         }
 
         return $this->render('AppBundle:CourseManager:editCourse.html.twig', [
             'editCourseForm' => $editCourseForm->createView(),
-            'addPromotionForm' => $addPromotionForm->createView(),
             'course' => $course
         ]);
     }
@@ -177,7 +176,6 @@ class CourseManagerController extends Controller
             $stringTransitions[$value->getName()] = $value;
         }
         $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $stringTransitions));
-
 
         $form->handleRequest($request);
 
@@ -198,16 +196,28 @@ class CourseManagerController extends Controller
         ]);
     }
 
-    public function addPromotionAction(Request $request)
+    /**
+     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
+     */
+    public function addPromotionAction(Request $request, Course $course)
     {
-        $courseId = $request->get('courseId');
-        $data = $request->request->get('add_promotion');
-
-        $this->get('app.factory.promotion')->createPromotionFromForm($courseId, $data);
-
-        $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
-
-        return $this->redirectToRoute('course_manager.course.edit', ['courseId' => $courseId]);
+        $addPromotionForm = $this->createForm(AddPromotionType::class);
+        
+        if ($request->isMethod('post')) {
+            $data = $request->request->get('add_promotion');
+            $addPromotionForm->handleRequest($request);
+            
+            if ($addPromotionForm->isSubmitted() && $addPromotionForm->isValid()) {
+                $this->get('app.factory.promotion')->createPromotionFromForm($course->getId(), $data);
+                $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
+                return $this->redirectToRoute('course_manager.course', ['courseId' => $course->getId()]);
+            }
+        }
+        
+        return $this->render('AppBundle:CourseManager:addPromotion.html.twig', [
+            'addPromotionForm' => $addPromotionForm->createView(),
+            'course' => $course
+        ]);
     }
 
     public function studentListAction(Request $request)
