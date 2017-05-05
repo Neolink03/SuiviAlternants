@@ -62,7 +62,6 @@ class CourseManagerController extends Controller
             if ($studentForm->isSubmitted() && $studentForm->isValid()) {
 
                 $userFactory = $this->get('app.factory.user');
-
                 $student = $userFactory->getOrCreateStudentIfNotExist($student);
                 $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
                 $em->persist($student);

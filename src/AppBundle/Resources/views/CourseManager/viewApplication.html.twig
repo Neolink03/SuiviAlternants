@@ -7,7 +7,9 @@
     <hr>
 
     <h2 class="mb-4">Statut : {{ application.lastStatusModification.state.name }}</h2>
-    <div id="workflow" style="display: none">{{ app_factory_workflow.dumpWorflowFromApplication(application) }}</div>
+
+    <div class="workflow-dump" style="display: none">{{ app_factory_workflow.dumpWorflowFromApplication(application) }}</div>
+
     <div class="mb-4">
         {{ form_start(form) }}
         {{ form_widget(form) }}

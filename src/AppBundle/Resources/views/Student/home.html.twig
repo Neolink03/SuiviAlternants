@@ -14,7 +14,7 @@
             <div>
                 <span>{{ application.promotion.course.name }}</span>
                 <span>{{ application.currentState }}</span>
-                <div id="workflow" style="display: none">{{ app_factory_workflow.dumpWorflowFromApplication(application) }}</div>
+                <div class="workflow-dump" style="display: none">{{ app_factory_workflow.dumpWorflowFromApplication(application) }}</div>
             </div>
         {% endfor %}
     </div>

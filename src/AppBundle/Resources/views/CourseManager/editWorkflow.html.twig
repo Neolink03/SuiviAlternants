@@ -9,7 +9,9 @@
     </a>
 
     <h2 class="mb-4">Modification du workflow</h2>
-    <div id="workflow" style="display: none">{{ app_factory_workflow.dumpWorflowFromPromotion(promotion) }}</div>
+
+    <div class="workflow-dump" style="display: none">{{ app_factory_workflow.dumpWorflowFromPromotion(promotion) }}</div>
+
     <div id="accordion" role="tablist" aria-multiselectable="true">
         <div class="card mb-3">
             <h4 class="card-header" data-toggle="collapse" data-parent="#accordion" href="#collapseStates"
