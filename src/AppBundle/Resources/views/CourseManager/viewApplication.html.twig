@@ -4,17 +4,18 @@
 
 {% block body %}
     <h1>{{ application.student.firstName }} {{ application.student.lastName }}</h1>
-    <h2>Status : {{ application.lastStatusModification.state.name }}</h2>
+    <hr>
+
+    <h2 class="mb-4">Statut : {{ application.lastStatusModification.state.name }}</h2>
     <div id="workflow" style="display: none">{{ app_factory_workflow.dumpWorflowFromApplication(application) }}</div>
-    <div>
+    <div class="mb-4">
         {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Valider"
-               class="btn btn-default" />
+        <input type="submit" value="Valider" class="btn btn-primary"/>
         {{ form_end(form) }}
     </div>
     <div>
-        <span>Historique des étapes</span>
+        <h4>Historique des étapes</h4>
         <table class="table">
             <thead>
             <tr>
@@ -24,13 +25,13 @@
             </tr>
             </thead>
             <tbody>
-                    {% for statusModification in application.statusModifications %}
-                        <tr>
-                            <td>{{ statusModification.state.name }}</td>
-                            <td>{{ statusModification.dateTime | date}}</td>
-                            <td>{{ statusModification.comment }}</td>
-                        </tr>
-                    {% endfor %}
+            {% for statusModification in application.statusModifications %}
+                <tr>
+                    <td>{{ statusModification.state.name }}</td>
+                    <td>{{ statusModification.dateTime | date }}</td>
+                    <td>{{ statusModification.comment }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
 
