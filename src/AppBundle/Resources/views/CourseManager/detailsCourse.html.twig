@@ -12,6 +12,11 @@
         <a href="{{ path('course_manager.course.edit', { 'courseId': course.id }) }}" class="btn btn-primary">
             <i class="fa fa-pencil" aria-hidden="true"></i> Modifier la formation
         </a>
+            
+        <a href="{{ path('course_manager.promotion.add', { 'courseId': course.id }) }}" class="btn btn-success">
+            <i class="fa fa-users" aria-hidden="true"></i> Ajouter une promotion
+        </a>
+            
         <a href="{{ path('companycontact_index', { 'courseId': course.id }) }}" class="btn btn-primary">
             <i class="fa fa-address-book" aria-hidden="true"></i> Liste des contacts entreprise
         </a>

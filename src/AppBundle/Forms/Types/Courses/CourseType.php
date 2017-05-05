@@ -8,13 +8,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use AppBundle\Forms\Types\CourseManagers\CourseManagerSingleSelectType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use AppBundle\Models\Dtos\Courses\Course as CourseDto;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use AppBundle\Forms\DataTransformers\CourseManager\SingleSelectDataTransformer as CourseManagerSingleSelectDataTransformer;
 
-class CourseCreateType extends AbstractType{
+class CourseType extends AbstractType{
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // Fields
         $builder
             ->add('name', TextType::class, [
                  'label' => 'Nom'
@@ -29,7 +29,11 @@ class CourseCreateType extends AbstractType{
             ->add('secretariatContactDetails', TextareaType::class, [
                 'label' => 'Coordonnées secrétariat'
             ])
-            ->add('submit', SubmitType::class, ['label' => 'Créer'])
+            ->add('submit', SubmitType::class, ['label' => 'Valider'])
         ;
+        
+        // Data transformers
+        $builder->get('manager')->addModelTransformer(new CourseManagerSingleSelectDataTransformer());
+        $builder->get('coManager')->addModelTransformer(new CourseManagerSingleSelectDataTransformer());
     }
 }

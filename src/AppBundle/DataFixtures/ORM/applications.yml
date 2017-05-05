@@ -5,3 +5,4 @@ AppBundle\Entity\Application:
    Application_1:
         student: '@student_1'
         promotion: '@Promotion_1'
+        currentState: 'Est_Repellat'

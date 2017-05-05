@@ -7,8 +7,10 @@
        class="btn btn-secondary pull-right">
         <i class="fa fa-download" aria-hidden="true"></i> Exporter le workflow
     </a>
+
     <h2 class="mb-4">Modification du workflow</h2>
-    <div id="workflow" class="mb-4" style="display: none">{{ workflowDump }}</div>
+
+    <div class="workflow-dump" style="display: none">{{ app_factory_workflow.dumpWorflowFromPromotion(promotion) }}</div>
 
     <div id="accordion" role="tablist" aria-multiselectable="true">
         <div class="card mb-3">

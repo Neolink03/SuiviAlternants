@@ -16,8 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-
-
 class StudentController extends Controller
 {
     public function studentIndexAction(){
