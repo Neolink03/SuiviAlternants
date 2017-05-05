@@ -175,6 +175,18 @@ class CourseManagerController extends Controller
         foreach ($transitions as $index => $value) {
             $stringTransitions[$value->getName()] = $value;
         }
+
+        $realTransitions = $application->getPromotion()->getWorkflow()->getTransitions()->toArray();
+
+        $result = [];
+        foreach ($realTransitions as $realTransition){
+            foreach ($transitions as $workflowTransition){
+                if($realTransition->getMachineName() == $workflowTransition->getName()){
+                    $result[] = $realTransition;
+                }
+            }
+        }
+
         $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $stringTransitions));
 
         $form->handleRequest($request);
