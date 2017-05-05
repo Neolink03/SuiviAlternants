@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Accueil formateur{% endblock %}
+
+{% block body %}
+    <h1>Formations</h1>
+    <hr>
+{% endblock %}

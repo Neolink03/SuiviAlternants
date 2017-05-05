@@ -59,3 +59,14 @@ AppBundle\Entity\User\Student:
         enabled: true
         roles:
           - ROLE_STUDENT
+
+AppBundle\Entity\User\Jury:
+   jury_1:
+        firstName: Jean Jury
+        lastName: Jury
+        username: jury
+        plainPassword: jury
+        email: test4@test.test
+        enabled: true
+        roles:
+          - ROLE_JURY

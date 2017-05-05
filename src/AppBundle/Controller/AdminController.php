@@ -53,36 +53,6 @@ class AdminController extends Controller
         ]);
     }
 
-    public function displayPersonalInformationsAction(Request $request){
-
-        $administrator = $this->getUser();
-        $form = $this->createForm(UserType::class, $administrator, ['isDisabled' => true]);
-
-        if ($request->isMethod('post')) {
-
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($administrator);
-                $em->flush();
-                $this->addFlash(
-                    'success',
-                    'Vos informations ont bien été mises a jour!'
-                );
-            }elseif($form->isSubmitted() && !$form->isValid()){
-                $this->addFlash(
-                    'danger',
-                    'Une ou plusieurs informations sont manquantes et/ou non valides    '
-                );
-            }
-        }
-
-        return $this->render('AppBundle:Admin:personalInformations.html.twig',[
-            'administrator' => $form->createView(),
-        ]);
-    }
 
     /**
      * @ParamConverter("application")
