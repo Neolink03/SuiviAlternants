@@ -90,6 +90,8 @@ class UserFactory
         $courseManager->setUsername($adminUserDto->getUser()->getEmail());
         $courseManager->setPhoneNumber($adminUserDto->getPhoneNumber());
         $courseManager->setPlainPassword($adminUserDto->getPassword());
+        $courseManager->addRole('ROLE_MANAGER');
+        $courseManager->setEnabled(true);
 
         $this->em->persist($courseManager);
         $this->em->flush();
@@ -104,6 +106,8 @@ class UserFactory
         $jury->setEmail($adminUserDto->getUser()->getEmail());
         $jury->setUsername($adminUserDto->getUser()->getEmail());
         $jury->setPlainPassword($adminUserDto->getPassword());
+        $jury->addRole('ROLE_JURY');
+        $jury->setEnabled(true);
 
         $this->em->persist($jury);
         $this->em->flush();
@@ -118,6 +122,8 @@ class UserFactory
         $administrator->setEmail($adminUserDto->getUser()->getEmail());
         $administrator->setUsername($adminUserDto->getUser()->getEmail());
         $administrator->setPlainPassword($adminUserDto->getPassword());
+        $administrator->addRole('ROLE_ADMIN');
+        $administrator->setEnabled(true);
 
         $this->em->persist($administrator);
         $this->em->flush();
@@ -166,6 +172,8 @@ class UserFactory
             $student->setLastName($studentArray[0]);
             $student->setFirstName($studentArray[1]);
             $student->setEmail($studentArray[2]);
+            $student->addRole('ROLE_STUDENT');
+            $student->setEnabled(true);
 
             $student = $this->getOrCreateStudentIfNotExist($student);
             $student = $this->createStudentApplicationFromPromotion($student, $promotion);

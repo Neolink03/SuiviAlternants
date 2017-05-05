@@ -8,6 +8,14 @@
         <default key="_controller">AppBundle:Security:login</default>
     </route>
 
+    <route id="personalInformation" path="/informations">
+        <default key="_controller">AppBundle:Common:displayPersonalInformations</default>
+    </route>
+
+    <route id="changePassword" path="/change_password">
+        <default key="_controller">AppBundle:Common:changerMotDePasse</default>
+    </route>
+
     <route id="homepage" path="/">
         <default key="_controller">AppBundle:Common:index</default>
     </route>
@@ -16,6 +24,7 @@
     <import resource="@AppBundle/Resources/config/routing/admin.xml" prefix="/admin"/>
     <import resource="@AppBundle/Resources/config/routing/course_manager.xml" prefix="/course-manager"/>
     <import resource="@AppBundle/Resources/config/routing/student.xml" prefix="/student"/>
+    <import resource="@AppBundle/Resources/config/routing/jury.xml" prefix="/jury"/>
     <import resource="@AppBundle/Resources/config/routing/companycontact.xml" prefix="/course-manager/course/{courseId}/companycontact"/>
 
 </routes>

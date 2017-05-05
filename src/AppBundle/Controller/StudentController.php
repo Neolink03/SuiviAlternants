@@ -28,39 +28,5 @@ class StudentController extends Controller
         ]);
     }
 
-    public function displayPersonalInformationsAction(Request $request) {
-
-        $student = $this->getUser();
-        $form = $this->createForm(StudentType::class, $student, ['isDisabled' => true]);
-
-        if ($request->isMethod('post')) {
-
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($student);
-                $em->flush();
-                $this->addFlash(
-                    'success',
-                    'Vos informations ont bien été mises a jour!'
-                );
-                
-                return new RedirectResponse($this->generateUrl("student.home"));
-            }
-            
-            elseif ($form->isSubmitted() && !$form->isValid()){
-                $this->addFlash(
-                    'danger',
-                    'Une ou plusieurs informations sont manquantes et/ou non valides    '
-                );
-            }
-        }
-
-        return $this->render('AppBundle:Student:personalInformations.html.twig',[
-            'student' => $form->createView(),
-        ]);
-    }
 
 }

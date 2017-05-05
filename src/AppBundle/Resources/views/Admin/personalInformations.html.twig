@@ -10,6 +10,8 @@
 
 {% block body %}
     <h1>Mes informations personnelles</h1>
+    <a href="{{ path('changePassword') }}" class="btn btn-primary">Changer le mot de passe</a>
+
     <div id="administratorInformation">
         {{ form_start(administrator) }}
         {{ form_widget(administrator) }}

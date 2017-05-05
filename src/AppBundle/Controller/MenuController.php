@@ -18,7 +18,7 @@ class MenuController extends Controller
         $menuService = $this->get('app.menu');
         $menuItems = $menuService->getMenuItems();
 
-        return $this->render('@App/Menu/menu.html.twig', [
+        return $this->render('@App/Common/menu.html.twig', [
             "currentRoute" => $currentRoute,
             "menuItems" => $menuItems
         ]);

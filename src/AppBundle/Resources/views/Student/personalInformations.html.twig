@@ -10,8 +10,9 @@
 
 {% block body %}
     <h1>Mes informations personnelles</h1>
+    <a href="{{ path('changePassword') }}" class="btn btn-primary">Changer le mot de passe</a>
     
-    <div class="row form-group col-md-6">
+    <div class="form-group">
         {{ form_start(student) }}
 
         {{ form_row(student.lastName) }}
