@@ -47,6 +47,12 @@ class WorkflowController extends Controller
     public function addApplicationWorkflowFromNothingAction(Promotion $promotion, Request $request)
     {
         $workflow = new WorkFlow();
+
+        $state = new State();
+        $state->setName("Départ");
+        $state->setWorkflow($workflow);
+
+        $workflow->addState($state);
         $workflow->setPromotion($promotion);
 
         $em = $this->getDoctrine()->getManager();
