@@ -14,3 +14,13 @@ AppBundle\Entity\Transition:
         name: <words(5, true)>
         startState: '@State*'
         endState: '@State*'
+
+AppBundle\Entity\StudentCountCondition:
+   Yolo{1..5}:
+        number: <numberBetween(0,25)>
+        operator: '<='
+
+AppBundle\Entity\DatetimeCondition:
+   Bitch{1..5}:
+        datetime: <(new \DateTime())>
+        operator: '<='
