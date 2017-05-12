@@ -12,11 +12,11 @@
         <a href="{{ path('course_manager.course.edit', { 'courseId': course.id }) }}" class="btn btn-primary">
             <i class="fa fa-pencil" aria-hidden="true"></i> Modifier la formation
         </a>
-            
+
         <a href="{{ path('course_manager.promotion.add', { 'courseId': course.id }) }}" class="btn btn-success">
             <i class="fa fa-users" aria-hidden="true"></i> Ajouter une promotion
         </a>
-            
+
         <a href="{{ path('companycontact_index', { 'courseId': course.id }) }}" class="btn btn-primary">
             <i class="fa fa-address-book" aria-hidden="true"></i> Liste des contacts entreprise
         </a>
@@ -64,7 +64,7 @@
             {{ form_widget(searchForm.lastName, { 'attr': { 'class': 'form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
             {{ form_widget(searchForm.firstName, { 'attr': { 'class': 'form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
             {{ form_widget(searchForm.currentState, { 'attr': { 'class': 'form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
-            <button type="submit" class="btn btn-secondary form-control mb-2 mr-sm-2 mb-sm-0">
+            <button type="submit" class="btn btn-secondary form-control mb-2 mr-sm-2 mb-sm-0" role="button">
                 Rechercher <i class="fa fa-search" aria-hidden="true"></i>
             </button>
             {#<button type="reset" class="btn btn-secondary form-control mb-2 mr-sm-2 mb-sm-0">#}
@@ -105,10 +105,6 @@
             <a href="{{ path('course_manager.promotion.workflow.add', { 'promotionId': promotion.id }) }}"
                class="btn btn-secondary">Ajouter un workflow</a>
         {% endif %}
-    {% else %}
-        <a href="{{ path('course_manager.course.edit', { 'courseId': course.id }) }}" class="btn btn-success">
-            <i class="fa fa-plus" aria-hidden="true"></i> Ajouter une promotion
-        </a>
     {% endif %}
 
 {% endblock %}

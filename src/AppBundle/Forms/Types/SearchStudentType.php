@@ -35,15 +35,17 @@ class SearchStudentType extends AbstractType
                 'placeholder' => 'Prénom...'
             ]
         ]);
-        $builder->add('currentState', ChoiceType::class, [
-            'choices' => $options['states'],
-            'choice_label' => function (State $state) {
-                return $state->getName();
-            },
-            'placeholder' => 'Trier par statut...',
-            'label' => false,
-            'required' => false
-        ]);
+        if($options['states']) {
+            $builder->add('currentState', ChoiceType::class, [
+                'choices' => $options['states'],
+                'choice_label' => function (State $state) {
+                    return $state->getName();
+                },
+                'placeholder' => 'Trier par statut...',
+                'label' => false,
+                'required' => false
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
