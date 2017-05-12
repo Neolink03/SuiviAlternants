@@ -10,5 +10,6 @@
     <id name="id" type="integer" column="id">
       <generator strategy="AUTO"/>
     </id>
+    <one-to-one field="transition" target-entity="AppBundle\Entity\Transition" mapped-by="condition" />
   </entity>
 </doctrine-mapping>

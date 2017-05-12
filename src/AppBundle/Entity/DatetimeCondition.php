@@ -33,5 +33,10 @@ class DatetimeCondition extends TransitionCondition
     {
         return $this->operator;
     }
+
+    public function isChecked(): boolean
+    {
+        return false;
+    }
 }
 
