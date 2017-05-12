@@ -3,11 +3,11 @@
 {% block title %}Créer une formation{% endblock %}
 
 {% block body %}
-    <h1>Créer une formation</h1>
+    <h1>{% block body_title %}Créer une formation{% endblock %}</h1>
     
     <div class="row col-md-6">
         
-        {{ form_start(courseForm, {'action': path('admin.course.add')}) }}
+        {% block head_form %} {{ form_start(courseForm, {'action': path('admin.course.add')}) }} {% endblock %}
         
             <div class="form-group">
                 {{ form_label(courseForm.name)}}
