@@ -16,6 +16,13 @@
                 <span>{{ application.currentState }}</span>
                 <div class="workflow-dump" style="display: none">{{ app_factory_workflow.dumpWorflowFromApplication(application) }}</div>
             </div>
+            {% for dataAttachment in application.dataAttachments %}
+                {% if dataAttachment is company %}
+                    <a href="{{ path('student.company.edit', { 'companyId' : dataAttachment.id}) }}" class="btn btn-primary">Ajouter les informations de l'entreprise</a>
+                {% else %}
+                    Ce n'est pas une compagny TODO
+                {% endif %}
+            {% endfor %}
         {% endfor %}
     </div>
 {% endblock %}

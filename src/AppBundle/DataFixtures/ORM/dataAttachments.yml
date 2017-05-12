@@ -1,0 +1,4 @@
+AppBundle\Entity\Company:
+   Company_1:
+        name: Facebook
+        application: '@Application_1'

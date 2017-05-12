@@ -5,8 +5,6 @@
             <generator strategy="AUTO"/>
         </id>
         <field name="currentState" type="string" column="currentState" length="255"/>
-        <many-to-one field="student" target-entity="AppBundle\Entity\User\Student" inversed-by="applications" />
-        <many-to-one field="promotion" target-entity="AppBundle\Entity\Promotion" inversed-by="applications" />
         <one-to-many field="statusModifications" target-entity="AppBundle\Entity\StatusModification" mapped-by="application">
             <cascade>
                 <cascade-persist/>
@@ -15,5 +13,12 @@
                 <order-by-field name="id" direction="DESC" />
             </order-by>
         </one-to-many>
+        <one-to-many field="dataAttachments" target-entity="AppBundle\Entity\DataAttachments" mapped-by="application">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <many-to-one field="student" target-entity="AppBundle\Entity\User\Student" inversed-by="applications" />
+        <many-to-one field="promotion" target-entity="AppBundle\Entity\Promotion" inversed-by="applications" />
     </entity>
 </doctrine-mapping>

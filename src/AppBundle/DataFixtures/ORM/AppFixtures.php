@@ -23,6 +23,7 @@ class AppFixtures implements FixtureInterface
                 __DIR__ . '/workflow.yml',
                 __DIR__ . '/applications.yml',
                 __DIR__ . '/statusModifications.yml',
+                __DIR__ . '/dataAttachments.yml',
             ],
             $manager,
             [
