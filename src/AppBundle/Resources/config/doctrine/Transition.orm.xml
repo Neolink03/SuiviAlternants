@@ -10,7 +10,11 @@
     <field name="machineName" type="string" column="machineName" length="255">
       <gedmo:slug unique="true" style="camel" updatable="false" separator="_" fields="name" />
     </field>
-    <one-to-one field="condition" target-entity="AppBundle\Entity\TransitionCondition" inversed-by="transition"/>
+    <one-to-one field="condition" target-entity="AppBundle\Entity\TransitionCondition" inversed-by="transition">
+      <cascade>
+        <cascade-persist/>
+      </cascade>
+    </one-to-one>
     <many-to-one field="startState" target-entity="AppBundle\Entity\State" />
     <many-to-one field="endState" target-entity="AppBundle\Entity\State" />
 
