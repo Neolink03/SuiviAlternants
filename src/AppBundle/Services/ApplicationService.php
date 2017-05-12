@@ -30,7 +30,11 @@ class ApplicationService
     }
 
     public function setState(Application $application, array $data){
-        $authoriseChangeState = $this->tcs->isChecked($data['transition']->getCondition());
+        $authoriseChangeState =true;
+        if($data['transition']->getCondition()){
+            $authoriseChangeState = $this->tcs->isChecked($data['transition']->getCondition());
+        }
+
         if($authoriseChangeState){
             $state = $data['transition']->getEndState();
 

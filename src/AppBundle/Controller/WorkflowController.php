@@ -2,11 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\DatetimeCondition;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
 use AppBundle\Entity\StudentCountCondition;
 use AppBundle\Entity\Transition;
 use AppBundle\Entity\TransitionCondition;
+use AppBundle\Forms\Types\TransitionConditions\DatetimeConditionType;
 use AppBundle\Forms\Types\TransitionConditions\StudentCountConditionType;
 use AppBundle\Forms\Types\Workflow\SampleTransitionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -244,8 +246,16 @@ class WorkflowController extends Controller
     public function editConditionWorkflowCountAction(Request $request, Promotion $promotion, TransitionCondition $condition)
     {
         $em =$this->getDoctrine()->getManager();
-        $form = $this->createForm(StudentCountConditionType::class, $condition);
+
+        if ($condition instanceof StudentCountCondition) {
+            $form = $this->createForm(StudentCountConditionType::class, $condition);
+        }
+        if ($condition instanceof DatetimeCondition) {
+            $form = $this->createForm(DatetimeConditionType::class, $condition);
+        }
+
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($condition);
@@ -256,11 +266,40 @@ class WorkflowController extends Controller
                 'transitionId' => $condition->getTransition()->getId()
             ]);
         }
+
         return $this->render('AppBundle:CourseManager:editWorkflowConditionCount.html.twig',
             [
                 'form' => $form->createView()
             ]);
     }
 
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     * @ParamConverter("transition", options={"mapping": {"transitionId" : "id"}})
+     */
+    public function addConditionWorkflowDateAction(Request $request, Promotion $promotion, Transition $transition)
+    {
+        $em =$this->getDoctrine()->getManager();
+
+        $condition = new DatetimeCondition();
+        $form = $this->createForm(DatetimeConditionType::class, $condition);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $condition->setTransition($transition);
+            $transition->setCondition($condition);
+            $em->persist($transition);
+            $em->flush();
+
+            return $this->redirectToRoute('course_manager.promotion.workflow.transition.rename', [
+                'promotionId' => $promotion->getId(),
+                'transitionId' => $transition->getId()
+            ]);
+        }
+        return $this->render('AppBundle:CourseManager:addWorkflowConditionDate.html.twig',
+            [
+                'form' => $form->createView()
+            ]);
+    }
 
 }

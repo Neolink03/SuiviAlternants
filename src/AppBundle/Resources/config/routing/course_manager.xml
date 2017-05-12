@@ -68,8 +68,16 @@
         <default key="_controller">AppBundle:Workflow:addConditionWorkflowCount</default>
     </route>
 
-    <route id="course_manager.promotion.workflow.condition.edit.count" path="/promotion/{promotionId}/workflow/condition/{conditionId}/edit/count">
+    <route id="course_manager.promotion.workflow.condition.edit" path="/promotion/{promotionId}/workflow/condition/{conditionId}/edit/count">
         <default key="_controller">AppBundle:Workflow:editConditionWorkflowCount</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.condition.add.date" path="/promotion/{promotionId}/workflow/condition/{transitionId}/add/date">
+        <default key="_controller">AppBundle:Workflow:addConditionWorkflowDate</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.condition.edit.date" path="/promotion/{promotionId}/workflow/condition/{conditionId}/edit/date">
+        <default key="_controller">AppBundle:Workflow:editConditionWorkflowDate</default>
     </route>
 
     <route id="course_manager.showPersonalInformation" path="/informations">
