@@ -41,15 +41,22 @@ class AdminController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 
                 $courseDto = $form->getData();
-                if($this->get('app.factory.course')->saveNewCourse($courseDto) == true){
+                
+                try {
+                    $this->get('app.factory.course')->saveNewCourse($courseDto);
                     $this->addFlash("success", "La formation a bien été créée.");
                     return new RedirectResponse($this->generateUrl("admin.home"));
+                }
+                catch (\Exception $e){
+                    $this->addFlash("danger", "La formation existe déjà.");
                 }
             }
         }
         
-        return $this->render('AppBundle:Admin:createCourse.html.twig', [
-            "courseForm" => $form->createView()
+        return $this->render('AppBundle:Course:edit.html.twig', [
+            "courseForm" => $form->createView(),
+            "title" => "Créer une formation",
+            "updateCourseActionUrl" => $this->generateUrl("admin.course.add")
         ]);
     }
 
@@ -66,11 +73,21 @@ class AdminController extends Controller
         $adminNewUserDto = new AdminNewUserDto();
         $form = $this->createForm(AdminNewUserType::class,$adminNewUserDto);
         $form->handleRequest($request);
-
+       // dump($form['userType']->getData());
+       // dump($form['phoneNumber']->getData());die;
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainpassword = $this->get('app.password')->generate();
-            $adminNewUserDto->setPassword($plainpassword);
-            $this->get('app.factory.user')->saveFromAdmin($adminNewUserDto);
+            if ($form['userType']->getData() == "responsable" && $form['phoneNumber']->getData() == null){
+                $this->addFlash("danger", "Une information est manquante ou incomplète.");
+            }else{
+                $plainpassword = $this->get('app.password')->generate();
+                $adminNewUserDto->setPassword($plainpassword);
+                $this->get('app.factory.user')->saveFromAdmin($adminNewUserDto);
+                unset($adminNewUserDto);
+                unset($form);
+                $adminNewUserDto = new AdminNewUserDto();
+                $form = $this->createForm(AdminNewUserType::class,$adminNewUserDto);
+            }
+
         }
 
         return $this->render('AppBundle:Admin:addUser.html.twig', [

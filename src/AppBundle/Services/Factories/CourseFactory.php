@@ -7,6 +7,7 @@ use AppBundle\Entity\Course;
 use AppBundle\Models\Dtos\Courses\Course as CourseDto;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
+use AppBundle\Errors\Courses\AlreadyExistCourseException;
 
 class CourseFactory {
     
@@ -32,17 +33,13 @@ class CourseFactory {
         $course->setSecretariatContactDetails($courseDto->getSecretariatContactDetails());
         $course->setStudentNumber(Course::DEFAULT_STUDENT_NUMBER); // no student number field in course create form 
 
-
+        if (!is_null($courseDataBase)) {
+            throw new AlreadyExistCourseException($courseDataBase);
+        }
+        
         if(($course->getManager() != $course->getCoManager()) && is_null($courseDataBase)){
             $this->em->persist($course);
             $this->em->flush($course);
-            return true;
-        }else{
-            if($course->getManager() == $course->getCoManager())
-                $this->session->getFlashBag()->add("danger", "Le manager et le co-manager ne peuvent pas être la même personne.");
-            elseif(!is_null($courseDataBase))
-                $this->session->getFlashBag()->add("danger", "La formation existe déjà.");
-            return false;
         }
     }
 }

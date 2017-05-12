@@ -39,8 +39,14 @@
             <argument type="service" id="security.authorization_checker" />
         </service>
 
+
+        <service id="app.transition_condition" class="AppBundle\Services\TransitionConditionService">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
         <service id="app.application" class="AppBundle\Services\ApplicationService">
             <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="app.transition_condition"/>
+            <argument type="service" id="session"/>
         </service>
 
         <service id="app.factory.swift_message" class="AppBundle\Services\Factories\SwiftMessageFactory">

@@ -8,6 +8,7 @@ namespace AppBundle\Services\Factories;
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\StatusModification;
+use AppBundle\Entity\User;
 use AppBundle\Entity\User\Administrator;
 use AppBundle\Entity\User\CourseManager;
 use AppBundle\Entity\User\Jury;
@@ -42,7 +43,7 @@ class UserFactory
 
     public function saveFromAdmin(AdminNewUserDto $adminUserDto){
 
-        $managerDataBase = $this->em->getRepository(CourseManager::class)->findOneBy(array(
+        $managerDataBase = $this->em->getRepository(User::class)->findOneBy(array(
             'email' => $adminUserDto->getUser()->getEmail()
         ));
 

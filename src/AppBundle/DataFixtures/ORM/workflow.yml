@@ -8,9 +8,26 @@ AppBundle\Entity\State:
         name:  <words(2, true)>
         workflow: '@WorkFlow*'
 
+AppBundle\Entity\StudentCountCondition:
+   Yolo:
+        number: <numberBetween(0,25)>
+        operator: '<='
+
+AppBundle\Entity\DatetimeCondition:
+   Bitch:
+        datetime: <(new \DateTime())>
+        operator: '<='
+
 AppBundle\Entity\Transition:
    Transition{20..50}:
         workflow: '@WorkFlow*'
+        name: <words(5, true)>
+        startState: '@State*'
+        endState: '@State*'
+
+   Transition_1:
+        workflow: '@WorkFlow*'
+        condition: '@Yolo'
         name: <words(5, true)>
         startState: '@State*'
         endState: '@State*'

@@ -20,6 +20,8 @@ class Transition
     private $startState;
     /** @SerializedName("endStateName") */
     private $endState;
+    /** @Exclude */
+    private $condition;
 
 
     public function getId()
@@ -81,6 +83,16 @@ class Transition
     public function setWorkflow($workflow)
     {
         $this->workflow = $workflow;
+    }
+
+    public function getCondition()
+    {
+        return $this->condition;
+    }
+
+    public function setCondition($condition)
+    {
+        $this->condition = $condition;
     }
 
 }

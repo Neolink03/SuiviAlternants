@@ -8,6 +8,10 @@
         <default key="_controller">AppBundle:Jury:displayPersonalInformations</default>
     </route>
 
+    <route id="jury.course" path="/course/{courseId}">
+        <default key="_controller">AppBundle:Jury:studentList</default>
+    </route>
+
     <route id="jury.home" path="">
         <default key="_controller">AppBundle:Jury:juryIndex</default>
     </route>

@@ -6,6 +6,61 @@
     <h1>Modification de la transition</h1>
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <input type="submit" value="Modifier" class="btn btn-primary">
+    {%  if transition.condition is not null %}
+        <h2>Condition</h2>
+        <ul>
+            <li>
+                {{ dump(transition.condition) }}
+                <div class="btn-group">
+                    <a class="btn btn-primary"
+                       href="{{ path('course_manager.promotion.workflow.condition.edit',
+                       { 'conditionId': transition.condition.id, 'promotionId': promotion.id }) }}">
+                        Modifier
+                    </a>
+                    <button type="button"
+                            class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="{{ path('course_manager.promotion.workflow.condition.delete',
+                        { 'conditionId': transition.condition.id, 'promotionId': promotion.id }) }}"
+                           class="dropdown-item">
+                            Supprimer
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    {% endif %}
+
+    <input type="submit" value="Valider" class="btn btn-primary">
+
+    {%  if transition.condition is null %}
+        <div class="btn-group">
+            <a class="btn btn-primary">
+                Ajouter une condition
+            </a>
+            <button type="button"
+                    class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <a href="{{ path('course_manager.promotion.workflow.condition.add.date',
+                { 'transitionId': transition.id, 'promotionId': promotion.id }) }}"
+                   class="dropdown-item">
+                    Date
+                </a>
+                <a href="{{ path('course_manager.promotion.workflow.condition.add.count',
+                { 'transitionId': transition.id, 'promotionId': promotion.id }) }}"
+                   class="dropdown-item">
+                    Nombre d'étudiants
+                </a>
+            </div>
+        </div>
+    {% endif %}
     {{ form_end(form) }}
+
+
 {% endblock %}

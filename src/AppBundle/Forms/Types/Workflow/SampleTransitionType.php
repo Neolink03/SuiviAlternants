@@ -1,20 +1,19 @@
 <?php
 /**
- * Created by Antoine Lamirault.
+ * User: Antoine Lamirault
  */
 
 namespace AppBundle\Forms\Types\Workflow;
 
 
 use AppBundle\Entity\State;
-use AppBundle\Forms\Types\TransitionConditions\StudentCountConditionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TransitionType extends AbstractType
+class SampleTransitionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -36,7 +35,6 @@ class TransitionType extends AbstractType
             },
             'label' => "Etat d'arrivé"
         ]);
-        $builder->add('condition', StudentCountConditionType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
