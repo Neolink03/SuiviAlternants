@@ -1,0 +1,168 @@
+states:
+    -
+        name: Dossier
+    -
+        name: Etude
+    -
+        name: 'En attente'
+    -
+        name: Refusé
+    -
+        name: Appel
+    -
+        name: Admissible
+    -
+        name: Quitter
+    -
+        name: Recherche
+    -
+        name: Attente
+    -
+        name: Validation
+    -
+        name: 'En cours d''année'
+    -
+        name: Abandon
+    -
+        name: 'Post Alternant'
+    -
+        name: 'Plus d''entreprise'
+transitions:
+    -
+        name: Complet
+        startStateName:
+            name: Dossier
+        endStateName:
+            name: Etude
+    -
+        name: Incomplet
+        startStateName:
+            name: Dossier
+        endStateName:
+            name: 'En attente'
+    -
+        name: Complet
+        startStateName:
+            name: 'En attente'
+        endStateName:
+            name: Etude
+    -
+        name: Relance
+        startStateName:
+            name: 'En attente'
+        endStateName:
+            name: 'En attente'
+    -
+        name: Refusé
+        startStateName:
+            name: Etude
+        endStateName:
+            name: Refusé
+    -
+        name: Entretient
+        startStateName:
+            name: Etude
+        endStateName:
+            name: Appel
+    -
+        name: Admission
+        startStateName:
+            name: Etude
+        endStateName:
+            name: Admissible
+    -
+        name: Refusé
+        startStateName:
+            name: Appel
+        endStateName:
+            name: Refusé
+    -
+        name: Admis
+        startStateName:
+            name: Appel
+        endStateName:
+            name: Admissible
+    -
+        name: Abandon
+        startStateName:
+            name: Etude
+        endStateName:
+            name: Quitter
+    -
+        name: Abandon
+        startStateName:
+            name: Admissible
+        endStateName:
+            name: Quitter
+    -
+        name: Date
+        startStateName:
+            name: Admissible
+        endStateName:
+            name: Recherche
+    -
+        name: Abandon
+        startStateName:
+            name: Recherche
+        endStateName:
+            name: Quitter
+    -
+        name: 'Trouvé > Quota'
+        startStateName:
+            name: Recherche
+        endStateName:
+            name: Attente
+    -
+        name: 'Trouvé < Quota'
+        startStateName:
+            name: Recherche
+        endStateName:
+            name: Validation
+    -
+        name: 'Place se libère'
+        startStateName:
+            name: Attente
+        endStateName:
+            name: Validation
+    -
+        name: Abandon
+        startStateName:
+            name: Validation
+        endStateName:
+            name: Quitter
+    -
+        name: Validé
+        startStateName:
+            name: Validation
+        endStateName:
+            name: 'En cours d''année'
+    -
+        name: Abandon
+        startStateName:
+            name: 'En cours d''année'
+        endStateName:
+            name: Abandon
+    -
+        name: 'Diplome validé'
+        startStateName:
+            name: 'En cours d''année'
+        endStateName:
+            name: 'Post Alternant'
+    -
+        name: 'Rupture du contrat'
+        startStateName:
+            name: 'En cours d''année'
+        endStateName:
+            name: 'Plus d''entreprise'
+    -
+        name: 'Formation initiale'
+        startStateName:
+            name: 'Plus d''entreprise'
+        endStateName:
+            name: 'En cours d''année'
+    -
+        name: 'Nouvelle entreprise'
+        startStateName:
+            name: 'Plus d''entreprise'
+        endStateName:
+            name: 'En cours d''année'
