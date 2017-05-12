@@ -73,11 +73,21 @@ class AdminController extends Controller
         $adminNewUserDto = new AdminNewUserDto();
         $form = $this->createForm(AdminNewUserType::class,$adminNewUserDto);
         $form->handleRequest($request);
-
+       // dump($form['userType']->getData());
+       // dump($form['phoneNumber']->getData());die;
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainpassword = $this->get('app.password')->generate();
-            $adminNewUserDto->setPassword($plainpassword);
-            $this->get('app.factory.user')->saveFromAdmin($adminNewUserDto);
+            if ($form['userType']->getData() == "responsable" && $form['phoneNumber']->getData() == null){
+                $this->addFlash("danger", "Une information est manquante ou incomplète.");
+            }else{
+                $plainpassword = $this->get('app.password')->generate();
+                $adminNewUserDto->setPassword($plainpassword);
+                $this->get('app.factory.user')->saveFromAdmin($adminNewUserDto);
+                unset($adminNewUserDto);
+                unset($form);
+                $adminNewUserDto = new AdminNewUserDto();
+                $form = $this->createForm(AdminNewUserType::class,$adminNewUserDto);
+            }
+
         }
 
         return $this->render('AppBundle:Admin:addUser.html.twig', [
