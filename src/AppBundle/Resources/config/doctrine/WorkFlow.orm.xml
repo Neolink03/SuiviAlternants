@@ -4,6 +4,7 @@
     <id name="id" type="integer" column="id">
       <generator strategy="AUTO"/>
     </id>
+    <one-to-one field="promotion" target-entity="AppBundle\Entity\Promotion" inversed-by="workflow" />
 
     <one-to-many field="states" target-entity="AppBundle\Entity\State" mapped-by="workflow">
       <cascade>
@@ -15,6 +16,5 @@
         <cascade-persist/>
       </cascade>
     </one-to-many>
-    <one-to-one field="promotion" target-entity="AppBundle\Entity\Promotion" inversed-by="workflow" />
   </entity>
 </doctrine-mapping>

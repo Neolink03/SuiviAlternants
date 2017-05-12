@@ -4,7 +4,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
+use AppBundle\Entity\StudentCountCondition;
 use AppBundle\Entity\Transition;
+use AppBundle\Forms\Types\TransitionConditions\StudentCountConditionType;
+use AppBundle\Forms\Types\Workflow\SampleTransitionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,7 +77,7 @@ class WorkflowController extends Controller
         $transition = new Transition();
 
         $formState = $this->createForm(StateType::class, $state);
-        $formTransition = $this->createForm(TransitionType::class, $transition, array(
+        $formTransition = $this->createForm(SampleTransitionType::class, $transition, array(
             'states' => $promotion->getWorkflow()->getStates()
         ));
 
@@ -183,10 +186,10 @@ class WorkflowController extends Controller
                 'promotionId' => $promotion->getId()
             ]);
         }
-
         return $this->render('AppBundle:CourseManager:editWorkflowTransition.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'transition' => $transition
             ]);
     }
 }
