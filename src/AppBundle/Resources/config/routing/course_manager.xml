@@ -60,6 +60,18 @@
         <default key="_controller">AppBundle:Workflow:renameTransitionWorkflow</default>
     </route>
 
+    <route id="course_manager.promotion.workflow.condition.delete" path="/promotion/{promotionId}/workflow/condition/{conditionId}/delete">
+        <default key="_controller">AppBundle:Workflow:deleteConditionWorkflow</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.condition.add.count" path="/promotion/{promotionId}/workflow/condition/{transitionId}/add/count">
+        <default key="_controller">AppBundle:Workflow:addConditionWorkflowCount</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.condition.edit.count" path="/promotion/{promotionId}/workflow/condition/{conditionId}/edit/count">
+        <default key="_controller">AppBundle:Workflow:editConditionWorkflowCount</default>
+    </route>
+
     <route id="course_manager.showPersonalInformation" path="/informations">
         <default key="_controller">AppBundle:CourseManager:displayPersonalInformations</default>
     </route>

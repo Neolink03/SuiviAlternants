@@ -6,6 +6,7 @@ use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
 use AppBundle\Entity\StudentCountCondition;
 use AppBundle\Entity\Transition;
+use AppBundle\Entity\TransitionCondition;
 use AppBundle\Forms\Types\TransitionConditions\StudentCountConditionType;
 use AppBundle\Forms\Types\Workflow\SampleTransitionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -66,7 +67,6 @@ class WorkflowController extends Controller
             'promotionId' => $promotion->getId()
         ]);
     }
-
 
     /**
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
@@ -173,7 +173,7 @@ class WorkflowController extends Controller
     {
         $em =$this->getDoctrine()->getManager();
 
-        $form = $this->createForm(TransitionType::class, $transition, array(
+        $form = $this->createForm(SampleTransitionType::class, $transition, array(
             'states' => $promotion->getWorkflow()->getStates()
         ));
         $form->handleRequest($request);
@@ -189,7 +189,78 @@ class WorkflowController extends Controller
         return $this->render('AppBundle:CourseManager:editWorkflowTransition.html.twig',
             [
                 'form' => $form->createView(),
-                'transition' => $transition
+                'transition' => $transition,
+                'promotion' => $promotion
             ]);
     }
+
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     * @ParamConverter("condition", options={"mapping": {"conditionId" : "id"}})
+     */
+    public function deleteConditionWorkflowAction(Request $request , TransitionCondition $condition, Promotion $promotion)
+    {
+        $em =$this->getDoctrine()->getManager();
+        $condition->getTransition()->setCondition(null);
+        $em->persist($condition);
+        $em->flush();
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+    }
+
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     * @ParamConverter("transition", options={"mapping": {"transitionId" : "id"}})
+     */
+    public function addConditionWorkflowCountAction(Request $request, Promotion $promotion, Transition $transition)
+    {
+        $em =$this->getDoctrine()->getManager();
+
+        $condition = new StudentCountCondition();
+        $form = $this->createForm(StudentCountConditionType::class, $condition);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $condition->setTransition($transition);
+            $transition->setCondition($condition);
+            $em->persist($transition);
+            $em->flush();
+
+            return $this->redirectToRoute('course_manager.promotion.workflow.transition.rename', [
+                'promotionId' => $promotion->getId(),
+                'transitionId' => $transition->getId()
+            ]);
+        }
+        return $this->render('AppBundle:CourseManager:addWorkflowConditionCount.html.twig',
+            [
+                'form' => $form->createView()
+            ]);
+    }
+
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     * @ParamConverter("condition", options={"mapping": {"conditionId" : "id"}})
+     */
+    public function editConditionWorkflowCountAction(Request $request, Promotion $promotion, TransitionCondition $condition)
+    {
+        $em =$this->getDoctrine()->getManager();
+        $form = $this->createForm(StudentCountConditionType::class, $condition);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($condition);
+            $em->flush();
+
+            return $this->redirectToRoute('course_manager.promotion.workflow.transition.rename', [
+                'promotionId' => $promotion->getId(),
+                'transitionId' => $condition->getTransition()->getId()
+            ]);
+        }
+        return $this->render('AppBundle:CourseManager:editWorkflowConditionCount.html.twig',
+            [
+                'form' => $form->createView()
+            ]);
+    }
+
+
 }
