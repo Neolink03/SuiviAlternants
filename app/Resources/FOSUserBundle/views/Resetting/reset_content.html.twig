@@ -1,8 +1,39 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-{{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'resetting.reset.submit'|trans }}" />
+<div class="jumbotron">
+    <h1 class="display-4">Nouveau mot de passe</h1>
+    <p class="lead">Veuillez saisir votre nouveau mot de passe.</p>
+    <hr class="my-4">
+
+    {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
+
+    <div class="form-group row {{ form.plainPassword.first.vars.valid ?: 'has-danger' }}">
+        {{ form_label(form.plainPassword.first, null, { 'label_attr': { 'class': 'col-md-4 col-form-label' } }) }}
+        <div class="col-md-8">
+            {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}} ) }}
+            {% if not form.plainPassword.first.vars.valid %}
+                <ul>
+                    {% for error in form.plainPassword.first.vars.errors %}
+                        <p class="form-control-feedback">{{ error.message }}</p>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
     </div>
-{{ form_end(form) }}
+
+    <div class="form-group row {{ form.plainPassword.second.vars.valid ?: 'has-danger' }}">
+        {{ form_label(form.plainPassword.second, null, { 'label_attr': { 'class': 'col-md-4 col-form-label' } }) }}
+        <div class="col-md-8">
+            {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}} ) }}
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success float-right">
+        <i class="fa fa-check-square-o" aria-hidden="true"></i> {{ 'resetting.reset.submit'|trans }}
+    </button>
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+    <a href="{{ path('homepage') }}">Retour à l'acceuil</a>
+</div>

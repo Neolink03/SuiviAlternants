@@ -1,20 +1,13 @@
 {% trans_default_domain 'FOSUserBundle' %}
 {% block subject %}
 {%- autoescape false -%}
-Réinitialisation de votre mot de passe
+{{ 'resetting.email.subject'|trans({'%username%': user.username}) }}
 {%- endautoescape -%}
 {% endblock %}
 
 {% block body_text %}
 {% autoescape false %}
-Madame, Monsieur,
-
-Vous avez demandé la réinitialisation de votre mot de passe pour le compte {{ user.username }}.
-
-Pour terminer votre demande, cliquez sur le lien suivant :
-
-    {{ confirmationUrl }}
-
+{{ 'resetting.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) }}
 {% endautoescape %}
 {% endblock %}
 {% block body_html %}{% endblock %}

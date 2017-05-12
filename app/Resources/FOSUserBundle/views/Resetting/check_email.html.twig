@@ -1,14 +1,14 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
+{% trans_default_domain 'FOSUserBundle' %}
+
 {% block title %}Email envoyé{% endblock %}
 
 {% block fos_user_content %}
     <div class="jumbotron">
         <h1 class="display-4">Email envoyé !</h1>
         <p class="lead">
-            Un email avec les instructions de réinitialisation de votre mot de passe a été envoyé à l'adresse
-            suivante, {{ app.request.get('username') }}.<br>
-            Veuillez vérifier vos emails.
+            {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
         </p>
         <hr class="my-4">
         <p>

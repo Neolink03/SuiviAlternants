@@ -12,6 +12,12 @@
         <default key="_controller">AppBundle:Common:displayPersonalInformations</default>
     </route>
 
+    <route id="fos_user.profile" path="/profile/">
+        <default key="_controller">FrameworkBundle:Redirect:urlRedirect</default>
+        <default key="path">/informations</default>
+        <default key="permanent">true</default>
+    </route>
+
     <route id="changePassword" path="/change_password">
         <default key="_controller">AppBundle:Common:changerMotDePasse</default>
     </route>

@@ -1,11 +1,13 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
+{% trans_default_domain 'FOSUserBundle' %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/signin.css') }}">
 {% endblock %}
 
-{% block title %}Connexion - Suivi alternants{% endblock %}
+{% block title %}{{ 'layout.login'|trans }}{% endblock %}
 
 {% block fos_user_content %}
     {{ include('@FOSUser/Security/login_content.html.twig') }}

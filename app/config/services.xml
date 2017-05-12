@@ -31,7 +31,7 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
 
-        <service id="app.form.registration" class="AppBundle\Forms\Types\RegistrationType">
+        <service id="app.form.registration" class="AppBundle\Forms\Types\FOSUserBundle\RegistrationType">
             <tag name="form.type" alias="app_user_registration" />
         </service>
 
