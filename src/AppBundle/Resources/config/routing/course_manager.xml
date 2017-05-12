@@ -60,8 +60,32 @@
         <default key="_controller">AppBundle:Workflow:renameTransitionWorkflow</default>
     </route>
 
+    <route id="course_manager.promotion.workflow.condition.delete" path="/promotion/{promotionId}/workflow/condition/{conditionId}/delete">
+        <default key="_controller">AppBundle:Workflow:deleteConditionWorkflow</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.condition.add.count" path="/promotion/{promotionId}/workflow/condition/{transitionId}/add/count">
+        <default key="_controller">AppBundle:Workflow:addConditionWorkflowCount</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.condition.edit" path="/promotion/{promotionId}/workflow/condition/{conditionId}/edit/count">
+        <default key="_controller">AppBundle:Workflow:editConditionWorkflowCount</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.condition.add.date" path="/promotion/{promotionId}/workflow/condition/{transitionId}/add/date">
+        <default key="_controller">AppBundle:Workflow:addConditionWorkflowDate</default>
+    </route>
+
+    <route id="course_manager.promotion.workflow.condition.edit.date" path="/promotion/{promotionId}/workflow/condition/{conditionId}/edit/date">
+        <default key="_controller">AppBundle:Workflow:editConditionWorkflowDate</default>
+    </route>
+
     <route id="course_manager.showPersonalInformation" path="/informations">
         <default key="_controller">AppBundle:CourseManager:displayPersonalInformations</default>
+    </route>
+
+    <route id="course_manager.jury.add" path="/course/{courseId}/jury/add">
+        <default key="_controller">AppBundle:CourseManager:addJury</default>
     </route>
 
     <route id="courseManager.home" path="">

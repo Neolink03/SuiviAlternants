@@ -10,4 +10,12 @@
 {% block body %}
     <h1>Formations</h1>
     <hr>
+    {% if courseAttached is defined %}
+        {% for course in courseAttached %}
+            {% include "AppBundle:Course:showJury.html.twig" with {"courseId": course.id} %}
+        {% endfor %}
+    {% else %}
+        <h3>Pas de formations attribuées !</h3>
+    {% endif %}
+
 {% endblock %}
