@@ -7,6 +7,7 @@ use AppBundle\Entity\Course;
 use AppBundle\Models\Dtos\Courses\Course as CourseDto;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
+use AppBundle\Errors\Courses\AlreadyExistCourseException;
 
 class CourseFactory {
     
@@ -33,7 +34,7 @@ class CourseFactory {
         $course->setStudentNumber(Course::DEFAULT_STUDENT_NUMBER); // no student number field in course create form 
 
         if (!is_null($courseDataBase)) {
-            throw new \Exception(sprintf("Course %s with id = %s already exist", $courseDataBase->getName(), $courseDataBase->getId()));
+            throw new AlreadyExistCourseException($courseDataBase);
         }
         
         if(($course->getManager() != $course->getCoManager()) && is_null($courseDataBase)){
