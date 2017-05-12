@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 class Application
 {
     private $id;
@@ -9,6 +11,12 @@ class Application
     private $promotion;
     private $statusModifications;
     private $currentState = "";
+    private $dataAttachments;
+
+    public function __construct()
+    {
+        $this->dataAttachments = new ArrayCollection();
+    }
 
     public function getId() : int
     {
@@ -70,6 +78,29 @@ class Application
     public function setCurrentState($currentState)
     {
         $this->currentState = $currentState;
+    }
+
+    public function getDataAttachments()
+    {
+        return $this->dataAttachments;
+    }
+
+    public function setDataAttachments($dataAttachments)
+    {
+        $this->dataAttachments = $dataAttachments;
+    }
+
+    public function addDataAttachments(DataAttachments $dataAttachments)
+    {
+        $this->dataAttachments[] = $dataAttachments;
+        $dataAttachments->setApplication($this);
+
+        return $this;
+    }
+
+    public function removeDataAttachments(DataAttachments $dataAttachments)
+    {
+        $this->dataAttachments->removeElement($dataAttachments);
     }
 }
 

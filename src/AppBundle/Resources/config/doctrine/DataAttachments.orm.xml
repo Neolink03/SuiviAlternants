@@ -9,5 +9,7 @@
     <id name="id" type="integer" column="id">
       <generator strategy="AUTO"/>
     </id>
+
+    <many-to-one target-entity="AppBundle\Entity\Application" field="application" inversed-by="dataAttachments"/>
   </entity>
 </doctrine-mapping>

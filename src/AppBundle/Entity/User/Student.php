@@ -73,6 +73,14 @@ class Student extends User
         $this->birthday = $birthday;
     }
 
+    function getProfessionnalSocialNetworkLink() {
+        return $this->professionnalSocialNetworkLink;
+    }
+
+    function setProfessionnalSocialNetworkLink($professionnalSocialNetworkLink) {
+        $this->professionnalSocialNetworkLink = $professionnalSocialNetworkLink;
+    }
+
     public function getApplications()
     {
         return $this->applications;
@@ -81,14 +89,6 @@ class Student extends User
     public function setApplication($application)
     {
         $this->applications = $application;
-    }
-
-    function getProfessionnalSocialNetworkLink() {
-        return $this->professionnalSocialNetworkLink;
-    }
-
-    function setProfessionnalSocialNetworkLink($professionnalSocialNetworkLink) {
-        $this->professionnalSocialNetworkLink = $professionnalSocialNetworkLink;
     }
 
     public function addApplication(Application $application)
