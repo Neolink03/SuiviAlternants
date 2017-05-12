@@ -1,0 +1,20 @@
+<div class="card mb-4">
+    <div class="card-header">
+        <h4 class="d-inline" style="line-height: inherit;">{{ course.name }}</h4>
+        <span><span class="badge badge-default ml-2 mr-1">{{ course.studentNumber }}</span>places</span>
+        <a href="{{ path('jury.course', { 'courseId': course.id }) }}"
+           class="float-right btn btn-primary">Liste des étudiants <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </a>
+
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item border-top-0">
+            <strong>Responsable :</strong>&nbsp;{{ course.manager.firstname }} {{ course.manager.lastname }}
+        </li>
+        {% if course.coManager %}
+            <li class="list-group-item">
+                <strong>Co-responsable :</strong>&nbsp;{{ course.coManager.firstname }} {{ course.coManager.lastname }}
+            </li>
+        {% endif %}
+    </ul>
+</div>

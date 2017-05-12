@@ -84,6 +84,10 @@
         <default key="_controller">AppBundle:CourseManager:displayPersonalInformations</default>
     </route>
 
+    <route id="course_manager.jury.add" path="/course/{courseId}/jury/add">
+        <default key="_controller">AppBundle:CourseManager:addJury</default>
+    </route>
+
     <route id="courseManager.home" path="">
         <default key="_controller">AppBundle:CourseManager:courseManagerIndex</default>
     </route>

@@ -8,9 +8,10 @@
     <field name="name" unique="true" />
     <field name="studentNumber" type="integer" />
     <field name="secretariatContactDetails" type="text" />
+    <one-to-many field="companyContacts" target-entity="AppBundle\Entity\CompanyContact" mapped-by="course" />
     <many-to-one field="manager" target-entity="\AppBundle\Entity\User\CourseManager" inversed-by="courseManaged" />
     <many-to-one field="coManager" target-entity="\AppBundle\Entity\User\CourseManager" inversed-by="courseCoManaged" />
-    <one-to-many field="companyContacts" target-entity="AppBundle\Entity\CompanyContact" mapped-by="course" />
+    <many-to-many target-entity="\AppBundle\Entity\User\Jury" field="jurys" inversed-by="coursesAttached" />
     <one-to-many field="promotions" target-entity="AppBundle\Entity\Promotion" mapped-by="course">
       <cascade>
         <cascade-persist/>
