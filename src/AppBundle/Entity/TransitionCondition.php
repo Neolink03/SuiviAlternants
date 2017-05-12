@@ -15,8 +15,6 @@ abstract class TransitionCondition
         return $this->id;
     }
 
-    public abstract function isChecked() : boolean;
-
     public function getTransition()
     {
         return $this->transition;
@@ -27,6 +25,9 @@ abstract class TransitionCondition
         $this->transition = $transition;
     }
 
-
+    public function getErrorMessage(): string
+    {
+        return "Impossible de passer à cet état, la condition n'est pas respectée";
+    }
 }
 

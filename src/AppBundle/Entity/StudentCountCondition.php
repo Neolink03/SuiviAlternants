@@ -34,15 +34,9 @@ class StudentCountCondition extends TransitionCondition
         return $this->operator;
     }
 
-
-    public function isChecked(): boolean
+    public function getErrorMessage(): string
     {
-//        $actualNumber = 10;
-//        eval('$result='.$actualNumber.' '.$this->getOperator().' '.$this->getNumber().';');
-//
-//        return $result;
-
-        return false;
+        return "Impossible de passer à cet état, le nombre d'étudiants doit être ". $this->getOperator()." à ".$this->getNumber().".";
     }
 }
 
