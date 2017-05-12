@@ -11,4 +11,8 @@
     <route id="student.home" path="">
         <default key="_controller">AppBundle:Student:studentIndex</default>
     </route>
+
+    <route id="student.company.edit" path="/company/application/{companyId}/edit">
+        <default key="_controller">AppBundle:Student:companyEdit</default>
+    </route>
 </routes>

@@ -9,12 +9,10 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Entity\User\Student;
-use AppBundle\Forms\Types\StudentType;
+use AppBundle\Entity\Application;
+use AppBundle\Entity\Company;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class StudentController extends Controller
 {
@@ -28,5 +26,13 @@ class StudentController extends Controller
         ]);
     }
 
-
+    /**
+     * @ParamConverter("company", options={"mapping": {"companyId" : "id"}})
+     */
+    public function companyEditAction(Company $company)
+    {
+        return $this->render('AppBundle:Student:company.html.twig',[
+            'compagny' => $company,
+        ]);
+    }
 }
