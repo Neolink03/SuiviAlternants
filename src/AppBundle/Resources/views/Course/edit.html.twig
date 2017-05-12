@@ -1,13 +1,13 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Créer une formation{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-    <h1>{% block body_title %}Créer une formation{% endblock %}</h1>
-    
+    <h1>{{ title }}</h1>
+    <hr>
     <div class="row col-md-6">
         
-        {% block head_form %} {{ form_start(courseForm, {'action': path('admin.course.add')}) }} {% endblock %}
+        {% block head_form %} {{ form_start(courseForm, {'action': updateCourseActionUrl}) }} {% endblock %}
         
             <div class="form-group">
                 {{ form_label(courseForm.name)}}
@@ -44,5 +44,4 @@
 
         {{ form_rest(courseForm) }}
     </div>
-    
 {% endblock %}

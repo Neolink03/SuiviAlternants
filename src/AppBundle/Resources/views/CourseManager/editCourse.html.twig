@@ -1,5 +1,0 @@
-{% extends 'AppBundle:Admin:createCourse.html.twig' %}
-
-{% block title %}Modifier formation{% endblock %}
-{% block body_title %}Modifier formation{% endblock %}
-{% block head_form %} {{ form_start(courseForm, {'action': path('course_manager.course.edit', {'courseId' : course.id } )}) }} {% endblock %}

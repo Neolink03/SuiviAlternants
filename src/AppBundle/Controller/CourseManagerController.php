@@ -160,9 +160,10 @@ class CourseManagerController extends Controller
             }
         }
 
-        return $this->render('AppBundle:CourseManager:editCourse.html.twig', [
-            'courseForm' => $editCourseForm->createView(),
-            'course' => $course
+        return $this->render('AppBundle:Course:edit.html.twig', [
+            "courseForm" => $editCourseForm->createView(),
+            "title" => "Modifier formation",
+            "updateCourseActionUrl" => $this->generateUrl("course_manager.course.edit", ["courseId" => $course->getId()])
         ]);
     }
 
