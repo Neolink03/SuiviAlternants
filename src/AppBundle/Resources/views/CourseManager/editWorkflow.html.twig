@@ -13,52 +13,8 @@
     <div class="workflow-dump" style="display: none">{{ app_factory_workflow.dumpWorflowFromPromotion(promotion) }}</div>
 
     <div id="accordion" role="tablist" aria-multiselectable="true">
-        <div class="card mb-3">
-            <h4 class="card-header" data-toggle="collapse" data-parent="#accordion" href="#collapseStates"
-                aria-expanded="true" aria-controls="collapseStates" role="button">
-                Etats <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
-            </h4>
-            <div id="collapseStates" class="collapse" role="tabpanel">
-                <div class="card-block">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Etat</th>
-                            <th>Opération</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for state in promotion.workflow.states %}
-                            <tr>
-                                <td>{{ state.name }}</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a class="btn btn-primary"
-                                           href="{{ path('course_manager.promotion.workflow.state.rename',
-                                           { 'promotionId': promotion.id, 'stateId': state.id }) }}">
-                                            Renommer
-                                        </a>
-                                        <button type="button"
-                                                class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a href="{{ path('course_manager.promotion.workflow.state.delete',
-                                            { 'promotionId': promotion.id, 'stateId': state.id }) }}"
-                                               class="dropdown-item">
-                                                Supprimer
-                                            </a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+
+        {% include "AppBundle:CourseManager:editStatesWorkflow.html.twig" with {"workflow": promotion.workflow} %}
 
         <div class="card mb-4">
             <h5 class="card-header">Ajouter un état</h5>
