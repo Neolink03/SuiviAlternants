@@ -106,6 +106,11 @@ class CourseManagerController extends Controller
         if ($request->get('promotion')) {
             $promotion = $em->getRepository(Promotion::class)->find($request->get('promotion'));
             $promotionsForm->get('promotions')->setData($promotion);
+            $applications = $promotion->getApplications();
+            $states = $em->getRepository(State::class)->findBy(
+                ['workflow' => $promotion->getWorkflow()]
+            );
+            $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
         }
 
         if ($request->isMethod('post')) {
@@ -116,6 +121,10 @@ class CourseManagerController extends Controller
             if ($promotionsForm->isSubmitted() && $promotionsForm->isValid()) {
                 $promotion = $em->getRepository(Promotion::class)->find($promotionsForm->getData()['promotions']->getId());
                 $applications = $promotion->getApplications();
+                $states = $em->getRepository(State::class)->findBy(
+                    ['workflow' => $promotion->getWorkflow()]
+                );
+                $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
             }
 
             if ($studentsCsvForm->isSubmitted() && $studentsCsvForm->isValid()) {
