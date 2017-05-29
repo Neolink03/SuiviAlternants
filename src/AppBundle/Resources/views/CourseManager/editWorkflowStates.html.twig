@@ -13,8 +13,8 @@
                 </tr>   
                 </thead>
                 <tbody>
-                {% if (workflow.states.count) == 1 %}
-                    {% set state = workflow.states.first %}
+                {% if (promotion.workflow.states.count) == 1 %}
+                    {% set state = promotion.workflow.states.first %}
                     <tr>
                         <td>{{ state.name }}</td>
                         <td>
@@ -28,7 +28,7 @@
                         </td>
                     </tr>
                 {% else %}
-                    {% for state in workflow.states %}
+                    {% for state in promotion.workflow.states %}
                         <tr>
                             <td>{{ state.name }}</td>
                             <td>
