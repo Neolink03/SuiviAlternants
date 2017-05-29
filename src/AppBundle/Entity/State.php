@@ -15,6 +15,8 @@ class State
     /** @Exclude */
     private $machineName;
     /** @Exclude */
+    private $trigger;
+    /** @Exclude */
     private $workflow;
 
     public function getId()
@@ -54,6 +56,16 @@ class State
     public function setWorkflow(WorkFlow $workflow)
     {
         $this->workflow = $workflow;
+    }
+
+    public function getTrigger()
+    {
+        return $this->trigger;
+    }
+
+    public function setTrigger($trigger)
+    {
+        $this->trigger = $trigger;
     }
 
 }
