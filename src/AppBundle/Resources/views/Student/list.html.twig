@@ -35,7 +35,7 @@
                     <ul class="mb-0">
                         {% for application in student.applications %}
                             <li>
-                                {{ application.promotion.course.name }}:
+                                {{ application.promotion.course.name }} - {{ application.promotion.name }}:
                                 {% if application.getLastStatusModification() %}
                                     <a href="{{ path('course_manager.application.view', {'applicationId': application.id }) }}">
                                         {{ application.getLastStatusModification().state.name }}

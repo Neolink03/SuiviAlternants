@@ -61,6 +61,8 @@ class WorkflowController extends Controller
         $workflow->addState($state);
         $workflow->setPromotion($promotion);
 
+        $this->addFlash('success', 'Le workflow a été créé avec un état de départ. Vous pouvez néanmoins continuez de l\'éditer.');
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($workflow);
         $em->flush();
