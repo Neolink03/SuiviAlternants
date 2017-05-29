@@ -173,6 +173,22 @@ class WorkflowController extends Controller
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      * @ParamConverter("transition", options={"mapping": {"transitionId" : "id"}})
      */
+    public function deleteTransitionWorkflowAction(Request $request , Promotion $promotion, Transition $transition)
+    {
+        $em =$this->getDoctrine()->getManager();
+        $promotion->getWorkflow()->removeTransition($transition);
+        $em->persist($promotion);
+        $em->remove($transition);
+        $em->flush();
+        
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+    }
+    
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     * @ParamConverter("transition", options={"mapping": {"transitionId" : "id"}})
+     */
     public function renameTransitionWorkflowAction(Request $request , Transition $transition, Promotion $promotion)
     {
         $em =$this->getDoctrine()->getManager();

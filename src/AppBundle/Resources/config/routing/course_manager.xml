@@ -63,6 +63,10 @@
     <route id="course_manager.promotion.workflow.condition.delete" path="/promotion/{promotionId}/workflow/condition/{conditionId}/delete">
         <default key="_controller">AppBundle:Workflow:deleteConditionWorkflow</default>
     </route>
+    
+    <route id="course_manager.promotion.workflow.transition.delete" path="/promotion/{promotionId}/workflow/transition/{transitionId}/delete">
+        <default key="_controller">AppBundle:Workflow:deleteTransitionWorkflow</default>
+    </route>
 
     <route id="course_manager.promotion.workflow.condition.add.count" path="/promotion/{promotionId}/workflow/condition/{transitionId}/add/count">
         <default key="_controller">AppBundle:Workflow:addConditionWorkflowCount</default>
