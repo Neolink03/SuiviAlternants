@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Ajouter un jury{% endblock %}
+
+{% block body %}
+    <h1>{{course.name}}</h1>
+    <h2>Ajouter un jury</h2>
+    <hr>
+    <div >
+        {% if juryList is defined %}
+            {{ form_start(juryList) }}
+            {{ form_row(juryList.jurys) }}
+            <input type="submit" value="Modifier les jurys rattachés à cette formation" class="btn btn-secondary">
+            {{ form_end(juryList) }}
+        {% endif %}
+    </div>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\User\Jury;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -19,11 +20,13 @@ class Course
     private $secretariatContactDetails;
     private $promotions;
     private $companyContacts;
+    private $jurys;
 
     public function __construct()
     {
         $this->companyContacts = new ArrayCollection();
         $this->promotions = new ArrayCollection();
+        $this->jurys = new ArrayCollection();
     }
 
     public function getPromotions()
@@ -125,5 +128,29 @@ class Course
     {
         $this->companyContacts->removeElement($companyContacts);
     }
+
+    public function getJurys()
+    {
+        return $this->jurys;
+    }
+
+    public function setJurys($jurys)
+    {
+        $this->jurys = $jurys;
+    }
+
+    public function addJurys(Jury $jury)
+    {
+        $this->jurys[] = $jury;
+        $jury->addCoursesAttached($this);
+
+        return $this;
+    }
+
+    public function removeJurys(Jury $jury)
+    {
+        $this->$jury->removeElement($jury);
+    }
+
 }
 

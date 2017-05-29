@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Détails formation - {{ course.name }}{% endblock %}
+{% block title %}Liste des étudiant - {{ course.name }}{% endblock %}
 
 {% block body %}
 
@@ -8,29 +8,12 @@
     <span><span class="badge badge-default ml-2 mr-1">{{ course.studentNumber }}</span>places maximum</span>
     <hr>
 
-    <div class="mb-4">
-        <a href="{{ path('course_manager.course.edit', { 'courseId': course.id }) }}" class="btn btn-primary">
-            <i class="fa fa-pencil" aria-hidden="true"></i> Modifier la formation
-        </a>
-
-        <a href="{{ path('course_manager.promotion.add', { 'courseId': course.id }) }}" class="btn btn-success">
-            <i class="fa fa-users" aria-hidden="true"></i> Ajouter une promotion
-        </a>
-
-        <a href="{{ path('companycontact_index', { 'courseId': course.id }) }}" class="btn btn-primary">
-            <i class="fa fa-address-book" aria-hidden="true"></i> Liste des contacts entreprise
-        </a>
-        <a href="{{ path('course_manager.jury.add', { 'courseId': course.id }) }}" class="btn btn-success">
-            <i class="fa fa-users" aria-hidden="true"></i> Ajouter un Jury
-        </a>
-    </div>
-
-
     {% if promotion %}
+
         <div class="row col-12 mb-4">
             {{ form_start(promotionsForm, {
                 'attr': { 'class': 'form-inline' },
-                'action': path('course_manager.course', { 'courseId': course.id })
+                'action': path('jury.course', { 'courseId': course.id })
             }) }}
             <div class="form-group">
                 <h4>{{ form_label(promotionsForm.promotions, null, { 'label_attr': { 'class': 'mr-sm-2' } }) }}</h4>
@@ -44,22 +27,6 @@
         </div>
 
         {% if promotion.workflow %}
-            <div class="mb-3">
-                <a href="{{ path('course_manager.promotion.workflow.edit', { 'promotionId': promotion.id }) }}"
-                   class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Modifier le workflow</a>
-                <a href="{{ path('course_manager.mail.send', { 'promotionId': promotion.id }) }}"
-                   class="btn btn-primary"><i class="fa fa-envelope" aria-hidden="true"></i> Envoyer un e-mail</a>
-            </div>
-
-            {{ form_start(studentsCsvForm, { 'attr': { 'class': 'mb-4' } }) }}
-            {{ form_widget(studentsCsvForm.file, { 'attr': { 'class': 'btn-sm' } }) }}
-            <button type="submit" class="btn btn-success" role="button">
-                <i class="fa fa-users" aria-hidden="true"></i> Ajouter liste d'étudiants
-            </button>
-            <a href="{{ path('course_manager.student.add', { 'promotionId': promotion.id }) }}"
-               class="btn btn-success"><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter un étudiant</a>
-            {{ form_end(studentsCsvForm) }}
-
             <h4>Liste des étudiants</h4>
             <hr>
 
@@ -105,9 +72,7 @@
                 </tbody>
             </table>
         {% else %}
-            Aucun workflow existant pour cette promotion.
-            <a href="{{ path('course_manager.promotion.workflow.add', { 'promotionId': promotion.id }) }}"
-               class="btn btn-secondary">Ajouter un workflow</a>
+            Pas d'étudiants pour cette promotion.
         {% endif %}
     {% endif %}
 

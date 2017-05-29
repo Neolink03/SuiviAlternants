@@ -13,10 +13,11 @@ use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
+use AppBundle\Entity\User\Jury;
 use AppBundle\Entity\User\Student;
+use AppBundle\Forms\Types\AddJuryType;
 use AppBundle\Forms\Types\AddPromotionType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
-use AppBundle\Forms\Types\CourseManagerType;
 use AppBundle\Forms\Types\Courses\CourseType;
 use AppBundle\Forms\Types\EmailMessageType;
 use AppBundle\Forms\Types\PromotionFormType;
@@ -27,8 +28,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Response;
-use AppBundle\Models\Dtos\Courses\Course as CourseDto;
 
 
 class CourseManagerController extends Controller
@@ -107,6 +106,11 @@ class CourseManagerController extends Controller
         if ($request->get('promotion')) {
             $promotion = $em->getRepository(Promotion::class)->find($request->get('promotion'));
             $promotionsForm->get('promotions')->setData($promotion);
+            $applications = $promotion->getApplications();
+            $states = $em->getRepository(State::class)->findBy(
+                ['workflow' => $promotion->getWorkflow()]
+            );
+            $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
         }
 
         if ($request->isMethod('post')) {
@@ -117,6 +121,10 @@ class CourseManagerController extends Controller
             if ($promotionsForm->isSubmitted() && $promotionsForm->isValid()) {
                 $promotion = $em->getRepository(Promotion::class)->find($promotionsForm->getData()['promotions']->getId());
                 $applications = $promotion->getApplications();
+                $states = $em->getRepository(State::class)->findBy(
+                    ['workflow' => $promotion->getWorkflow()]
+                );
+                $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
             }
 
             if ($studentsCsvForm->isSubmitted() && $studentsCsvForm->isValid()) {
@@ -302,5 +310,36 @@ class CourseManagerController extends Controller
             'form' => $form->createView()
         ]);
     }
-    
+
+    /**
+     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
+     */
+    public function addJuryAction(Request $request, Course $course){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(AddJuryType::class, null, array(
+            'applications' => $jury = $this->getDoctrine()->getManager()->getRepository(Jury::class)->findAll()
+        ));
+
+        if ($request->isMethod('post')) {
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $data = $form->getData();
+
+                $course->setJurys($data['jurys']);
+                $em->persist($course);
+                $em->flush();
+                $this->addFlash("success", "Les jurys ont bien été ajoutés à la promotion");
+            }
+        }
+
+        return $this->render('AppBundle:CourseManager:addJuryToCourse.html.twig',[
+            'juryList' => $form->createView(),
+            'course' => $course
+        ]);
+    }
 }

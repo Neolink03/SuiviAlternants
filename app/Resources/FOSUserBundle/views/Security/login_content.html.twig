@@ -20,13 +20,13 @@
     <input type="email" id="username" class="form-control" name="_username" value="{{ last_username }}"
            placeholder="E-mail" required="required"/>
 
-    <label for="password" class="sr-only">Mot de passe</label>
-    <input type="password" id="password" class="form-control" name="_password" placeholder="Mot de passe"
+    <label for="password" class="sr-only">{{ 'security.login.password'|trans }}</label>
+    <input type="password" id="password" class="form-control" name="_password" placeholder="{{ 'security.login.password'|trans }}"
            required="required"/>
 
     <div class="checkbox">
         <label>
-            <input type="checkbox" id="remember_me" name="_remember_me" value="on"/> Se souvenir de moi
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on"/> {{ 'security.login.remember_me'|trans }}
         </label>
     </div>
 

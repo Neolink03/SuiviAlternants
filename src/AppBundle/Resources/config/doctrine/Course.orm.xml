@@ -8,13 +8,23 @@
     <field name="name" unique="true" />
     <field name="studentNumber" type="integer" />
     <field name="secretariatContactDetails" type="text" />
+    <one-to-many field="promotions" target-entity="AppBundle\Entity\Promotion" mapped-by="course">
+        <cascade>
+            <cascade-persist/>
+        </cascade>
+    </one-to-many>
+    <one-to-many field="companyContacts" target-entity="AppBundle\Entity\CompanyContact" mapped-by="course" />
     <many-to-one field="manager" target-entity="\AppBundle\Entity\User\CourseManager" inversed-by="courseManaged" />
     <many-to-one field="coManager" target-entity="\AppBundle\Entity\User\CourseManager" inversed-by="courseCoManaged" />
-    <one-to-many field="companyContacts" target-entity="AppBundle\Entity\CompanyContact" mapped-by="course" />
-    <one-to-many field="promotions" target-entity="AppBundle\Entity\Promotion" mapped-by="course">
-      <cascade>
-        <cascade-persist/>
-      </cascade>
-    </one-to-many>
+    <many-to-many field="jurys" target-entity="\AppBundle\Entity\User\Jury" inversed-by="coursesAttached" >
+        <join-table name="course_jury">
+            <join-columns>
+                <join-column name="course_id" referenced-column-name="id" />
+            </join-columns>
+            <inverse-join-columns>
+                <join-column name="jury_id" referenced-column-name="id" />
+            </inverse-join-columns>
+        </join-table>
+    </many-to-many>
   </entity>
 </doctrine-mapping>

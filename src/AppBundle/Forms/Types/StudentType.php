@@ -26,8 +26,8 @@ class StudentType extends AbstractType
                 'required' => false,
                 'constraints' => array(new Regex(
                     array(
-                        'pattern' => "/^((0|\\(\\+33\\))[0-9]{9})?$/",
-                        'message' => 'Le numéro de téléphone doit être de format 0xxxxxxxxx ou (+33)xxxxxxxxx',)
+                        'pattern' => "/^((0|\\+33)[0-9]{9})?$/",
+                        'message' => 'Le numéro de téléphone doit être de format 0xxxxxxxxx ou +33xxxxxxxxx',)
                 ))
             ))
             ->add('cellphone', TextType::class, array(
@@ -35,8 +35,8 @@ class StudentType extends AbstractType
                 'required' => false,
                 'constraints' => array(new Regex(
                     array(
-                        'pattern' => "/^(0|\\(\\+33\\))[0-9]{9}$/",
-                        'message' => 'Le numéro de téléphone doit être de format 0xxxxxxxxx ou (+33)xxxxxxxxx',)
+                        'pattern' => "/^(0|\\+33)[0-9]{9}$/",
+                        'message' => 'Le numéro de téléphone doit être de format 0xxxxxxxxx ou +33xxxxxxxxx',)
                 ))
             ))
             ->add('birthday', BirthdayType::class, array('label' => 'Date de naissance', 'required' => false))
