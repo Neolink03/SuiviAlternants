@@ -19,9 +19,4 @@
     <route id="admin.user.add" path="/user/add">
         <default key="_controller">AppBundle:Admin:userAdd</default>
     </route>
-
-    <route id="admin.showPersonalInformation" path="/informations">
-        <default key="_controller">AppBundle:Admin:displayPersonalInformations</default>
-    </route>
-
 </routes>
