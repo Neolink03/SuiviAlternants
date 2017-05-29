@@ -136,7 +136,9 @@ class WorkflowController extends Controller
         $em =$this->getDoctrine()->getManager();
         $promotion->getWorkflow()->removeState($state);
         $em->persist($promotion);
-
+        $em->remove($state);
+        $em->flush();
+        
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
     }
