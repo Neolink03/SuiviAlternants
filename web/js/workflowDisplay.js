@@ -6,7 +6,7 @@ $(function() {
     workflows.each(function(index) {
         var result = Viz(this.innerText, { format: "png-image-element", scale: 1 });
 
-        result.style.width = '100%';
+        result.style.maxWidth = '100%';
         result.style.height = 'auto';
         result.style.maxHeight = '400px';
 
