@@ -70,9 +70,10 @@
             <button type="submit" class="btn btn-secondary form-control mb-2 mr-sm-2 mb-sm-0" role="button">
                 Rechercher <i class="fa fa-search" aria-hidden="true"></i>
             </button>
-            {#<button type="reset" class="btn btn-secondary form-control mb-2 mr-sm-2 mb-sm-0">#}
-            {#<i class="fa fa-refresh" aria-hidden="true"></i>#}
-            {#</button>#}
+            <button class="btn btn-secondary"
+                    onclick="for (var elem in this.form.elements) { this.form.elements[elem].value = ''; } this.form.submit();">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+            </button>
             {{ form_end(searchForm) }}
 
             <table class="table table-striped table-bordered">
