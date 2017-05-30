@@ -4,30 +4,37 @@
 
 {% block body %}
 
-    <h1 class="d-inline">{{ course.name }}</h1>
-    <span><span class="badge badge-default ml-2 mr-1">{{ course.studentNumber }}</span>places maximum</span>
+    <div>
+        <h2 class="d-inline">{{ course.name }}</h2>
+        <span><span class="badge badge-default ml-2 mr-1">{{ course.studentNumber }}</span>places maximum</span>
+
+        <div class="btn-group float-right">
+            <a href="{{ path('course_manager.course.edit', { 'courseId': course.id }) }}" class="btn btn-secondary">
+                <i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Modifier la formation
+            </a>
+            <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <a href="{{ path('course_manager.promotion.add', { 'courseId': course.id }) }}" class="dropdown-item">
+                    <i class="fa fa-users fa-fw" aria-hidden="true"></i> Ajouter une promotion
+                </a>
+                <a href="{{ path('course_manager.jury.add', { 'courseId': course.id }) }}" class="dropdown-item">
+                    <i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> Ajouter un Jury
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{{ path('companycontact_index', { 'courseId': course.id }) }}" class="dropdown-item">
+                    <i class="fa fa-address-book fa-fw" aria-hidden="true"></i> Liste des contacts entreprise
+                </a>
+            </div>
+        </div>
+
+    </div>
     <hr>
 
-    <div class="mb-4">
-        <a href="{{ path('course_manager.course.edit', { 'courseId': course.id }) }}" class="btn btn-primary">
-            <i class="fa fa-pencil" aria-hidden="true"></i> Modifier la formation
-        </a>
-
-        <a href="{{ path('course_manager.promotion.add', { 'courseId': course.id }) }}" class="btn btn-success">
-            <i class="fa fa-users" aria-hidden="true"></i> Ajouter une promotion
-        </a>
-
-        <a href="{{ path('companycontact_index', { 'courseId': course.id }) }}" class="btn btn-primary">
-            <i class="fa fa-address-book" aria-hidden="true"></i> Liste des contacts entreprise
-        </a>
-        <a href="{{ path('course_manager.jury.add', { 'courseId': course.id }) }}" class="btn btn-success">
-            <i class="fa fa-users" aria-hidden="true"></i> Ajouter un Jury
-        </a>
-    </div>
-
-
     {% if promotion %}
-        <div class="row col-12 mb-4">
+        <div class="mb-4">
             {{ form_start(promotionsForm, {
                 'attr': { 'class': 'form-inline' },
                 'action': path('course_manager.course', { 'courseId': course.id })

@@ -9,7 +9,11 @@ namespace AppBundle\Services\Factories;
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
+use AppBundle\Entity\StatusModification;
 use AppBundle\Entity\Transition;
+use AppBundle\Models\CustomDefinitionBuilder;
+use AppBundle\Models\CustomGraphvizDumper;
+use AppBundle\Models\CustomTransition;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Workflow\DefinitionBuilder;
 use Symfony\Component\Workflow\Dumper\StateMachineGraphvizDumper;
@@ -50,19 +54,11 @@ class WorkflowFactory
         }
 
         $definition = $builder->build();
-//        echo (new StateMachineGraphvizDumper)->dump($definition);
         $marking = new SingleStateMarkingStore('currentState');
         return new Workflow($definition, $marking);
     }
 
-    public function dumpWorflowFromPromotion(Promotion $promotion) : string
-    {
-        $workflow = $promotion->getWorkflow();
-        $builder = $this->definitionBuilderFromWorkflow($workflow);
-        $definition = $builder->build();
 
-        return (new StateMachineGraphvizDumper)->dump($definition);
-    }
 
     public function dumpWorflowFromApplication(Application $application) : string
     {
@@ -92,6 +88,77 @@ class WorkflowFactory
                     $transition->getMachineName(),
                     $transition->getStartState()->getMachineName(),
                     $transition->getEndState()->getMachineName())
+            );
+        }
+
+        return $builder;
+    }
+
+    public function dumpStudentWorflowFromApplication(Application $application) : string
+    {
+        $modifications = $application->getStatusModifications()->toArray();
+
+        $builder = $this->definitionBuilderFromModifications($modifications);
+        $definition = $builder->build();
+
+        return (new CustomGraphvizDumper)->dump($definition);
+    }
+
+    private function definitionBuilderFromModifications(array $modifications) : CustomDefinitionBuilder {
+        $builder = new CustomDefinitionBuilder();
+
+        /** @var StatusModification $modification */
+        foreach ($modifications as $index => $modification){
+            $builder->addPlace( $modification->getState()->getName());
+            if($index+1 < count($modifications)){
+                $builder->addTransition(
+                    new CustomTransition(
+                        '',
+                        $modifications[$index+1]->getState()->getName(),
+                        $modification->getState()->getName())
+                );
+            }
+        }
+
+        return $builder;
+    }
+
+    public function customDumpWorflowFromApplication(Application $application) : string
+    {
+        $workflow = $application->getPromotion()->getWorkflow();
+
+        $builder = $this->customDefinitionBuilderFromWorkflow($workflow);
+
+        $definition = $builder->build();
+        return (new CustomGraphvizDumper())->dump($definition);
+    }
+
+    public function customDumpWorflowFromPromotion(Promotion $promotion) : string
+    {
+        $workflow = $promotion->getWorkflow();
+        $builder = $this->customDefinitionBuilderFromWorkflow($workflow);
+        $definition = $builder->build();
+
+        return (new CustomGraphvizDumper())->dump($definition);
+    }
+
+    private function customDefinitionBuilderFromWorkflow(\AppBundle\Entity\WorkFlow $workflow) : CustomDefinitionBuilder {
+        $builder = new CustomDefinitionBuilder();
+        $states = $workflow->getStates();
+        /** @var State $state */
+        foreach ($states as $state){
+            $builder->addPlace($state->getName());
+        }
+
+        $transitions = $workflow->getTransitions();
+
+        /** @var Transition $transition */
+        foreach ($transitions as $transition){
+            $builder->addTransition(
+                new CustomTransition(
+                    $transition->getName(),
+                    $transition->getStartState()->getName(),
+                    $transition->getEndState()->getName())
             );
         }
 

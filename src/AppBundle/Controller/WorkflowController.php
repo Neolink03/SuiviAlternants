@@ -43,7 +43,7 @@ class WorkflowController extends Controller
                     'promotionId' => $promotion->getId()
                 ]);
             }else{
-                $this->addFlash('danger', 'Le fichier fournit pour le workflow n\'est pas valide. Veuillez choisir un autre fichier ou créer votre workflow.');
+                $this->addFlash('danger', 'Le fichier fournit pour le workflow n\'est pas valide. Veuillez choisir un autre fichier (au format yml) ou créer votre workflow.');
             }
 
         }
@@ -118,7 +118,7 @@ class WorkflowController extends Controller
             [
                 'promotion' => $promotion,
                 'formState' => $formState->createView(),
-                'formTransition' => $formTransition->createView()
+                'formTransition' => $formTransition->createView(),
             ]);
     }
 
