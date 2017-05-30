@@ -29,7 +29,7 @@
                                 <a class="btn btn-primary"
                                    href="{{ path('course_manager.promotion.workflow.state.rename',
                                    { 'promotionId': promotion.id, 'stateId': state.id }) }}">
-                                    Renommer
+                                    <i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Renommer
                                 </a>
                             </div>
                         </td>
@@ -49,7 +49,7 @@
                                     <a class="btn btn-primary"
                                        href="{{ path('course_manager.promotion.workflow.state.rename',
                                        { 'promotionId': promotion.id, 'stateId': state.id }) }}">
-                                        Modifier
+                                       <i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Modifier
                                     </a>
 
                                     <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
@@ -61,7 +61,7 @@
                                         <a href="{{ path('course_manager.promotion.workflow.state.delete',
                                         { 'promotionId': promotion.id, 'stateId': state.id }) }}"
                                            class="dropdown-item">
-                                            Supprimer
+                                            <i class="fa fa-times" aria-hidden="true"></i> Supprimer
                                         </a>
                                     </div>
                                 </div>

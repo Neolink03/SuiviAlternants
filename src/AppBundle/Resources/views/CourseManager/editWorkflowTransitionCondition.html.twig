@@ -21,7 +21,7 @@
                 <a class="btn btn-primary"
                    href="{{ path('course_manager.promotion.workflow.condition.edit',
                    { 'conditionId': transition.condition.id, 'promotionId': promotion.id }) }}">
-                    Modifier
+                   <i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Modifier
                 </a>
                 <button type="button"
                         class="btn btn-primary dropdown-toggle dropdown-toggle-split"
@@ -32,7 +32,7 @@
                     <a href="{{ path('course_manager.promotion.workflow.condition.delete',
                     { 'conditionId': transition.condition.id, 'promotionId': promotion.id }) }}"
                        class="dropdown-item">
-                        Supprimer
+                        <i class="fa fa-times" aria-hidden="true"></i> Supprimer
                     </a>
                 </div>
             </div>
