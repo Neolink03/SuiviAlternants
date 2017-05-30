@@ -32,13 +32,17 @@ class WorkflowController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->getData()['file'];
-            $this->get('app.factory.workflow.custom')->createAppWorflowFromYml($promotion, $file->getPathname());
+            if (pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) == 'yml'){
+                $this->get('app.factory.workflow.custom')->createAppWorflowFromYml($promotion, $file->getPathname());
+                $this->addFlash('success', 'La workflow a été ajouté à la formation');
 
-            $this->addFlash('success', 'La workflow a été ajouté à la formation');
+                return $this->redirectToRoute('course_manager.promotion.workflow.edit', [
+                    'promotionId' => $promotion->getId()
+                ]);
+            }else{
+                $this->addFlash('danger', 'Le fichier fournit pour le workflow n\'est pas valide. Veuillez choisir un autre fichier ou créer votre workflow.');
+            }
 
-            return $this->redirectToRoute('course_manager.promotion.workflow.edit', [
-                'promotionId' => $promotion->getId()
-            ]);
         }
 
         return $this->render('AppBundle:CourseManager:addWorkflowFromYml.html.twig', [
