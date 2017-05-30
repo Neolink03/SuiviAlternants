@@ -9,7 +9,7 @@ AppBundle\Entity\State:
         workflow: '@WorkFlow*'
 
    State_1:
-        name:  State avec condition
+        name:  State avec trigger
         workflow: '@WorkFlow_1'
 
 AppBundle\Entity\CompanyTrigger:
