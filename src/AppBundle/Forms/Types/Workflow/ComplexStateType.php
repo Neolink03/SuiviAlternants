@@ -26,7 +26,7 @@ class ComplexStateType extends AbstractType
         $builder->add('trigger', ChoiceType::class, [
             'required' => false,
             'choices' => $options['triggersAviable'],
-            'label' => "Etat initial",
+            'label' => "Trigger à déclencher",
             'data' =>  $options['triggersSelected']
         ]);
 
