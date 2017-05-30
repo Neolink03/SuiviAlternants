@@ -133,7 +133,7 @@ class CourseManagerController extends Controller
                 if (pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) == 'csv')
                     $this->get('app.factory.user')->saveStudentsfromCsvFile($file->getPathname(), $promotion);
                 else
-                    $this->addFlash('danger', 'Le fichier fournit pour ajouter des étudiants n\'est pas valide. Veuillez choisir un autre fichier ou ajouter les étudiants un à un.');
+                    $this->addFlash('danger', 'Le fichier fournit pour ajouter des étudiants n\'est pas valide. Veuillez choisir un autre fichier (au format csv) ou ajouter les étudiants un à un.');
             }
 
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
