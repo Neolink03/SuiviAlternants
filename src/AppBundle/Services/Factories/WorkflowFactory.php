@@ -9,6 +9,7 @@ namespace AppBundle\Services\Factories;
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
+use AppBundle\Entity\StatusModification;
 use AppBundle\Entity\Transition;
 use AppBundle\Models\CustomDefinitionBuilder;
 use AppBundle\Models\CustomGraphvizDumper;
@@ -88,6 +89,35 @@ class WorkflowFactory
                     $transition->getStartState()->getMachineName(),
                     $transition->getEndState()->getMachineName())
             );
+        }
+
+        return $builder;
+    }
+
+    public function dumpStudentWorflowFromApplication(Application $application) : string
+    {
+        $modifications = $application->getStatusModifications()->toArray();
+
+        $builder = $this->definitionBuilderFromModifications($modifications);
+        $definition = $builder->build();
+
+        return (new CustomGraphvizDumper)->dump($definition);
+    }
+
+    private function definitionBuilderFromModifications(array $modifications) : CustomDefinitionBuilder {
+        $builder = new CustomDefinitionBuilder();
+
+        /** @var StatusModification $modification */
+        foreach ($modifications as $index => $modification){
+            $builder->addPlace( $modification->getState()->getName());
+            if($index+1 < count($modifications)){
+                $builder->addTransition(
+                    new CustomTransition(
+                        '',
+                        $modifications[$index+1]->getState()->getName(),
+                        $modification->getState()->getName())
+                );
+            }
         }
 
         return $builder;

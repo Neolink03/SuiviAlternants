@@ -14,7 +14,7 @@
             <div>
                 <span>{{ application.promotion.course.name }}</span>
                 <span>{{ application.currentState }}</span>
-                <div class="workflow-dump" style="display: none">{{ app_factory_workflow.dumpWorflowFromApplication(application) }}</div>
+                <div class="workflow-dump" style="display: none">{{ app_factory_workflow.dumpStudentWorflowFromApplication(application) }}</div>
             </div>
             {% for dataAttachment in application.dataAttachments %}
                 {% if dataAttachment is company %}
