@@ -367,5 +367,4 @@ class WorkflowController extends Controller
                 'form' => $form->createView()
             ]);
     }
-
 }

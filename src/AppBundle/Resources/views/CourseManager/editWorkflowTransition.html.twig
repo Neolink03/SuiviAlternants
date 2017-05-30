@@ -16,33 +16,7 @@
         </div>
     </div>
     
-    {%  if transition.condition is not null %}
-        <h2>Condition</h2>
-        <ul>
-            <li>
-                {{ dump(transition.condition) }}
-                <div class="btn-group">
-                    <a class="btn btn-primary"
-                       href="{{ path('course_manager.promotion.workflow.condition.edit',
-                       { 'conditionId': transition.condition.id, 'promotionId': promotion.id }) }}">
-                        Modifier
-                    </a>
-                    <button type="button"
-                            class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="{{ path('course_manager.promotion.workflow.condition.delete',
-                        { 'conditionId': transition.condition.id, 'promotionId': promotion.id }) }}"
-                           class="dropdown-item">
-                            Supprimer
-                        </a>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    {% endif %}
+    {% include "AppBundle:CourseManager:editWorkflowTransitionCondition.html.twig" with { "transition" : transition } %}
 
     <input type="submit" value="Valider" class="btn btn-primary mb-1">
 

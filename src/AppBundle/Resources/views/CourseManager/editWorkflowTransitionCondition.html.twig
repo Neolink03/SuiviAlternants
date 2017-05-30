@@ -1,0 +1,41 @@
+{% if transition.condition is not null %}
+    <h2>Condition</h2>
+    <ul>
+        <li class="mb-2">
+            {% if transition.condition is StudentCountCondition %}
+                {% if transition.condition.operator == '==' %}
+                    {% set operator = '=' %}
+                {% elseif transition.condition.operator == '!=' %}
+                    {% set operator = '≠' %}
+                {% else %}
+                    {% set operator = transition.condition.operator %}
+                {% endif %}
+
+                Nombre d'étudiants {{ operator }} {{ transition.condition.number }}
+
+            {% elseif transition.condition is DatetimeCondition %}
+                Date {{ transition.condition.operator }} {{ transition.condition.dateTime | date('D d/m/Y') }}
+            {% endif %}
+
+            <div class="btn-group ml-2">
+                <a class="btn btn-primary"
+                   href="{{ path('course_manager.promotion.workflow.condition.edit',
+                   { 'conditionId': transition.condition.id, 'promotionId': promotion.id }) }}">
+                    Modifier
+                </a>
+                <button type="button"
+                        class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="{{ path('course_manager.promotion.workflow.condition.delete',
+                    { 'conditionId': transition.condition.id, 'promotionId': promotion.id }) }}"
+                       class="dropdown-item">
+                        Supprimer
+                    </a>
+                </div>
+            </div>
+        </li>
+    </ul>
+{% endif %}

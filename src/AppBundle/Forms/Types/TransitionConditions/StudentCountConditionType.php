@@ -27,7 +27,7 @@ class StudentCountConditionType extends AbstractType
                     'Est supérieur >' => '>',
                     'Est inférieur <' => '<',
                     'Est égal =' => '==',
-                    'Est différent !=' => '==',
+                    'Est différent ≠' => '!=',
                 )))
             ->add('number', IntegerType::class ,array('label' => "Nombre d'étudiants"));
 
