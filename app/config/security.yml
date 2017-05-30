@@ -34,7 +34,7 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/course-manager/application/[0-9]+/view, role: ROLE_JURY }
+        - { path: '^/course-manager/application/[0-9]+/view', role: [ROLE_JURY, ROLE_MANAGER] }
         - { path: ^/course-manager, role: ROLE_MANAGER }
         - { path: ^/admin, role: ROLE_ADMIN }
         - { path: ^/, role: ROLE_USER }

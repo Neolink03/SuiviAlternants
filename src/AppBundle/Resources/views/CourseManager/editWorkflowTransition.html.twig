@@ -5,7 +5,17 @@
 {% block body %}
     <h1>Modification de la transition</h1>
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    
+    {{ form_row(form.name) }}
+    <div class="row">
+        <div class="col-sm">
+            {{ form_row(form.startState, {'attr': {"class": 'form-control custom-select'} }) }}
+        </div>
+        <div class="col-sm">
+            {{ form_row(form.endState, {'attr': {"class": 'form-control custom-select'} }) }}
+        </div>
+    </div>
+    
     {%  if transition.condition is not null %}
         <h2>Condition</h2>
         <ul>
@@ -34,17 +44,13 @@
         </ul>
     {% endif %}
 
-    <input type="submit" value="Valider" class="btn btn-primary">
+    <input type="submit" value="Valider" class="btn btn-primary mb-1">
 
     {%  if transition.condition is null %}
-        <div class="btn-group">
-            <a class="btn btn-primary">
-                Ajouter une condition
-            </a>
-            <button type="button"
-                    class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="sr-only">Toggle Dropdown</span>
+        
+        <div class="btn-group mb-1">
+            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-plus" aria-hidden="true"></i> Ajouter une condition
             </button>
             <div class="dropdown-menu">
                 <a href="{{ path('course_manager.promotion.workflow.condition.add.date',
@@ -60,6 +66,7 @@
             </div>
         </div>
     {% endif %}
+    
     {{ form_end(form) }}
 
 
