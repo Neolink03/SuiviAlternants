@@ -4,20 +4,33 @@
 
 {% block body %}
     <h2>Ajout d'un worflow</h2>
-
+    <hr />
+    
     <div class="row">
-        <div class="col-sm-6">
-            <h3>Depuis un fichier au format yml</h3>
-            {{ form_start(form) }}
-            {{ form_widget(form.file) }}
-            <input type="submit" value="Ajouter le workflow"
-                   class="btn btn-primary" />
-            {{ form_end(form) }}
+        <div class="col">
+            <div class="card">
+                <h3 class="card-header"> <i class="fa fa-file-text-o" aria-hidden="true"></i> Depuis un fichier au format yml</h3>
+
+                <div class="card-block">
+                    {{ form_start(form) }}
+                    {{ form_label(form.file, "Ajouter le workflow", {'label_attr' : {'class' : 'btn btn-primary mb-0'} }) }}
+                    {{ form_widget(form.file, {'attr' : {'class' : 'd-none', 'onchange' : 'this.form.submit()'} }) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>  
         </div>
-        <div class="col-sm-6">
-            <h3>A partir de rien</h3>
-            <a href="{{ path('course_manager.promotion.workflow.create', { 'promotionId' : promotion.id}) }}"
-               class="btn btn-primary">Créer</a>
+        <div class="col">
+                <div class="card">
+                <h3 class="card-header"> <i class="fa fa-plus" aria-hidden="true"></i> A partir de rien</h3>
+
+                <div class="card-block">
+                    <a href="{{ path('course_manager.promotion.workflow.create', { 'promotionId' : promotion.id}) }}"
+                       class="btn btn-primary">Créer</a>
+                </div>
+            </div>
         </div>
     </div>
+    
+    
+    
 {% endblock %}
