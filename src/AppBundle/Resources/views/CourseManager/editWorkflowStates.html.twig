@@ -17,10 +17,11 @@
                     {% set state = promotion.workflow.states.first %}
                     <tr>
                         <td>
-                            {% if state.trigger is not null %}
-                                <i class="fa fa-bolt" aria-hidden="true" title="Passer dans cet état déclenche une action"></i>
-                            {% endif %}
                             {{ state.name }}
+                            {% if state.trigger is not null %}
+                                <i class="fa fa-bolt" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
+                                   title="Passer dans cet état déclenche une action"></i>
+                            {% endif %}
                         </td>
                         <td>
                             <div class="btn-group">
@@ -35,7 +36,13 @@
                 {% else %}
                     {% for state in promotion.workflow.states %}
                         <tr>
-                            <td>{{ state.name }}</td>
+                            <td>
+                                {{ state.name }}
+                                {% if state.trigger is not null %}
+                                    <i class="fa fa-bolt" aria-hidden="true" data-toggle="tooltip"
+                                       data-placement="bottom" title="Passer dans cet état déclenche une action"></i>
+                                {% endif %}
+                            </td>
                             <td>
                                 <div class="btn-group">
                                     <a class="btn btn-primary"
@@ -43,8 +50,8 @@
                                        { 'promotionId': promotion.id, 'stateId': state.id }) }}">
                                         Modifier
                                     </a>
-                                    <button type="button"
-                                            class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+
+                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
