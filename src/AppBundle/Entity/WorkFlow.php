@@ -83,6 +83,16 @@ class WorkFlow
     {
         $this->transitions = $transitions;
     }
+    
+    public function renameTransition(string $name) {
+        
+        foreach ($this->getTransitions()->toArray() as $transition) {
+            if ($transition->getName() == $name) {
+                $transition->setName($name);
+                $transition->setMachineName($name);
+            }
+        }
+    }
 
     public function addTransition(Transition $transition)
     {

@@ -210,6 +210,10 @@ class WorkflowController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($transition);
+            
+            $promotion->getWorkflow()->renameTransition($transition->getName());
+            $em->persist($promotion);
+            
             $em->flush();
 
             return $this->redirectToRoute('course_manager.promotion.workflow.edit', [
