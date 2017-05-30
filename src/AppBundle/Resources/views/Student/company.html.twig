@@ -3,6 +3,9 @@
 {% block title %}Modification de l'entreprise{% endblock %}
 
 {% block body %}
-    <h1>Modification de l'entreprise</h1>
-    TODO
+    <h1>Entreprise d'acceuil</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" value="Modifier" class="btn btn-primary">
+    {{ form_end(form) }}
 {% endblock %}

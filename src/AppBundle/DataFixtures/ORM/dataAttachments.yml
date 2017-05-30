@@ -1,4 +1,14 @@
+AppBundle\Entity\Address:
+   Address_1:
+        street: 15 rue des la renaissance
+        city: Lyon
+        postalCode: 69001
+        country: France
+
 AppBundle\Entity\Company:
    Company_1:
         name: Facebook
+        employeeNumber: 50
+        ItNumber: 5
+        address: '@Address_1'
         application: '@Application_1'

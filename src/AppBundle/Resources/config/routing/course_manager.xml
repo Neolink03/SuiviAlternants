@@ -84,10 +84,6 @@
         <default key="_controller">AppBundle:Workflow:editConditionWorkflowDate</default>
     </route>
 
-    <route id="course_manager.showPersonalInformation" path="/informations">
-        <default key="_controller">AppBundle:CourseManager:displayPersonalInformations</default>
-    </route>
-
     <route id="course_manager.jury.add" path="/course/{courseId}/jury/add">
         <default key="_controller">AppBundle:CourseManager:addJury</default>
     </route>

@@ -11,13 +11,18 @@
                 <tr>
                     <th>Etat</th>
                     <th>Action</th>
-                </tr>   
+                </tr>
                 </thead>
                 <tbody>
                 {% if (promotion.workflow.states.count) == 1 %}
                     {% set state = promotion.workflow.states.first %}
                     <tr>
-                        <td>{{ state.name }}</td>
+                        <td>
+                            {% if state.trigger is not null %}
+                                <i class="fa fa-bolt" aria-hidden="true" title="Passer dans cet état déclenche une action"></i>
+                            {% endif %}
+                            {{ state.name }}
+                        </td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-primary"
@@ -37,7 +42,7 @@
                                     <a class="btn btn-primary"
                                        href="{{ path('course_manager.promotion.workflow.state.rename',
                                        { 'promotionId': promotion.id, 'stateId': state.id }) }}">
-                                        Renommer
+                                        Modifier
                                     </a>
                                     <button type="button"
                                             class="btn btn-primary dropdown-toggle dropdown-toggle-split"
@@ -63,3 +68,6 @@
         </div>
     </div>
 </div>
+
+
+

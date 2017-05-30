@@ -10,8 +10,7 @@
         <field name="machineName" type="string" column="machineName" length="255" unique="true">
             <gedmo:slug unique="true" style="camel" updatable="false" separator="_" fields="name" />
         </field>
-
+        <one-to-one field="trigger" target-entity="AppBundle\Entity\AbstractTrigger" mapped-by="state"/>
         <many-to-one field="workflow" target-entity="AppBundle\Entity\WorkFlow" inversed-by="states" />
-
     </entity>
 </doctrine-mapping>

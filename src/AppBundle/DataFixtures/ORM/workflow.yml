@@ -8,6 +8,14 @@ AppBundle\Entity\State:
         name:  <words(2, true)>
         workflow: '@WorkFlow*'
 
+   State_1:
+        name:  State avec condition
+        workflow: '@WorkFlow_1'
+
+AppBundle\Entity\CompanyTrigger:
+   CompanyTrigger_1:
+        state: '@State_1'
+
 AppBundle\Entity\StudentCountCondition:
    Yolo:
         number: <numberBetween(0,25)>
