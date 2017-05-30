@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\CompanyTrigger;
 use AppBundle\Entity\DatetimeCondition;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
@@ -10,7 +11,9 @@ use AppBundle\Entity\Transition;
 use AppBundle\Entity\TransitionCondition;
 use AppBundle\Forms\Types\TransitionConditions\DatetimeConditionType;
 use AppBundle\Forms\Types\TransitionConditions\StudentCountConditionType;
+use AppBundle\Forms\Types\Workflow\ComplexStateType;
 use AppBundle\Forms\Types\Workflow\SampleTransitionType;
+use ReflectionClass;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -151,24 +154,58 @@ class WorkflowController extends Controller
      */
     public function renameStateWorkflowAction(Request $request , State $state, Promotion $promotion)
     {
-        $em =$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(StateType::class, $state);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($state);
-            $em->flush();
-
-            return $this->redirectToRoute('course_manager.promotion.workflow.edit', [
-                'promotionId' => $promotion->getId()
-            ]);
+        $selected = '';
+        if ($state->getTrigger()) {
+            $reflect = new ReflectionClass($state->getTrigger());
+            $selected= $reflect->getShortName();
         }
 
-        return $this->render('AppBundle:CourseManager:editWorkflowState.html.twig',
-            [
-                'form' => $form->createView()
+            $form = $this->createForm(ComplexStateType::class, null, [
+                'triggersAviable' => [
+                    '' => '',
+                    'Affiche un formulaire entreprise' => 'CompanyTrigger',
+                    'Affiche un formulaire après la fin des études' => 'EndTrigger',
+                ],
+                'stateName' => $state->getName(),
+                'triggersSelected' => $selected
             ]);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $data = $form->getData();
+                $state->setName($data['name']);
+                switch ($data['trigger']) {
+                    case "CompanyTrigger":
+                        $trigger = new CompanyTrigger();
+                        $trigger->setState($state);
+                        $em->persist($trigger);
+                        $state->setTrigger($trigger);
+                        break;
+                    case "EndTrigger":
+                        throw new \DomainException("Trigger à implementer");
+                        break;
+                    case "":
+                        $em->remove($state->getTrigger());
+                        break;
+                    default:
+                        throw new \DomainException("Problème dans le choix du trigger");
+                }
+                $em->persist($state);
+                $em->flush();
+
+                return $this->redirectToRoute('course_manager.promotion.workflow.edit', [
+                    'promotionId' => $promotion->getId()
+                ]);
+            }
+
+            return $this->render('AppBundle:CourseManager:editWorkflowState.html.twig',
+                [
+                    'form' => $form->createView(),
+                    'state' => $state
+                ]);
     }
 
     /**
