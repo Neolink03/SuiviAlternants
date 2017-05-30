@@ -8,7 +8,8 @@
         <i class="fa fa-download" aria-hidden="true"></i> Exporter le workflow
     </a>
 
-    <h2 class="mb-4">Modification du workflow</h2>
+    <h2>Modification du workflow</h2>
+    <hr />
 
     <div class="workflow-dump text-center mb-4" style="display: none">{{ app_factory_workflow.dumpWorflowFromPromotion(promotion) }}</div>
 
@@ -32,7 +33,17 @@
             <h5 class="card-header">Ajouter une transition</h5>
             <div class="card-block">
                 {{ form_start(formTransition) }}
-                {{ form_widget(formTransition) }}
+                
+                {{ form_row(formTransition.name) }}
+                <div class="row">
+                    <div class="col-sm">
+                        {{ form_row(formTransition.startState, {'attr': {"class": 'form-control custom-select'} }) }}
+                    </div>
+                    <div class="col-sm">
+                        {{ form_row(formTransition.endState, {'attr': {"class": 'form-control custom-select'} }) }}
+                    </div>
+                </div>
+                
                 <button type="submit" class="btn btn-success pull-right">
                     <i class="fa fa-plus" aria-hidden="true"></i> Ajouter
                 </button>

@@ -5,7 +5,17 @@
 {% block body %}
     <h1>Modification de la transition</h1>
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    
+    {{ form_row(form.name) }}
+    <div class="row">
+        <div class="col-sm">
+            {{ form_row(form.startState, {'attr': {"class": 'form-control custom-select'} }) }}
+        </div>
+        <div class="col-sm">
+            {{ form_row(form.endState, {'attr': {"class": 'form-control custom-select'} }) }}
+        </div>
+    </div>
+    
     {%  if transition.condition is not null %}
         <h2>Condition</h2>
         <ul>

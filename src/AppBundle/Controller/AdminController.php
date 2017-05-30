@@ -73,8 +73,7 @@ class AdminController extends Controller
         $adminNewUserDto = new AdminNewUserDto();
         $form = $this->createForm(AdminNewUserType::class,$adminNewUserDto);
         $form->handleRequest($request);
-       // dump($form['userType']->getData());
-       // dump($form['phoneNumber']->getData());die;
+
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form['userType']->getData() == "responsable" && $form['phoneNumber']->getData() == null){
                 $this->addFlash("danger", "Une information est manquante ou incomplète.");
