@@ -41,10 +41,20 @@ class WorkFlow
     {
         return $this->states;
     }
-
+    
     public function setStates($states)
     {
         $this->states = $states;
+    }
+    
+    public function renameState(string $name) {
+        
+        foreach ($this->getStates()->toArray() as $state) {
+            if ($state->getName() == $name) {
+                $state->setName($name);
+                $state->setMachineName($name);
+            }
+        }
     }
 
     public function addState(State $state)
