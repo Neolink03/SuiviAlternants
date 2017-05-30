@@ -118,7 +118,7 @@ class WorkflowController extends Controller
             [
                 'promotion' => $promotion,
                 'formState' => $formState->createView(),
-                'formTransition' => $formTransition->createView()
+                'formTransition' => $formTransition->createView(),
             ]);
     }
 
