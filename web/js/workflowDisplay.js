@@ -15,5 +15,17 @@ $(function () {
         this.style.display = 'block';
     });
 
-    $("img:first", workflows).attr("data-action", "zoom");
+    $(workflows).attr("data-scale", "2.4");
+
+    var zoomed = false;
+    $(workflows).on('click', function () {
+        if (!zoomed) $(this).children('img').css({'transform': 'scale(' + $(this).attr('data-scale') + ')'});
+        else $(this).children('img').css({'transform': 'scale(1)'});
+
+        zoomed = !zoomed;
+
+    }).on('mousemove', function (e) {
+        if (zoomed)
+            $(this).children('img').css({'transform-origin': ((e.pageX - $(this).offset().left) / $(this).width()) * 100 + '% ' + ((e.pageY - $(this).offset().top) / $(this).height()) * 100 + '%'});
+    })
 });
