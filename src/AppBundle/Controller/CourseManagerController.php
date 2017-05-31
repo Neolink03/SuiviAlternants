@@ -65,7 +65,7 @@ class CourseManagerController extends Controller
                 $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
                 $em->persist($student);
                 $em->flush();
-                return $this->redirectToRoute('course_manager.course', ['courseId' => $promotion->getCourse()->getId()]);
+                return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
             }
         }
 
@@ -223,14 +223,14 @@ class CourseManagerController extends Controller
                 $em->persist($course);
                 $em->flush();
                 $this->addFlash('success', 'La formation a été modifiée avec succès.');
-                return $this->redirectToRoute('course_manager.course', ['courseId' => $course->getId()]);
+                return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $course->getPromotions()->last()->getId()]);
             }
         }
 
         return $this->render('AppBundle:Course:edit.html.twig', [
             "courseForm" => $editCourseForm->createView(),
             "title" => "Modifier formation",
-            "updateCourseActionUrl" => $this->generateUrl("course_manager.course.edit", ["courseId" => $course->getId()])
+            "updateCourseActionUrl" => $this->generateUrl('course_manager.promotion', ['promotionId' => $course->getPromotions()->last()->getId()])
         ]);
     }
 
