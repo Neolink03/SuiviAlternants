@@ -16,6 +16,4 @@ $(function () {
     });
 
     $("img:first", workflows).attr("data-action", "zoom");
-
-    $('[data-toggle="tooltip"]').tooltip();
 });
