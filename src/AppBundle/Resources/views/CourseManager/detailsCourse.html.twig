@@ -42,18 +42,15 @@
             'attr': { 'class': 'form-inline d-inline-block mb-4' }
         }) }}
         <div class="form-group">
-            <h4>{{ form_label(promotionsForm.promotions, null, { 'label_attr': { 'class': 'mr-sm-2' } }) }}</h4>
-            {{ form_widget(promotionsForm.promotions, { 'attr': {
-                'class': 'form-control mb-2 mr-sm-2 mb-sm-0',
-                'onchange': 'this.form.submit()' }
-            }) }}
+            {{ form_label(promotionsForm.promotions, null, { 'label_attr': { 'class': 'mr-sm-2' } }) }}
+            {{ form_widget(promotionsForm.promotions,
+            { 'attr': { 'class': 'custom-select form-control mb-2 mr-sm-2 mb-sm-0', 'onchange': 'this.form.submit()' } }) }}
         </div>
         {{ form_rest(promotionsForm) }}
         {{ form_end(promotionsForm) }}
         {% if promotion.workflow %}
 
             <div class="btn-group float-right">
-
                 <a href="{{ path('course_manager.promotion.workflow.edit', { 'promotionId': promotion.id }) }}"
                    class="btn btn-secondary"><i class="fa fa-sitemap fa-fw" aria-hidden="true"></i> Modifier le workflow</a>
 
@@ -66,7 +63,7 @@
                 <div class="dropdown-menu">
                     {{ form_start(studentsCsvForm) }}
                     {#{{ form_label(studentsCsvForm.file, 'Ajouter liste d\'étudiants', { 'label_attr': { 'class': 'dropdown-item mb-0' } }) }}#}
-                    <label for="{{ studentsCsvForm.file.vars.id }}" class="dropdown-item mb-0">
+                    <label for="{{ studentsCsvForm.file.vars.id }}" class="dropdown-item mb-0" role="button">
                         <i class="fa fa-users fa-fw" aria-hidden="true"></i> Ajouter liste d'étudiants
                     </label>
                     {{ form_widget(studentsCsvForm.file, { 'attr': { 'class': 'd-none', 'onchange': 'this.form.submit()' } }) }}
@@ -92,7 +89,7 @@
             {{ form_start(searchForm, { 'attr': { 'class': 'form-inline mb-4' } }) }}
             {{ form_widget(searchForm.lastName, { 'attr': { 'class': 'form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
             {{ form_widget(searchForm.firstName, { 'attr': { 'class': 'form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
-            {{ form_widget(searchForm.currentState, { 'attr': { 'class': 'form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
+            {{ form_widget(searchForm.currentState, { 'attr': { 'class': 'custom-select form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
             <button type="submit" class="btn btn-secondary form-control mb-2 mr-sm-2 mb-sm-0" role="button">
                 Rechercher <i class="fa fa-search" aria-hidden="true"></i>
             </button>

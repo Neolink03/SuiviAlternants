@@ -19,7 +19,7 @@
             {% set application = choice.data %}
             <tr>
 
-                <td>{{  application.student.firstName }} {{  application.student.lastName }}</td>
+                <td>{{ application.student.firstName }} {{ application.student.lastName }}</td>
                 {% if application.getLastStatusModification() %}
                     <td>{{ application.getLastStatusModification().state.name }}</td>
                 {% else %}
@@ -28,7 +28,8 @@
                 <td>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" id="email_message_users_{{ loop.index }}" name="email_message[users][]" value="{{ loop.index }}">
+                            <input type="checkbox" id="email_message_users_{{ loop.index }}"
+                                   name="email_message[users][]" value="{{ loop.index }}">
                         </label>
                     </div>
                 </td>
@@ -38,10 +39,19 @@
         </tbody>
     </table>
 
-    {{ form_row(form.object) }}
-    {{ form_row(form.message) }}
-    {{ form_row(form._token) }}
+    <div class="form-group">
+        {{ form_row(form.object) }}
+        {{ form_widget(form.object) }}
+        {{ form_errors(form.object) }}
+    </div>
 
-    <input type="submit" value="Envoyer l'email" class="btn btn-secondary" />
+    <div class="form-group">
+        {{ form_label(form.message) }}
+        {{ form_widget(form.message, { 'attr': { 'rows': '8' } }) }}
+        {{ form_errors(form.message) }}
+    </div>
+
+    {{ form_row(form._token) }}
+    <input type="submit" value="Envoyer l'email" class="btn btn-primary"/>
 
 {% endblock %}
