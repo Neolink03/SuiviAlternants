@@ -223,7 +223,8 @@ class WorkflowController extends Controller
             return $this->render('AppBundle:CourseManager:editWorkflowState.html.twig',
                 [
                     'form' => $form->createView(),
-                    'state' => $state
+                    'state' => $state,
+                    'promotionId' => $promotion->getId()
                 ]);
     }
 
