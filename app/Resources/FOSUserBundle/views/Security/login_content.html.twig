@@ -9,27 +9,43 @@
     </p>
 {% endif %}
 
-<form class="form-signin" action="{{ path("fos_user_security_check") }}" method="post">
+<form class="card form-signin" action="{{ path("fos_user_security_check") }}" method="post">
     {% if csrf_token %}
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
     {% endif %}
 
-    <h2 class="form-signin-heading">Veuillez vous identifier</h2>
+    <div class="text-center">
+        <img class="card-img-top" width="128" height="128" src="{{ asset('logo/logo.svg') }}" />
+    </div>
+    
+    <h2 class="card-block form-signin-heading">Veuillez vous identifier</h2>
 
-    <label for="username" class="sr-only">E-mail</label>
-    <input type="email" id="username" class="form-control" name="_username" value="{{ last_username }}"
-           placeholder="E-mail" required="required"/>
-
-    <label for="password" class="sr-only">{{ 'security.login.password'|trans }}</label>
-    <input type="password" id="password" class="form-control" name="_password" placeholder="{{ 'security.login.password'|trans }}"
-           required="required"/>
-
-    <div class="checkbox">
-        <label>
-            <input type="checkbox" id="remember_me" name="_remember_me" value="on"/> {{ 'security.login.remember_me'|trans }}
+    <div class="form-group">
+        <label for="username" class="sr-only">E-mail</label>
+        <div class="input-group">
+            <span class="input-group-addon">@</span>
+            <input type="email" id="username" class="form-control" name="_username" value="{{ last_username }}"
+                   placeholder="E-mail" required="required"/>
+        </div>
+    </div>
+    
+    <div class="form-group">
+       <label for="password" class="sr-only">{{ 'security.login.password'|trans }}</label>
+       <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
+              <input type="password" id="password" class="form-control" name="_password" placeholder="{{ 'security.login.password'|trans }}"
+                     required="required"/>
+       </div>
+    </div>
+                     
+    <div class="form-group">
+           <label class="custom-control custom-checkbox">
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="custom-control-input"/> 
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">{{ 'security.login.remember_me'|trans }}</span>
         </label>
     </div>
-
+    
     <input type="submit" id="_submit" class="btn btn-primary btn-lg btn-block" name="_submit" value="S'identifier"/>
     <a class="btn btn-link btn-block" href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié ?</a>
 </form>
