@@ -9,7 +9,7 @@
     <hr />
 
     <div class="mb-3">
-        <a href="{{ path('course_manager.course', {'courseId': course.id}) }}"
+        <a href="{{ path('course_manager.promotion', {'promotionId': course.promotions.last.id}) }}"
         class="btn btn-secondary">
 
             <i class="fa fa-chevron-left" aria-hidden="true"></i>

@@ -6,7 +6,7 @@
 
     <div>
         <h2 class="d-inline">{{ course.name }}</h2>
-        <span><span class="badge badge-default ml-2 mr-1">{{ course.studentNumber }}</span>places maximum</span>
+        <span><span class="badge badge-default ml-2 mr-1">{{ promotion.studentNumber }}</span>places maximum</span>
 
         <div class="btn-group float-right">
             <a href="{{ path('course_manager.course.edit', { 'courseId': course.id }) }}" class="btn btn-secondary">
@@ -38,20 +38,21 @@
     <hr>
 
     {% if promotion %}
-        {{ form_start(promotionsForm, {
-            'attr': { 'class': 'form-inline d-inline-block mb-4' },
-            'action': path('course_manager.course', { 'courseId': course.id })
-        }) }}
-        <div class="form-group">
-            <h4>{{ form_label(promotionsForm.promotions, null, { 'label_attr': { 'class': 'mr-sm-2' } }) }}</h4>
-            {{ form_widget(promotionsForm.promotions, { 'attr': {
-                'class': 'form-control mb-2 mr-sm-2 mb-sm-0',
-                'onchange': 'this.form.submit()' }
-            }) }}
+        <div class="mb-4">
+            {{ form_start(promotionsForm, {
+                'attr': { 'class': 'form-inline' }
+                })
+            }}
+            <div class="form-group">
+                <h4>{{ form_label(promotionsForm.promotions, null, { 'label_attr': { 'class': 'mr-sm-2' } }) }}</h4>
+                {{ form_widget(promotionsForm.promotions, { 'attr': {
+                    'class': 'form-control mb-2 mr-sm-2 mb-sm-0',
+                    'onchange': 'this.form.submit();' }
+                }) }}
+            </div>
+            {{ form_rest(promotionsForm) }}
+            {{ form_end(promotionsForm) }}
         </div>
-        {{ form_rest(promotionsForm) }}
-        {{ form_end(promotionsForm) }}
-
         {% if promotion.workflow %}
 
             <div class="btn-group float-right">

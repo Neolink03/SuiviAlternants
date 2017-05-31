@@ -65,7 +65,7 @@ class CourseManagerController extends Controller
                 $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
                 $em->persist($student);
                 $em->flush();
-                return $this->redirectToRoute('course_manager.course', ['courseId' => $promotion->getCourse()->getId()]);
+                return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
             }
         }
 
@@ -152,6 +152,62 @@ class CourseManagerController extends Controller
     }
 
     /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+     */
+    public function detailsPromotionAction(Request $request, Promotion $promotion)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $states = null;
+        $applications = null;
+
+        $applications = $promotion->getApplications();
+        $states = $em->getRepository(State::class)->findBy(
+                ['workflow' => $promotion->getWorkflow()]
+        );
+
+        $promotionsForm = $this->createForm(PromotionFormType::class, null, [
+            "promotions" => $promotion->getCourse()->getPromotions(),
+            "promotionSelected" => $promotion
+        ]);
+        $studentsCsvForm = $this->createForm(StudentsCsvType::class);
+        $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
+
+        if ($request->isMethod('post')) {
+            $promotionsForm->handleRequest($request);
+            $studentsCsvForm->handleRequest($request);
+            $searchForm->handleRequest($request);
+//
+            if ($promotionsForm->isSubmitted() && $promotionsForm->isValid()) {
+                return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotionsForm->getData()['promotions']->getId()]);
+            }
+
+            if ($studentsCsvForm->isSubmitted() && $studentsCsvForm->isValid()) {
+                /** @var UploadedFile $file */
+                $file = $studentsCsvForm->getData()['file'];
+                if (pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) == 'csv')
+                    $this->get('app.factory.user')->saveStudentsfromCsvFile($file->getPathname(), $promotion);
+                else
+                    $this->addFlash('danger', 'Le fichier fournit pour ajouter des étudiants n\'est pas valide. Veuillez choisir un autre fichier (au format csv) ou ajouter les étudiants un à un.');
+            }
+
+            if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+                $applications = $em->getRepository(Application::class)->findAllByFilters($searchForm->getData());
+            }
+        }
+
+        return $this->render('@App/CourseManager/detailsCourse.html.twig', [
+            'course' => $promotion->getCourse(),
+            'promotion' => $promotion,
+            'applications' => $applications,
+            'promotionsForm' => $promotionsForm->createView(),
+            'studentsCsvForm' => $studentsCsvForm->createView(),
+            'searchForm' => $searchForm->createView()
+        ]);
+    }
+
+
+    /**
      * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
      */
     public function editCourseAction(Request $request, Course $course)
@@ -167,14 +223,14 @@ class CourseManagerController extends Controller
                 $em->persist($course);
                 $em->flush();
                 $this->addFlash('success', 'La formation a été modifiée avec succès.');
-                return $this->redirectToRoute('course_manager.course', ['courseId' => $course->getId()]);
+                return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $course->getPromotions()->last()->getId()]);
             }
         }
 
         return $this->render('AppBundle:Course:edit.html.twig', [
             "courseForm" => $editCourseForm->createView(),
             "title" => "Modifier formation",
-            "updateCourseActionUrl" => $this->generateUrl("course_manager.course.edit", ["courseId" => $course->getId()])
+            "updateCourseActionUrl" => $this->generateUrl('course_manager.promotion', ['promotionId' => $course->getPromotions()->last()->getId()])
         ]);
     }
 
