@@ -1,0 +1,15 @@
+.bordered {
+    border: 1px solid #ddd;
+}
+
+.zoom-in {
+    cursor: zoom-in;
+}
+
+.workflow-dump {
+    overflow: hidden;
+}
+
+.workflow-dump img {
+    transition: transform .5s ease-out;
+}

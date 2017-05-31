@@ -90,10 +90,19 @@ class Application
         $this->dataAttachments = $dataAttachments;
     }
 
-    public function addDataAttachments(DataAttachments $dataAttachments)
+    public function addDataAttachments(DataAttachments $dataAttachment)
     {
-        $this->dataAttachments[] = $dataAttachments;
-        $dataAttachments->setApplication($this);
+        $insert = true;
+        foreach ($this->dataAttachments as $stockedDataAttachment){
+            if($dataAttachment instanceof $stockedDataAttachment){
+                $insert = false;
+            }
+        }
+
+        if($insert){
+            $this->dataAttachments[] = $dataAttachment;
+            $dataAttachment->setApplication($this);
+        }
 
         return $this;
     }
