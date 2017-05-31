@@ -76,82 +76,6 @@ class CourseManagerController extends Controller
     }
 
     /**
-     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
-     */
-    public function detailsCourseAction(Request $request, Course $course)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $promotions = $em->getRepository(Promotion::class)->findBy(
-            ['course' => $course],
-            ['id' => 'desc']
-        );
-
-        $states = null;
-        $applications = null;
-
-        if ($promotions) {
-            $promotion = $promotions[0];
-            $applications = $promotion->getApplications();
-            $states = $em->getRepository(State::class)->findBy(
-                ['workflow' => $promotion->getWorkflow()]
-            );
-        } else {
-            $promotion = null;
-        }
-
-        $promotionsForm = $this->createForm(PromotionFormType::class, null, ["promotions" => $promotions]);
-        $studentsCsvForm = $this->createForm(StudentsCsvType::class);
-        $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
-
-        if ($request->get('promotion')) {
-            $promotion = $em->getRepository(Promotion::class)->find($request->get('promotion'));
-            $promotionsForm->get('promotions')->setData($promotion);
-            $applications = $promotion->getApplications();
-            $states = $em->getRepository(State::class)->findBy(
-                ['workflow' => $promotion->getWorkflow()]
-            );
-            $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
-        }
-
-        if ($request->isMethod('post')) {
-            $promotionsForm->handleRequest($request);
-            $studentsCsvForm->handleRequest($request);
-            $searchForm->handleRequest($request);
-
-            if ($promotionsForm->isSubmitted() && $promotionsForm->isValid()) {
-                $promotion = $em->getRepository(Promotion::class)->find($promotionsForm->getData()['promotions']->getId());
-                $applications = $promotion->getApplications();
-                $states = $em->getRepository(State::class)->findBy(
-                    ['workflow' => $promotion->getWorkflow()]
-                );
-                $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
-            }
-
-            if ($studentsCsvForm->isSubmitted() && $studentsCsvForm->isValid()) {
-                /** @var UploadedFile $file */
-                $file = $studentsCsvForm->getData()['file'];
-                if (pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) == 'csv')
-                    $this->get('app.factory.user')->saveStudentsfromCsvFile($file->getPathname(), $promotion);
-                else
-                    $this->addFlash('danger', 'Le fichier fournit pour ajouter des étudiants n\'est pas valide. Veuillez choisir un autre fichier (au format csv) ou ajouter les étudiants un à un.');
-            }
-
-            if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-                $applications = $em->getRepository(Application::class)->findAllByFilters($searchForm->getData());
-            }
-        }
-
-        return $this->render('@App/CourseManager/detailsCourse.html.twig', [
-            'course' => $course,
-            'promotion' => $promotion,
-            'applications' => $applications,
-            'promotionsForm' => $promotionsForm->createView(),
-            'studentsCsvForm' => $studentsCsvForm->createView(),
-            'searchForm' => $searchForm->createView()
-        ]);
-    }
-
-    /**
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      */
     public function detailsPromotionAction(Request $request, Promotion $promotion)
@@ -163,7 +87,7 @@ class CourseManagerController extends Controller
 
         $applications = $promotion->getApplications();
         $states = $em->getRepository(State::class)->findBy(
-                ['workflow' => $promotion->getWorkflow()]
+            ['workflow' => $promotion->getWorkflow()]
         );
 
         $promotionsForm = $this->createForm(PromotionFormType::class, null, [
@@ -192,7 +116,7 @@ class CourseManagerController extends Controller
             }
 
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-                $applications = $em->getRepository(Application::class)->findAllByFilters($searchForm->getData());
+                $applications = $em->getRepository(Application::class)->findAllByPromotionAndFilters($promotion, $searchForm->getData());
             }
         }
 
@@ -289,16 +213,16 @@ class CourseManagerController extends Controller
             $data = $request->request->get('add_promotion');
             $addPromotionForm->handleRequest($request);
 
-            $dateStartmodif = $data['startDate']['year'].'-'.$data['startDate']['month'].'-'.$data['startDate']['day'];
-            $dateEndmodif = $data['endDate']['year'].'-'.$data['endDate']['month'].'-'.$data['endDate']['day'];
-            if($dateStartmodif <= $dateEndmodif){
+            $dateStartmodif = $data['startDate']['year'] . '-' . $data['startDate']['month'] . '-' . $data['startDate']['day'];
+            $dateEndmodif = $data['endDate']['year'] . '-' . $data['endDate']['month'] . '-' . $data['endDate']['day'];
+            if ($dateStartmodif <= $dateEndmodif) {
 
                 if ($addPromotionForm->isSubmitted() && $addPromotionForm->isValid()) {
                     $this->get('app.factory.promotion')->createPromotionFromForm($course->getId(), $data);
                     $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
                     return $this->redirectToRoute('course_manager.course', ['courseId' => $course->getId()]);
                 }
-            }else{
+            } else {
                 $this->addFlash('danger', 'La date de début de la formation ne peut être supérieure à la date de fin.');
             }
         }
@@ -380,7 +304,8 @@ class CourseManagerController extends Controller
     /**
      * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
      */
-    public function addJuryAction(Request $request, Course $course){
+    public function addJuryAction(Request $request, Course $course)
+    {
 
         $em = $this->getDoctrine()->getManager();
 
@@ -403,7 +328,7 @@ class CourseManagerController extends Controller
             }
         }
 
-        return $this->render('AppBundle:CourseManager:addJuryToCourse.html.twig',[
+        return $this->render('AppBundle:CourseManager:addJuryToCourse.html.twig', [
             'juryList' => $form->createView(),
             'course' => $course
         ]);
