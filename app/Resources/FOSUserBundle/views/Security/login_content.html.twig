@@ -37,13 +37,15 @@
                      required="required"/>
        </div>
     </div>
-
-    <label class="custom-control custom-checkbox">
-        <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="custom-control-input"/> 
-        <span class="custom-control-indicator"></span>
-        <span class="custom-control-description">{{ 'security.login.remember_me'|trans }}</span>
-    </label>
-
+                     
+    <div class="form-group">
+           <label class="custom-control custom-checkbox">
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="custom-control-input"/> 
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">{{ 'security.login.remember_me'|trans }}</span>
+        </label>
+    </div>
+    
     <input type="submit" id="_submit" class="btn btn-primary btn-lg btn-block" name="_submit" value="S'identifier"/>
     <a class="btn btn-link btn-block" href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié ?</a>
 </form>
