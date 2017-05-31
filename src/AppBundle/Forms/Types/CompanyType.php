@@ -18,9 +18,9 @@ class CompanyType extends AbstractType
         $builder->add('name', TextType::class, [
             'label' => "Nom",
             ])
-            ->add('address', AddressType::class, [
-                'label' => "Addresse",
-            ])
+            ->add('address', AddressType::class, array(
+                'label' => false)
+            )
             ->add('employeeNumber', IntegerType::class, [
                 'label' => "Nombre de salariés",
             ])
