@@ -1,9 +1,10 @@
 <div class="card mb-4">
     <h4 class="card-header" data-toggle="collapse" data-parent="#accordion" href="#collapseTransition"
         aria-expanded="true" aria-controls="collapseTransition" role="button">
-        <i class="fa fa-long-arrow-right" aria-hidden="true"></i> Transitions <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
+        <i class="fa fa-long-arrow-right" aria-hidden="true"></i> Transitions <i class="fa fa-caret-down pull-right"
+                                                                                 aria-hidden="true"></i>
     </h4>
-    
+
     <div id="collapseTransition" class="collapse" role="tabpanel">
         <div class="card-block">
             <table class="table">
@@ -18,7 +19,14 @@
                 <tbody>
                 {% for transition in promotion.workflow.transitions %}
                     <tr>
-                        <td>{{ transition.name }}</td>
+                        <td>
+                            {{ transition.name }}
+                            {% if transition.condition %}
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true" data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="Cette transition comporte une condition d'accès"></i>
+                            {% endif %}
+                        </td>
                         <td>{{ transition.startState.name }}</td>
                         <td>{{ transition.endState.name }}</td>
                         <td>
@@ -34,8 +42,9 @@
                                 </button>
 
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{ path('course_manager.promotion.workflow.transition.delete',
-                                { 'promotionId': promotion.id, 'transitionId': transition.id }) }}">
+                                    <a class="dropdown-item"
+                                       href="{{ path('course_manager.promotion.workflow.transition.delete',
+                                       { 'promotionId': promotion.id, 'transitionId': transition.id }) }}">
                                         <i class="fa fa-times" aria-hidden="true"></i> Supprimer
                                     </a>
                                 </div>
@@ -47,4 +56,4 @@
             </table>
         </div>
     </div>
-    </div>
+</div>
