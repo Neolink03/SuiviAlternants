@@ -131,9 +131,11 @@
                 </tbody>
             </table>
         {% else %}
-            Aucun workflow existant pour cette promotion.
-            <a href="{{ path('course_manager.promotion.workflow.add', { 'promotionId': promotion.id }) }}"
-               class="btn btn-secondary">Ajouter un workflow</a>
+            <div>
+                Aucun workflow existant pour cette promotion.
+                <a href="{{ path('course_manager.promotion.workflow.add', { 'promotionId': promotion.id }) }}"
+                   class="btn btn-secondary">Ajouter un workflow</a>
+            </div>
         {% endif %}
     {% endif %}
 
