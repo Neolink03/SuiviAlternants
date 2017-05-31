@@ -300,6 +300,7 @@ class WorkflowController extends Controller
         $em =$this->getDoctrine()->getManager();
 
         $condition = new StudentCountCondition();
+        $condition->setNumber($promotion->getStudentNumber());
         $form = $this->createForm(StudentCountConditionType::class, $condition);
         $form->handleRequest($request);
 
