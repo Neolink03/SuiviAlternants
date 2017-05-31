@@ -144,6 +144,7 @@ class UserFactory
             $studentDataBase = $student;
             $studentDataBase->setUsername($student->getEmail());
             $studentDataBase->setPlainPassword($password);
+            $studentDataBase->setEnabled(true);
 
             $this->em->persist($studentDataBase);
             $this->em->flush();
