@@ -11,25 +11,10 @@
     <h1>Formations</h1>
     <div id="courseList">
         {% for application in applications %}
-            <div>
-                <span>{{ application.promotion.course.name }}</span>
-                <span>{{ application.currentState }}</span>
-                <div class="workflow-dump text-center mb-4 bordered zoom-in" style="display: none">
-                    {{ app_factory_workflow.dumpStudentWorflowFromApplication(application) }}
-                </div>
-            </div>
-            {% for dataAttachment in application.dataAttachments %}
-                {% if dataAttachment is company %}
-                    <a href="{{ path('student.company.edit', { 'companyId' : dataAttachment.id}) }}"
-                       class="btn btn-primary">Ajouter les informations de l'entreprise</a>
-                {% else %}
-                    Ce n'est pas une compagny TODO
-                {% endif %}
-            {% endfor %}
+            {% include "AppBundle:Student:showApplication.html.twig" with {"application": application} %}
         {% endfor %}
     </div>
 {% endblock %}
-
 
 {% block javascripts %}
     {{ parent() }}

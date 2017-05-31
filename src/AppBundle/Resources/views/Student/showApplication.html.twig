@@ -1,0 +1,21 @@
+<div class="card mb-4">
+    <div class="card-header">
+        <h4 class="d-inline" style="line-height: inherit;">{{ application.promotion.course.name }}</h4>
+        <span class="badge badge-default ml-2 mr-1">{{ application.currentState }}</span>
+        
+        {% for dataAttachment in application.dataAttachments %}
+            {% if dataAttachment is company %}
+                <a href="{{ path('student.company.edit', { 'companyId' : dataAttachment.id}) }}"
+                   class="btn btn-success float-right">Ajouter les informations de l'entreprise</a>
+            {% else %}
+                Ce n'est pas une compagny TODO
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    <div class="card-block">
+        <div class="workflow-dump text-center mb-4 bordered zoom-in" style="display: none">
+            {{ app_factory_workflow.dumpStudentWorflowFromApplication(application) }}
+        </div>
+    </div>
+</div>
