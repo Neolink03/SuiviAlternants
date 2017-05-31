@@ -60,7 +60,11 @@
                                     <div class="dropdown-menu">
                                         <a href="{{ path('course_manager.promotion.workflow.state.delete',
                                         { 'promotionId': promotion.id, 'stateId': state.id }) }}"
-                                           class="dropdown-item">
+                                           class="dropdown-item"
+                                           data-toggle="tooltip"
+                                           data-placement="right"
+                                           title="Supprimer un état entraînera la suppression de ses transitions"
+                                        >
                                             <i class="fa fa-times" aria-hidden="true"></i> Supprimer
                                         </a>
                                     </div>
