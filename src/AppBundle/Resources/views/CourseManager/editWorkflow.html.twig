@@ -2,11 +2,6 @@
 
 {% block title %}Modification du workflow{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/zoom.css') }}">
-{% endblock %}
-
 {% block body %}
     <a href="{{ path('course_manager.promotion.workflow.export', { 'promotionId': promotion.id }) }}"
        class="btn btn-secondary pull-right">
@@ -14,13 +9,15 @@
     </a>
 
     <a href="{{ path('course_manager.promotion', { 'promotionId': promotion.id }) }}"
-       class="btn btn-secondary float-left mr-3"><i class="fa fa-chevron-left" aria-hidden="true"></i> Retourner à la formation</a>
+       class="btn btn-secondary float-left mr-3"><i class="fa fa-chevron-left" aria-hidden="true"></i> Retourner à la
+        formation</a>
 
     <h2>Modification du workflow</h2>
     <hr/>
 
-    <div class="workflow-dump text-center mb-4"
-         style="display: none">{{ app_factory_workflow.customDumpWorflowFromPromotion(promotion) }}</div>
+    <div class="workflow-dump text-center mb-4 bordered zoom-in" style="display: none">
+        {{ app_factory_workflow.customDumpWorflowFromPromotion(promotion) }}
+    </div>
 
     <div id="accordion" role="tablist" aria-multiselectable="true">
 
@@ -68,5 +65,4 @@
     {{ parent() }}
     <script src="{{ asset('js/viz.js') }}"></script>
     <script src="{{ asset('js/workflowDisplay.js') }}"></script>
-    <script src="{{ asset('js/zoom.min.js') }}"></script>
 {% endblock %}
