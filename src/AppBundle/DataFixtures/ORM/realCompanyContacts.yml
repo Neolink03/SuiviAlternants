@@ -1,0 +1,36 @@
+AppBundle\Entity\CompanyContact:
+   CompanyContact_1:
+        companyName: DevSites
+        firstNameContact: Léandre
+        lastNameContact: Asnoth
+        email: LeandreAsnothPtutInfo@yopmail.com
+        phoneNumber: '0620135896'
+        course: '@Course_1'
+   CompanyContact_2:
+        companyName: DevSites
+        firstNameContact: Gaëlle
+        lastNameContact: Lifora
+        email: GaelleLiforaPtutInfo@yopmail.com
+        phoneNumber: '0620135784'
+        course: '@Course_1'
+   CompanyContact_3:
+        companyName: PhoneAppli
+        firstNameContact: Benoit
+        lastNameContact: Verradin
+        email: BenoitVerradinPtutInfo@yopmail.com
+        phoneNumber: '0625835784'
+        course: '@Course_2'
+   CompanyContact_4:
+        companyName: IncommingApps
+        firstNameContact: Ken
+        lastNameContact: Delanfer
+        email: KenDelanferPtutInfo@yopmail.com
+        phoneNumber: '0625951284'
+        course: '@Course_2'
+   CompanyContact_5:
+        companyName: 'SONECO, Developpeur de sites internet'
+        firstNameContact: Renée
+        lastNameContact: Lagnir
+        email: ReneeLagnirPtutInfo@yopmail.com
+        phoneNumber: '0610951284'
+        course: '@Course_3'

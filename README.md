@@ -7,6 +7,20 @@ Installation des dépendances :
 Création de la base de donnée, de ses tables et de données initiales :
 `app:database:initialize`
 
+Users Dev
+- 
+### Admin 
+    email : admin@yopmail.com 
+    Password : admin
+### Manager
+    email: manager@yopmail.com
+    Password: manager
+### Student
+    email: student@yopmail.com
+    Password: student
+### Jury
+    email: jury@yopmail.com
+    Password: jury
 
 Creation d'un workflow depuis un fichier
 -

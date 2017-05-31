@@ -3,9 +3,11 @@
 {% block title %}Modification d'une condition{% endblock %}
 
 {% block body %}
-    <h1>Modification de la condition sur le nombre d'étudiants</h1>
+    <h1>{{ titre }}</h1>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <input type="submit" value="Modifier" class="btn btn-primary">
+    <a href="{{ path('course_manager.promotion.workflow.transition.rename', { 'promotionId': promotionId, 'transitionId': transitionId }) }}"
+       class="btn btn-secondary mr-3"><i class="fa fa-times" aria-hidden="true"></i> Annuler</a>
     {{ form_end(form) }}
 {% endblock %}
