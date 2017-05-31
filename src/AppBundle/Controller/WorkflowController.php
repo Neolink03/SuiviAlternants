@@ -143,6 +143,19 @@ class WorkflowController extends Controller
     public function deleteStateWorkflowAction(Request $request ,Promotion $promotion, State $state)
     {
         $em =$this->getDoctrine()->getManager();
+        $startTransitions = $this->getDoctrine()->getRepository(Transition::class)->findBy(
+            ['startState' => $state]
+        );
+        $endTransition = $this->getDoctrine()->getRepository(Transition::class)->findBy(
+            ['endState' => $state]
+        );
+
+        foreach ($startTransitions as $transition){
+            $em->remove($transition);
+        }
+        foreach ($endTransition as $transition){
+            $em->remove($transition);
+        }
         $promotion->getWorkflow()->removeState($state);
         $em->persist($promotion);
         $em->remove($state);
