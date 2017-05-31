@@ -2,9 +2,16 @@
     <div class="card-header">
         <h4 class="d-inline" style="line-height: inherit;">{{ course.name }}</h4>
         <span><span class="badge badge-default ml-2 mr-1">{{ course.studentNumber }}</span>places</span>
-        <a href="{{ path('course_manager.promotion', { 'promotionId': course.promotions.last.id }) }}"
-           class="float-right btn btn-primary">Détails <i class="fa fa-angle-right" aria-hidden="true"></i>
-        </a>
+        {% if course.promotions.last %}
+            <a href="{{ path('course_manager.promotion', { 'promotionId': course.promotions.last.id }) }}"
+               class="float-right btn btn-primary">Détails <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </a>
+        {% else %}
+            <a href="{{ path('course_manager.promotion.add', { 'courseId': course.id }) }}"
+               class="float-right btn btn-success">
+                <i class="fa fa-users fa-fw" aria-hidden="true"></i> Ajouter une promotion
+            </a>
+        {% endif %}
 
     </div>
     <ul class="list-group list-group-flush">
