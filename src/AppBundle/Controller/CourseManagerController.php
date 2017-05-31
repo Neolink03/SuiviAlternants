@@ -233,10 +233,17 @@ class CourseManagerController extends Controller
             $data = $request->request->get('add_promotion');
             $addPromotionForm->handleRequest($request);
 
-            if ($addPromotionForm->isSubmitted() && $addPromotionForm->isValid()) {
-                $this->get('app.factory.promotion')->createPromotionFromForm($course->getId(), $data);
-                $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
-                return $this->redirectToRoute('course_manager.course', ['courseId' => $course->getId()]);
+            $dateStartmodif = $data['startDate']['year'].'-'.$data['startDate']['month'].'-'.$data['startDate']['day'];
+            $dateEndmodif = $data['endDate']['year'].'-'.$data['endDate']['month'].'-'.$data['endDate']['day'];
+            if($dateStartmodif <= $dateEndmodif){
+
+                if ($addPromotionForm->isSubmitted() && $addPromotionForm->isValid()) {
+                    $this->get('app.factory.promotion')->createPromotionFromForm($course->getId(), $data);
+                    $this->addFlash('success', 'La promotion a été ajoutée avec succès.');
+                    return $this->redirectToRoute('course_manager.course', ['courseId' => $course->getId()]);
+                }
+            }else{
+                $this->addFlash('danger', 'La date de début de la formation ne peut être supérieure à la date de fin.');
             }
         }
 
