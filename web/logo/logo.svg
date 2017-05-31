@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="189.46378mm"
+   height="189.46378mm"
+   viewBox="0 0 189.46377 189.46378"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.1 r15371"
@@ -29,17 +29,21 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.51809596"
-     inkscape:cx="493.60145"
-     inkscape:cy="515.61845"
+     inkscape:cx="102.64655"
+     inkscape:cy="470.66306"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="g10823"
      showgrid="false"
      inkscape:window-width="1680"
      inkscape:window-height="988"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     showguides="false" />
+     showguides="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -76,13 +80,14 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="Background"
-     style="display:none">
+     style="display:inline"
+     transform="translate(-11.490402,-11.527618)">
     <circle
-       style="opacity:0.98000004;fill:#f2f2f2;fill-opacity:1;stroke:none;stroke-width:6.67015076;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:0.98000004;fill:#f2f2f2;fill-opacity:1;stroke:none;stroke-width:7.05021667;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path8540"
-       cx="103.66886"
-       cy="105.23814"
-       r="89.625046"
+       cx="106.22229"
+       cy="106.25951"
+       r="94.731888"
        inkscape:export-filename="G:\files\workspace_remotes\suivi_alternants\web\apple-touch-icon.png"
        inkscape:export-xdpi="18.279488"
        inkscape:export-ydpi="18.279488" />
@@ -91,22 +96,26 @@
      inkscape:label="Borders"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:inline" />
+     style="display:inline"
+     transform="translate(-11.490402,-11.527618)" />
   <g
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Ribbons"
-     style="display:inline" />
+     style="display:inline"
+     transform="translate(-11.490402,-11.527618)" />
   <g
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Hat"
-     style="display:inline" />
+     style="display:inline"
+     transform="translate(-11.490402,-11.527618)" />
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Text"
-     style="display:inline">
+     style="display:inline"
+     transform="translate(-11.490402,-11.527618)">
     <circle
        style="display:inline;opacity:0.98000004;fill:none;fill-opacity:1;stroke:#006df0;stroke-width:5.4982686;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path8503"
@@ -206,8 +215,8 @@
       <path
          inkscape:connector-curvature="0"
          id="path8562"
-         d="M 89.348658,65.381243 103.20792,77.69033 88.944786,87.041156 Z"
-         style="fill:#006df0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+         d="M 86.395633,62.526277 103.4213,77.647603 85.899489,89.134798 Z"
+         style="fill:#006df0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.32503226px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
   </g>
 </svg>
