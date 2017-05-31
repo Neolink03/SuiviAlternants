@@ -4,11 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="jury.showPersonalInformation" path="/informations">
-        <default key="_controller">AppBundle:Jury:displayPersonalInformations</default>
-    </route>
-
-    <route id="jury.course" path="/course/{courseId}">
+    <route id="jury.promotion" path="/promotion/{promotionId}">
         <default key="_controller">AppBundle:Jury:studentList</default>
     </route>
 
