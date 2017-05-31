@@ -4,7 +4,7 @@
     <id name="id" type="integer" column="id">
       <generator strategy="AUTO"/>
     </id>
-    <field name="companyName" type="string" column="companyName" length="255" unique="true"/>
+    <field name="companyName" type="string" column="companyName" length="255" />
     <field name="firstNameContact" type="string" column="firstNameContact" length="255"/>
     <field name="lastNameContact" type="string" column="lastNameContact" length="255"/>
     <field name="email" type="string" column="email" length="255"/>

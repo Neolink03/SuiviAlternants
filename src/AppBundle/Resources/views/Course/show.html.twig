@@ -2,7 +2,7 @@
     <div class="card-header">
         <h4 class="d-inline" style="line-height: inherit;">{{ course.name }}</h4>
         <span><span class="badge badge-default ml-2 mr-1">{{ course.studentNumber }}</span>places</span>
-        <a href="{{ path('course_manager.course', { 'courseId': course.id }) }}"
+        <a href="{{ path('course_manager.promotion', { 'promotionId': course.promotions.last.id }) }}"
            class="float-right btn btn-primary">Détails <i class="fa fa-angle-right" aria-hidden="true"></i>
         </a>
 

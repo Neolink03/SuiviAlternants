@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Application;
+use AppBundle\Entity\Promotion;
 
 /**
  * ApplicationRepository
@@ -12,7 +13,7 @@ use AppBundle\Entity\Application;
  */
 class ApplicationRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAllByFilters(array $data)
+    public function findAllByPromotionAndFilters(Promotion $promotion, array $data)
     {
         $qb = $this->_em->createQueryBuilder();
 
@@ -20,11 +21,14 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('s.lastName LIKE :lastName')
             ->andWhere('s.firstName LIKE :firstName')
             ->andWhere('a.currentState LIKE :currentState')
-            ->join('a.student', 's');
+            ->andWhere('p.id = :promotion')
+            ->join('a.student', 's')
+            ->join('a.promotion', 'p');
 
-        $qb->setParameter('lastName', '%'.$data['lastName'].'%');
-        $qb->setParameter('firstName', '%'.$data['firstName'].'%');
+        $qb->setParameter('lastName', '%' . $data['lastName'] . '%');
+        $qb->setParameter('firstName', '%' . $data['firstName'] . '%');
         $qb->setParameter('currentState', $data['currentState'] ? $data['currentState']->getMachineName() : '%%');
+        $qb->setParameter('promotion', $promotion->getId());
 
         return $qb->getQuery()->getResult();
 

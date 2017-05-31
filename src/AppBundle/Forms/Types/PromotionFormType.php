@@ -20,6 +20,7 @@ class PromotionFormType extends AbstractType
         $builder->add('promotions', EntityType::class, [
             'class' => Promotion::class,
             'choices' => $options['promotions'],
+            'data' => $options['promotionSelected'],
             'choice_label' => function (Promotion $promotion) {
                 return $promotion->getName();
             },
@@ -31,6 +32,7 @@ class PromotionFormType extends AbstractType
     {
         $resolver->setDefaults(array(
             'promotions' => [],
+            'promotionSelected' => null,
         ));
     }
 }

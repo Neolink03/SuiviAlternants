@@ -143,6 +143,19 @@ class WorkflowController extends Controller
     public function deleteStateWorkflowAction(Request $request ,Promotion $promotion, State $state)
     {
         $em =$this->getDoctrine()->getManager();
+        $startTransitions = $this->getDoctrine()->getRepository(Transition::class)->findBy(
+            ['startState' => $state]
+        );
+        $endTransition = $this->getDoctrine()->getRepository(Transition::class)->findBy(
+            ['endState' => $state]
+        );
+
+        foreach ($startTransitions as $transition){
+            $em->remove($transition);
+        }
+        foreach ($endTransition as $transition){
+            $em->remove($transition);
+        }
         $promotion->getWorkflow()->removeState($state);
         $em->persist($promotion);
         $em->remove($state);
@@ -193,7 +206,8 @@ class WorkflowController extends Controller
                         throw new \DomainException("Trigger à implementer");
                         break;
                     case "":
-                        $em->remove($state->getTrigger());
+                        if(!is_null($state->getTrigger()))
+                            $em->remove($state->getTrigger());
                         break;
                     default:
                         throw new \DomainException("Problème dans le choix du trigger");
