@@ -7,7 +7,7 @@
     <hr>
     <div class="row col-md-6">
         
-        {% block head_form %} {{ form_start(courseForm, {'action': updateCourseActionUrl}) }} {% endblock %}
+        {% block head_form %} {{ form_start(courseForm) }} {% endblock %}
         
             <div class="form-group">
                 {{ form_label(courseForm.name)}}

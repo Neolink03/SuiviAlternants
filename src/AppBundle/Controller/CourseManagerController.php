@@ -82,9 +82,6 @@ class CourseManagerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $states = null;
-        $applications = null;
-
         $applications = $promotion->getApplications();
         $states = $em->getRepository(State::class)->findBy(
             ['workflow' => $promotion->getWorkflow()]
@@ -101,7 +98,7 @@ class CourseManagerController extends Controller
             $promotionsForm->handleRequest($request);
             $studentsCsvForm->handleRequest($request);
             $searchForm->handleRequest($request);
-//
+
             if ($promotionsForm->isSubmitted() && $promotionsForm->isValid()) {
                 return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotionsForm->getData()['promotions']->getId()]);
             }
@@ -153,8 +150,7 @@ class CourseManagerController extends Controller
 
         return $this->render('AppBundle:Course:edit.html.twig', [
             "courseForm" => $editCourseForm->createView(),
-            "title" => "Modifier formation",
-            "updateCourseActionUrl" => $this->generateUrl('course_manager.promotion', ['promotionId' => $course->getPromotions()->last()->getId()])
+            "title" => "Modifier formation"
         ]);
     }
 
