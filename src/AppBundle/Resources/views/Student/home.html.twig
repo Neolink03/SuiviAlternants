@@ -14,11 +14,14 @@
             <div>
                 <span>{{ application.promotion.course.name }}</span>
                 <span>{{ application.currentState }}</span>
-                <div class="workflow-dump" style="display: none">{{ app_factory_workflow.dumpStudentWorflowFromApplication(application) }}</div>
+                <div class="workflow-dump text-center mb-4 bordered zoom-in" style="display: none">
+                    {{ app_factory_workflow.dumpStudentWorflowFromApplication(application) }}
+                </div>
             </div>
             {% for dataAttachment in application.dataAttachments %}
                 {% if dataAttachment is company %}
-                    <a href="{{ path('student.company.edit', { 'companyId' : dataAttachment.id}) }}" class="btn btn-primary">Ajouter les informations de l'entreprise</a>
+                    <a href="{{ path('student.company.edit', { 'companyId' : dataAttachment.id}) }}"
+                       class="btn btn-primary">Ajouter les informations de l'entreprise</a>
                 {% else %}
                     Ce n'est pas une compagny TODO
                 {% endif %}

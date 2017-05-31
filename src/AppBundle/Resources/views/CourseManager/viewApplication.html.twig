@@ -8,7 +8,9 @@
 
     <h2 class="mb-4">Statut : {{ application.lastStatusModification.state.name }}</h2>
 
-    <div class="workflow-dump" style="display: none">{{ app_factory_workflow.customDumpWorflowFromApplication(application) }}</div>
+    <div class="workflow-dump text-center mb-4 bordered zoom-in" style="display: none">
+        {{ app_factory_workflow.customDumpWorflowFromApplication(application) }}
+    </div>
 
     <div class="mb-4">
         {{ form_start(form) }}
