@@ -6,8 +6,11 @@
     <h1>{{ titre }}</h1>
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <input type="submit" value="Modifier" class="btn btn-primary">
-    <a href="{{ path('course_manager.promotion.workflow.transition.rename', { 'promotionId': promotionId, 'transitionId': transitionId }) }}"
-       class="btn btn-secondary mr-3"><i class="fa fa-times" aria-hidden="true"></i> Annuler</a>
-    {{ form_end(form) }}
+    
+    <div class="form-group">
+        <a href="{{ path('course_manager.promotion.workflow.transition.rename', { 'promotionId': promotionId, 'transitionId': transitionId }) }}"
+           class="btn btn-secondary"><i class="fa fa-times" aria-hidden="true"></i> Annuler</a>
+        {{ form_end(form) }}
+        <input type="submit" value="Modifier" class="btn btn-primary">
+    </div>
 {% endblock %}
