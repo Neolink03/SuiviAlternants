@@ -1,0 +1,19 @@
+AppBundle\Entity\Course:
+   Course_1:
+        name: METINET
+        studentNumber: 15
+        manager: '@manager_1'
+        coManager: '@manager_2'
+        secretariatContactDetails: 'Felicie Perronet : 0479658432'
+   Course_2:
+        name: IEM
+        studentNumber: 20
+        manager: '@manager_3'
+        coManager: '@manager_4'
+        secretariatContactDetails: 'Benjamin Uderti : 0495486320'
+   Course_3:
+        name: ProWeb
+        studentNumber: 18
+        manager: '@manager_5'
+        coManager:
+        secretariatContactDetails: 'Gérard Yurick : 0479621432'

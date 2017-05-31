@@ -223,7 +223,8 @@ class WorkflowController extends Controller
             return $this->render('AppBundle:CourseManager:editWorkflowState.html.twig',
                 [
                     'form' => $form->createView(),
-                    'state' => $state
+                    'state' => $state,
+                    'promotionId' => $promotion->getId()
                 ]);
     }
 
@@ -315,7 +316,9 @@ class WorkflowController extends Controller
         }
         return $this->render('AppBundle:CourseManager:addWorkflowConditionCount.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'promotionId' => $promotion->getId(),
+                'transitionId' => $transition->getId()
             ]);
     }
 
@@ -323,15 +326,17 @@ class WorkflowController extends Controller
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      * @ParamConverter("condition", options={"mapping": {"conditionId" : "id"}})
      */
-    public function editConditionWorkflowCountAction(Request $request, Promotion $promotion, TransitionCondition $condition)
+    public function editConditionWorkflowAction(Request $request, Promotion $promotion, TransitionCondition $condition)
     {
         $em =$this->getDoctrine()->getManager();
 
         if ($condition instanceof StudentCountCondition) {
             $form = $this->createForm(StudentCountConditionType::class, $condition);
+            $titre = 'Modification de la condition sur le nombre d\'étudiants';
         }
         if ($condition instanceof DatetimeCondition) {
             $form = $this->createForm(DatetimeConditionType::class, $condition);
+            $titre = 'Modification de la condition sur une date';
         }
 
         $form->handleRequest($request);
@@ -349,7 +354,10 @@ class WorkflowController extends Controller
 
         return $this->render('AppBundle:CourseManager:editWorkflowConditionCount.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'titre' => $titre,
+                'promotionId' => $promotion->getId(),
+                'transitionId' => $condition->getTransition()->getId()
             ]);
     }
 
@@ -378,7 +386,9 @@ class WorkflowController extends Controller
         }
         return $this->render('AppBundle:CourseManager:addWorkflowConditionDate.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'promotionId' => $promotion->getId(),
+                'transitionId' => $transition->getId()
             ]);
     }
 }
