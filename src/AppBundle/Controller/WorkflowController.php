@@ -206,7 +206,8 @@ class WorkflowController extends Controller
                         throw new \DomainException("Trigger à implementer");
                         break;
                     case "":
-                        $em->remove($state->getTrigger());
+                        if(!is_null($state->getTrigger()))
+                            $em->remove($state->getTrigger());
                         break;
                     default:
                         throw new \DomainException("Problème dans le choix du trigger");
