@@ -1,0 +1,31 @@
+AppBundle\Entity\Promotion:
+   Promotion_1:
+        name: 2016-2017
+        startDate: <(new \DateTime('2016-05-10'))>
+        endDate: <(new \DateTime('2017-09-20'))>
+        studentNumber: 20
+        course: '@Course_1'
+   Promotion_2:
+        name: 2017-2018
+        startDate: <(new \DateTime('2017-05-10'))>
+        endDate: <(new \DateTime('2018-09-20'))>
+        studentNumber: 20
+        course: '@Course_1'
+   Promotion_3:
+        name: 2015-2016
+        startDate: <(new \DateTime('2015-05-10'))>
+        endDate: <(new \DateTime('2016-09-20'))>
+        studentNumber: 18
+        course: '@Course_2'
+   Promotion_4:
+        name: 2016-2017
+        startDate: <(new \DateTime('2016-01-09'))>
+        endDate: <(new \DateTime('2017-05-09'))>
+        studentNumber: 20
+        course: '@Course_3'
+   Promotion_5:
+        name: '2016-2017, année décalée'
+        startDate: <(new \DateTime('2016-01-10'))>
+        endDate: <(new \DateTime('2017-05-10'))>
+        studentNumber: 12
+        course: '@Course_3'
