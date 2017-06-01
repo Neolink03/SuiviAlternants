@@ -194,7 +194,8 @@ class CourseManagerController extends Controller
         }
         return $this->render('AppBundle:CourseManager:viewApplication.html.twig', [
             'form' => $form->createView(),
-            'application' => $application
+            'application' => $application,
+            'promotionId' => $application->getPromotion()->getId()
         ]);
     }
 
