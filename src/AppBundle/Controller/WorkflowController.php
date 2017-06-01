@@ -99,6 +99,7 @@ class WorkflowController extends Controller
         if ($formState->isSubmitted() && $formState->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $state->setWorkflow($promotion->getWorkflow());
+            $state->setJuryCanEdit(false);
             $em->persist($state);
             $em->flush();
             $this->addFlash('success', 'L\'état a été ajouté au workflow');
@@ -169,7 +170,7 @@ class WorkflowController extends Controller
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      * @ParamConverter("state", options={"mapping": {"stateId" : "id"}})
      */
-    public function renameStateWorkflowAction(Request $request , State $state, Promotion $promotion)
+    public function editStateWorkflowAction(Request $request , State $state, Promotion $promotion)
     {
 
         $em =$this->getDoctrine()->getManager();
@@ -187,6 +188,7 @@ class WorkflowController extends Controller
                     'Affiche un formulaire après la fin des études' => 'EndTrigger',
                 ],
                 'stateName' => $state->getName(),
+                'juryCanEdit' => $state->getJuryCanEdit(),
                 'triggersSelected' => $selected
             ]);
 
@@ -195,6 +197,7 @@ class WorkflowController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 $data = $form->getData();
                 $state->setName($data['name']);
+                $state->setJuryCanEdit($data['juryCanEdit']);
                 switch ($data['trigger']) {
                     case "CompanyTrigger":
                         $trigger = new CompanyTrigger();

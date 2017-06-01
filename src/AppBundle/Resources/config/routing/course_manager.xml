@@ -52,8 +52,8 @@
         <default key="_controller">AppBundle:Workflow:deleteStateWorkflow</default>
     </route>
 
-    <route id="course_manager.promotion.workflow.state.rename" path="/promotion/{promotionId}/workflow/state/{stateId}/rename">
-        <default key="_controller">AppBundle:Workflow:renameStateWorkflow</default>
+    <route id="course_manager.promotion.workflow.state.rename" path="/promotion/{promotionId}/workflow/state/{stateId}/edit">
+        <default key="_controller">AppBundle:Workflow:editStateWorkflow</default>
     </route>
 
     <route id="course_manager.promotion.workflow.transition.rename" path="/promotion/{promotionId}/workflow/transition/{transitionId}/rename">
