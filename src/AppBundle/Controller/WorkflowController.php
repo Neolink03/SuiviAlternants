@@ -202,16 +202,32 @@ class WorkflowController extends Controller
                 $state->setJuryCanEdit($data['juryCanEdit']);
                 switch ($data['trigger']) {
                     case "CompanyTrigger":
-                        $trigger = new CompanyTrigger();
-                        $trigger->setState($state);
-                        $em->persist($trigger);
-                        $state->setTrigger($trigger);
+                        if(!$state->getTrigger() instanceof CompanyTrigger){
+                            if(!is_null($state->getTrigger())){
+                                $em->remove($state->getTrigger());
+                            }
+                            $em->persist($state);
+                            $em->flush();
+                            $trigger = new CompanyTrigger();
+                            $trigger->setState($state);
+                            $em->persist($trigger);
+                            $state->setTrigger($trigger);
+                        }
                         break;
                     case "AfterCourseTrigger":
-                        $trigger = new AfterCourseTrigger();
-                        $trigger->setState($state);
-                        $em->persist($trigger);
-                        $state->setTrigger($trigger);
+                        if(!$state->getTrigger() instanceof AfterCourseTrigger){
+
+                            if(!is_null($state->getTrigger())){
+                                $em->remove($state->getTrigger());
+                            }
+                            $em->persist($state);
+                            $em->flush();
+
+                            $trigger = new AfterCourseTrigger();
+                            $trigger->setState($state);
+                            $em->persist($trigger);
+                            $state->setTrigger($trigger);
+                        }
                         break;
                     case "":
                         if(!is_null($state->getTrigger()))
