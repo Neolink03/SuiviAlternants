@@ -4,6 +4,7 @@
         <discriminator-column name="discr" type="string" />
         <discriminator-map>
             <discriminator-mapping value="compagnyTrigger" class="AppBundle\Entity\CompanyTrigger" />
+            <discriminator-mapping value="afterCourseTrigger" class="AppBundle\Entity\AfterCourseTrigger" />
         </discriminator-map>
 
         <id name="id" type="integer" column="id">

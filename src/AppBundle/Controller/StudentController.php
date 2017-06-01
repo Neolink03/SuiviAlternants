@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\AfterCourse;
 use AppBundle\Entity\Company;
+use AppBundle\Forms\Types\AfterCourseType;
 use AppBundle\Forms\Types\CompanyType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -57,7 +58,7 @@ class StudentController extends Controller
     public function afterCourseEditAction(Request $request, AfterCourse $afterCourse)
     {
 
-        $form = $this->createForm(AfterCourse::class, $afterCourse);
+        $form = $this->createForm(AfterCourseType::class, $afterCourse);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

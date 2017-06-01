@@ -21,7 +21,8 @@ class AfterCourseType extends AbstractType
     {
         $builder
             ->add('job', TextType::class, array(
-                'label' => "Veuillez indiquer ce que vous faites (métier, chômage, reconversion...)"
+                'label' => "Veuillez indiquer ce que vous faites (métier, chômage, reconversion...)",
+                'required' => true
             ))
             ->add('wage', IntegerType::class, array(
                 'label' => 'Votre salaire',
@@ -32,7 +33,8 @@ class AfterCourseType extends AbstractType
                 'required' => false
             ))
             ->add('comment', TextType::class, array(
-                'label' => 'Informations complémentaires : comment avez-vous trouvé votre entreprise, si reconversion pourquoi ce choix? ...'
+                'label' => 'Informations complémentaires : comment avez-vous trouvé votre entreprise, si reconversion pourquoi ce choix? ...',
+                'required' => false
             ));
     }
 }

@@ -7,8 +7,11 @@
             {% if dataAttachment is company %}
                 <a href="{{ path('student.company.edit', { 'companyId' : dataAttachment.id}) }}"
                    class="btn btn-success float-right">Ajouter les informations de l'entreprise</a>
+            {% elseif dataAttachment is afterCourse %}
+                <a href="{{ path('student.after_course.edit', { 'afterCourseId' : dataAttachment.id}) }}"
+                   class="btn btn-success float-right">Questionnaire de fin de formation</a>
             {% else %}
-                Ce n'est pas une compagnie TODO
+                Aucun formulaire pris en charge, merci de contacter l'administrateur.
             {% endif %}
         {% endfor %}
     </div>
