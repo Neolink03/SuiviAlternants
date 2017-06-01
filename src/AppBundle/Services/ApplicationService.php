@@ -41,8 +41,8 @@ class ApplicationService
 
     public function setState(Application $application, array $data){
         $authoriseChangeState =true;
-        $stateStart = $application->getCurrentState();
-        //dump($application->getStudent()->getFirstName());die;
+        $stateStart = $data['transition']->getStartState()->getName();
+
         if($data['transition']->getCondition()){
             $authoriseChangeState = $this->tcs->isChecked($data['transition']->getCondition());
         }
@@ -71,7 +71,7 @@ class ApplicationService
                 array(
                     "formation" => $application->getPromotion()->getCourse()->getName(),
                     "stateStart" => $stateStart,
-                    "stateEnd" => $application->getCurrentState(),
+                    "stateEnd" => $state->getName(),
                 )
             );
             $this->mailer->send($message);

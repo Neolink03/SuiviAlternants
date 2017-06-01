@@ -1,7 +1,7 @@
 <div class="card mb-4">
     <div class="card-header">
         <h4 class="d-inline" style="line-height: inherit;">{{ application.promotion.course.name }}</h4>
-        <span class="badge badge-default ml-2 mr-1">{{ application.currentState }}</span>
+        <span class="badge badge-default ml-2 mr-1">{{ application.statusModifications.first().state.name }}</span>
         
         {% for dataAttachment in application.dataAttachments %}
             {% if dataAttachment is company %}
