@@ -18,6 +18,8 @@ class State
     private $trigger;
     /** @Exclude */
     private $workflow;
+    /** @Exclude */
+    private $juryCanEdit;
 
     public function getId()
     {
@@ -66,6 +68,16 @@ class State
     public function setTrigger($trigger)
     {
         $this->trigger = $trigger;
+    }
+
+    public function getJuryCanEdit()
+    {
+        return $this->juryCanEdit;
+    }
+
+    public function setJuryCanEdit($juryCanEdit)
+    {
+        $this->juryCanEdit = $juryCanEdit;
     }
 
 }

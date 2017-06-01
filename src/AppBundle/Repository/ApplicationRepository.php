@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Promotion;
+use AppBundle\Entity\State;
 
 /**
  * ApplicationRepository
@@ -31,21 +32,20 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
         $qb->setParameter('promotion', $promotion->getId());
 
         return $qb->getQuery()->getResult();
+    }
 
-        /*$parameters = array();
-
+    public function findAllWhereJuryCanEdit(Promotion $promotion){
         $qb = $this->_em->createQueryBuilder();
-        $qb->select('a')->from(Application::class, 'a');
+        $qb->select('a')->from(Application::class, 'a')
+            ->from(State::class, 's')
+            ->join('a.promotion', 'p')
+            ->andWhere('p.id = :promotion')
+            ->andWhere('a.currentState = s.machineName')
+            ->andWhere('s.juryCanEdit = TRUE');
 
-        foreach ($data as $key => $value) {
-            if (!is_null($data[$key])) {
-                $qb->andWhere('a.' . $key . ' = :' . $key);
-                $parameters[$key] = $data[$key];
-            }
-        }
 
-        $qb->setParameters($parameters);
+        $qb->setParameter('promotion', $promotion->getId());
 
-        return $qb->getQuery()->getResult();*/
+        return $qb->getQuery()->getResult();
     }
 }

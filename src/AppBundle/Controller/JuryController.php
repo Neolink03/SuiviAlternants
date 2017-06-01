@@ -40,62 +40,6 @@ class JuryController extends Controller
         }
     }
 
-//    /**
-//     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
-//     */
-//    public function studentListAction(Request $request, Course $course){
-//
-//        $em = $this->getDoctrine()->getManager();
-//        $promotions = $em->getRepository(Promotion::class)->findBy(
-//            ['course' => $course],
-//            ['id' => 'desc']
-//        );
-//
-//        $states = null;
-//        $applications = null;
-//
-//        if ($promotions) {
-//            $promotion = $promotions[0];
-//            $applications = $promotion->getApplications();
-//            $states = $em->getRepository(State::class)->findBy(
-//                ['workflow' => $promotion->getWorkflow()]
-//            );
-//        } else {
-//            $promotion = null;
-//        }
-//
-//        $promotionsForm = $this->createForm(PromotionFormType::class, null, ["promotions" => $promotions]);
-//        $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
-//
-//        if ($request->get('promotion')) {
-//            $promotion = $em->getRepository(Promotion::class)->find($request->get('promotion'));
-//            $promotionsForm->get('promotions')->setData($promotion);
-//        }
-//
-//        if ($request->isMethod('post')) {
-//            $promotionsForm->handleRequest($request);
-//            $searchForm->handleRequest($request);
-//
-//            if ($promotionsForm->isSubmitted() && $promotionsForm->isValid()) {
-//                $promotion = $em->getRepository(Promotion::class)->find($promotionsForm->getData()['promotions']->getId());
-//                $applications = $promotion->getApplications();
-//            }
-//
-//            if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-//                $applications = $em->getRepository(Application::class)->findAllByFilters($searchForm->getData());
-//            }
-//        }
-//
-//        return $this->render('@App/Jury/studentList.html.twig', [
-//            'course' => $course,
-//            'promotion' => $promotion,
-//            'applications' => $applications,
-//            'promotionsForm' => $promotionsForm->createView(),
-//            'searchForm' => $searchForm->createView()
-//        ]);
-//    }
-
-
     /**
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      */
@@ -103,7 +47,8 @@ class JuryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $applications = $promotion->getApplications();
+        $applications = $em->getRepository(Application::class)->findAllWhereJuryCanEdit($promotion);
+
         $states = $em->getRepository(State::class)->findBy(
             ['workflow' => $promotion->getWorkflow()]
         );
