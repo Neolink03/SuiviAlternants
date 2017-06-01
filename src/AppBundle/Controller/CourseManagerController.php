@@ -60,12 +60,21 @@ class CourseManagerController extends Controller
 
             if ($studentForm->isSubmitted() && $studentForm->isValid()) {
 
-                $userFactory = $this->get('app.factory.user');
-                $student = $userFactory->getOrCreateStudentIfNotExist($student);
-                $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
-                $em->persist($student);
-                $em->flush();
-                return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
+                $application = $this->getDoctrine()->getRepository(Application::class)->findByEmail($promotion, $student);
+
+                if(count($application) == 0){
+                    $userFactory = $this->get('app.factory.user');
+                    //dump($application);die;
+                    $student = $userFactory->getOrCreateStudentIfNotExist($student);
+
+                    $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
+                    $em->persist($student);
+                    $em->flush();
+                    return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
+                }else{
+                    $this->addFlash('danger', 'Cet utilisateur est déjà présent dans cette formation.');
+                }
+
             }
         }
 
