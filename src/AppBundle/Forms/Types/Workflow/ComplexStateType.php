@@ -23,6 +23,16 @@ class ComplexStateType extends AbstractType
                 'label' => "Nom de l'état",
                 'data' => $options['stateName']
             ));
+        $builder->add('juryCanEdit', ChoiceType::class, [
+            'expanded' => true,
+            'multiple' => false,
+            'choices' => [
+                'Oui' => true,
+                'Non' => false
+            ],
+            'label' => "Le jury peut passer cet état à un autre état",
+            'data' =>  $options['juryCanEdit']
+        ]);
         $builder->add('trigger', ChoiceType::class, [
             'required' => false,
             'choices' => $options['triggersAviable'],
@@ -38,6 +48,7 @@ class ComplexStateType extends AbstractType
             'stateName' => '',
             'triggersSelected' => '',
             'triggersAviable' => [],
+            'juryCanEdit' => false,
         ));
     }
 }
