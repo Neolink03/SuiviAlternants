@@ -8,6 +8,10 @@
         <default key="_controller">AppBundle:Jury:studentList</default>
     </route>
 
+    <route id="jury.application.view" path="/application/{applicationId}/view">
+        <default key="_controller">AppBundle:Jury:viewApplication</default>
+    </route>
+
     <route id="jury.home" path="">
         <default key="_controller">AppBundle:Jury:juryIndex</default>
     </route>

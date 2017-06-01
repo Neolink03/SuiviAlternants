@@ -57,11 +57,11 @@
                             <td>{{ application.student.firstName }}</td>
                             <td>
                                 {% if application.getLastStatusModification() %}
-                                    <a href="{{ path('course_manager.application.view', {'applicationId': application.id }) }}">
+                                    <a href="{{ path('jury.application.view', {'applicationId': application.id }) }}">
                                         {{ application.getLastStatusModification().state.name }}
                                     </a>
                                 {% else %}
-                                    <a href="{{ path('course_manager.application.view', {'applicationId': application.id }) }}">
+                                    <a href="{{ path('jury.application.view', {'applicationId': application.id }) }}">
                                         Application with no status
                                     </a>
                                 {% endif %}

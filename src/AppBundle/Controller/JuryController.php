@@ -13,6 +13,7 @@ use AppBundle\Entity\Application;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
+use AppBundle\Forms\Types\Applications\ChangeStatusType;
 use AppBundle\Forms\Types\PromotionFormType;
 use AppBundle\Forms\Types\SearchStudentType;
 use AppBundle\Forms\Types\StudentsCsvType;
@@ -81,4 +82,40 @@ class JuryController extends Controller
         ]);
     }
 
+
+    /**
+     * @ParamConverter("application", options={"mapping": {"applicationId" : "id"}})
+     */
+    public function viewApplicationAction(Request $request, Application $application)
+    {
+        $workflow = $this->get('app.factory.workflow')->generateWorflowFromApplication($application);
+        $transitions = $workflow->getEnabledTransitions($application);
+
+        $realTransitions = $application->getPromotion()->getWorkflow()->getTransitions()->toArray();
+
+        $result = [];
+        foreach ($realTransitions as $realTransition) {
+            foreach ($transitions as $workflowTransition) {
+                if ($realTransition->getMachineName() == $workflowTransition->getName()) {
+                    $result[] = $realTransition;
+                }
+            }
+        }
+
+        $form = $this->createForm(ChangeStatusType::class, null, array('transitions' => $result));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $application = $this->get('app.application')->setState($application, $data);
+
+            return $this->redirectToRoute('jury.promotion', ['promotionId' => $application->getPromotion()->getId()]);
+        }
+        return $this->render('AppBundle:Jury:viewApplication.html.twig', [
+            'form' => $form->createView(),
+            'application' => $application,
+            'promotionId' => $application->getPromotion()->getId()
+        ]);
+    }
 }
