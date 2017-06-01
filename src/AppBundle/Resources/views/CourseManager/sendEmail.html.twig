@@ -28,8 +28,8 @@
                 <td>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" id="email_message_users_{{ loop.index }}"
-                                   name="email_message[users][]" value="{{ loop.index }}">
+                            <input type="checkbox" id="email_message_users_{{ loop.index - 1 }}"
+                                   name="email_message[users][]" value="{{ loop.index - 1 }}">
                         </label>
                     </div>
                 </td>
