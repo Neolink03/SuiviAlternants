@@ -19,10 +19,13 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->_em->createQueryBuilder();
 
         $qb->select('a')->from(Application::class, 'a')
+            ->from(State::class, 'state')
             ->andWhere('s.lastName LIKE :lastName')
             ->andWhere('s.firstName LIKE :firstName')
             ->andWhere('a.currentState LIKE :currentState')
+            ->andWhere('a.currentState = state.machineName')
             ->andWhere('p.id = :promotion')
+            ->andWhere('state.juryCanEdit = TRUE')
             ->join('a.student', 's')
             ->join('a.promotion', 'p');
 

@@ -15,7 +15,9 @@
             {% include "AppBundle:Course:showJury.html.twig" with {"courseId": course.id} %}
         {% endfor %}
     {% else %}
-        <h3>Pas de formations attribuées !</h3>
+        <div class="alert alert-warning" role="alert">
+            Pas de formations attribuées.
+        </div>
     {% endif %}
 
 {% endblock %}
