@@ -128,6 +128,7 @@ class WorkflowFactory
         $workflow = $application->getPromotion()->getWorkflow();
 
         $builder = $this->customDefinitionBuilderFromWorkflow($workflow);
+        $builder->setInitialPlace($application->getLastStatusModification()->getState()->getName());
 
         $definition = $builder->build();
         return (new CustomGraphvizDumper())->dump($definition);
