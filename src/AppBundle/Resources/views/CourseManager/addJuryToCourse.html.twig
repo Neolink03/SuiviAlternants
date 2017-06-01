@@ -10,7 +10,7 @@
         {% if juryList is defined %}
             {{ form_start(juryList) }}
             {{ form_row(juryList.jurys) }}
-            <input type="submit" value="Modifier les jurys rattachés à cette formation" class="btn btn-secondary">
+            <input type="submit" value="Modifier les jurys rattachés à cette formation" class="btn btn-primary">
             <a href="{{ path('course_manager.promotion', { 'promotionId': promotionId }) }}"
                class="btn btn-secondary"><i class="fa fa-times" aria-hidden="true"></i> Annuler</a>
             {{ form_end(juryList) }}
