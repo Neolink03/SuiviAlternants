@@ -12,6 +12,11 @@ class AfterCourse extends DataAttachments
     private $company;
     private $comment;
 
+    public function setJob($job)
+    {
+        $this->job = $job;
+    }
+
     public function getJob()
     {
         return $this->job;
