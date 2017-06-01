@@ -23,6 +23,10 @@
                                 <i class="fa fa-bolt" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
                                    title="Passer dans cet état déclenche une action"></i>
                             {% endif %}
+                            {% if state.juryCanEdit %}
+                                <i class="fa fa-gavel" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
+                                   title="Le jury peut passer cet état à un autre état"></i>
+                            {% endif %}
                         </td>
                         <td>
                             <div class="btn-group">
@@ -42,6 +46,10 @@
                                 {% if state.trigger is not null %}
                                     <i class="fa fa-bolt" aria-hidden="true" data-toggle="tooltip"
                                        data-placement="bottom" title="Passer dans cet état déclenche une action"></i>
+                                {% endif %}
+                                {% if state.juryCanEdit %}
+                                    <i class="fa fa-gavel" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
+                                       title="Le jury peut passer cet état à un autre état"></i>
                                 {% endif %}
                             </td>
                             <td>
