@@ -312,12 +312,12 @@ class CourseManagerController extends Controller
      */
     public function addJuryAction(Request $request, Promotion $promotion)
     {
-
         $em = $this->getDoctrine()->getManager();
         $course = $promotion->getCourse();
 
         $form = $this->createForm(AddJuryType::class, null, array(
-            'applications' => $jury = $this->getDoctrine()->getManager()->getRepository(Jury::class)->findAll()
+            'juries' => $jury = $this->getDoctrine()->getManager()->getRepository(Jury::class)->findAll(),
+            'juriesSelected' => $promotion->getCourse()->getJurys()->toArray()
         ));
 
         if ($request->isMethod('post')) {
