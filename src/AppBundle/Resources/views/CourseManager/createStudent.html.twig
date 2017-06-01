@@ -9,46 +9,63 @@
     <p class="mb-0">Formation : {{ promotion.course.name }}</p>
     <p>Promotion : {{ promotion.name }}</p>
 
-    <input placeholder="" id="autocomplete-input" data-suggest="{{ path('course_manager.students.find') }}" class="autocomplete">
+    <div class="mb-3">
+      <h2>Etudiant existant</h2>
+      <form class="form-inline" action="" method="post">
+          <div class="form-group">
+          <input placeholder="" id="autocomplete-input" data-suggest="{{ path('course_manager.students.find') }}" class="autocomplete form-control">
+          <span id="id-student" class="invisible"></span>
+          <button class="btn btn-secondary" type="submit">
+            Ajouter etudiant
+          </button>
+        </div>
+      </form>
+   </div>
 
-    <div id="addStudent">
-        {{ form_start(student) }}
-        {{ form_widget(student) }}
-        <input type="submit" value="Valider" class="btn btn-secondary">
-        {{ form_rest(student) }}
-    </div>
+  <div id="addStudent">
+    <h2>Nouvel étudiant</h2>
+      {{ form_start(student) }}
+      {{ form_widget(student) }}
+      <input type="submit" value="Valider" class="btn btn-secondary">
+      {{ form_rest(student) }}
+  </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
 
     <script type="text/javascript">
-      var search = "";
-
-      $( "#autocomplete-input" ).keypress(function(event) {
-            search = $("#autocomplete-input" ).val();
-      });
-
       $('#autocomplete-input').autocomplete({
-            source: function( request, response ) {
-                $.ajax( {
-                    url: $('#autocomplete-input').attr('data-suggest'),
-                    dataType: "json",
-                    data: {
-                        search: $("#autocomplete-input" ).val(),
-                    },
-                    success: function( data ) {
-                        response( data );
-                    }
-                });
+          source: fetchStudents,
+          minLength: 1,
+          select: selectStudent,
+      })
+        .data( "ui-autocomplete" )._renderItem = renderStudentList;
+
+      function renderStudentList( ul, item ) {
+        return $( "<li>" )
+          .prop( "id", item.id )
+          .append("<a>" + item.name + ", " + item.email + "</a>")
+          .appendTo( ul );
+      }
+
+      function selectStudent(event, ui) {
+        console.log(ui.item.name);
+        $('#autocomplete-input').val(ui.item.name);
+        $('#id-student').val(ui.item.id);
+        return false;
+      }
+
+      function fetchStudents(request, response) {
+        $.ajax( {
+            url: $('#autocomplete-input').attr('data-suggest'),
+            dataType: "json",
+            data: {
+                search: $("#autocomplete-input" ).val(),
             },
-            messages: {
-                noResults: '',
-                results: function() {}
-            },
-            limit: 10,
-            minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-      });
+            success: function( data ) { response(data);},
+        });
+      }
     </script>
 
 {% endblock %}

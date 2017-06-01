@@ -338,7 +338,11 @@ class CourseManagerController extends Controller
 
       $data = [];
       foreach ($students as $student) {
-        $data[] = sprintf("%s, %s", $student->getFullName(), $student->getEmail());
+        $data[] = [
+          "id" => $student->getId(),
+          "name" => $student->getFullName(),
+          "email" => $student->getEmail()
+        ];
       }
 
       return new JsonResponse($data, 200, array(
