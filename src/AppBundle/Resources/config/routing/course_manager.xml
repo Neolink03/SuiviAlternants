@@ -36,6 +36,14 @@
         <default key="_controller">AppBundle:CourseManager:viewApplication</default>
     </route>
 
+    <route id="course_manager.company" path="/company/application/{companyId}">
+        <default key="_controller">AppBundle:CourseManager:applicationCompany</default>
+    </route>
+
+    <route id="course_manager.after_course" path="/afterCourse/application/{afterCourseId}">
+        <default key="_controller">AppBundle:CourseManager:applicationAfterCourse</default>
+    </route>
+
     <route id="course_manager.mail.send" path="/promotion/{promotionId}/mail/send">
         <default key="_controller">AppBundle:CourseManager:sendMail</default>
     </route>

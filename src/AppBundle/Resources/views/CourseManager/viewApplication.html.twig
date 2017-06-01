@@ -6,7 +6,17 @@
     <h1>{{ application.student.firstName }} {{ application.student.lastName }}</h1>
     <hr>
 
-    <h2 class="mb-4">Statut : {{ application.lastStatusModification.state.name }}</h2>
+    <h4 class="mb-4"><strong>Statut</strong> : {{ application.lastStatusModification.state.name }}</h4>
+
+    {% for dataAttachment in application.dataAttachments %}
+        {% if dataAttachment is company %}
+            <a href="{{ path('course_manager.company', { 'companyId' : dataAttachment.id}) }}"
+               class="btn btn-secondary mb-4">Voir les informations de l'entreprise</a>
+        {% elseif dataAttachment is afterCourse %}
+            <a href="{{ path('course_manager.after_course', { 'afterCourseId' : dataAttachment.id}) }}"
+               class="btn btn-secondary mb-4">Voir les informations de fin de formation</a>
+        {% endif %}
+    {% endfor %}
 
     <div class="workflow-dump text-center mb-4 bordered zoom-in" style="display: none">
         {{ app_factory_workflow.customDumpWorflowFromApplication(application) }}

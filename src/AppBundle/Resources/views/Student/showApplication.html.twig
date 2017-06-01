@@ -6,10 +6,10 @@
         {% for dataAttachment in application.dataAttachments %}
             {% if dataAttachment is company %}
                 <a href="{{ path('student.company.edit', { 'companyId' : dataAttachment.id}) }}"
-                   class="btn btn-success float-right">Ajouter les informations de l'entreprise</a>
+                   class="btn btn-success float-right ml-2">Ajouter les informations de l'entreprise</a>
             {% elseif dataAttachment is afterCourse %}
                 <a href="{{ path('student.after_course.edit', { 'afterCourseId' : dataAttachment.id}) }}"
-                   class="btn btn-success float-right">Questionnaire de fin de formation</a>
+                   class="btn btn-success float-right ml-2">Questionnaire de fin de formation</a>
             {% else %}
                 Aucun formulaire pris en charge, merci de contacter l'administrateur.
             {% endif %}
