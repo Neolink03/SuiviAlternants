@@ -47,7 +47,6 @@ class StudentController extends Controller
             return $this->redirectToRoute('student.home');
         }
         return $this->render('AppBundle:Student:company.html.twig',[
-            'compagny' => $company,
             'form' => $form->createView()
         ]);
     }
@@ -70,8 +69,7 @@ class StudentController extends Controller
 
             return $this->redirectToRoute('student.home');
         }
-        return $this->render('AppBundle:Student:company.html.twig',[
-            'compagny' => $afterCourse,
+        return $this->render('AppBundle:Student:afterCourse.html.twig',[
             'form' => $form->createView()
         ]);
     }

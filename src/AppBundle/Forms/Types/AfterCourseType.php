@@ -9,9 +9,9 @@
 namespace AppBundle\Forms\Types;
 
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -22,19 +22,22 @@ class AfterCourseType extends AbstractType
         $builder
             ->add('job', TextType::class, array(
                 'label' => "Veuillez indiquer ce que vous faites (métier, chômage, reconversion...)",
-                'required' => true
+                'disabled' => $options['disabled']
             ))
             ->add('wage', IntegerType::class, array(
                 'label' => 'Votre salaire',
-                'required' => false
+                'required' => false,
+                'disabled' => $options['disabled']
             ))
             ->add('company', TextType::class, array(
                 'label' => "Votre entreprise",
-                'required' => false
+                'required' => false,
+                'disabled' => $options['disabled']
             ))
             ->add('comment', TextType::class, array(
                 'label' => 'Informations complémentaires : comment avez-vous trouvé votre entreprise, si reconversion pourquoi ce choix? ...',
-                'required' => false
+                'required' => false,
+                'disabled' => $options['disabled']
             ));
     }
 }

@@ -9,7 +9,9 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\AfterCourse;
 use AppBundle\Entity\Application;
+use AppBundle\Entity\Company;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
@@ -17,7 +19,9 @@ use AppBundle\Entity\User\Jury;
 use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddJuryType;
 use AppBundle\Forms\Types\AddPromotionType;
+use AppBundle\Forms\Types\AfterCourseType;
 use AppBundle\Forms\Types\Applications\ChangeStatusType;
+use AppBundle\Forms\Types\CompanyType;
 use AppBundle\Forms\Types\Courses\CourseType;
 use AppBundle\Forms\Types\EmailMessageType;
 use AppBundle\Forms\Types\PromotionFormType;
@@ -331,6 +335,32 @@ class CourseManagerController extends Controller
             'juryList' => $form->createView(),
             'course' => $course,
             'promotionId' => $promotion->getId()
+        ]);
+    }
+
+    /**
+     * @ParamConverter("company", options={"mapping": {"companyId" : "id"}})
+     */
+    public function applicationCompanyAction(Request $request, Company $company)
+    {
+        $form = $this->createForm(CompanyType::class, $company, ['disabled' => true]);
+        $form->handleRequest($request);
+
+        return $this->render('AppBundle:Student:company.html.twig',[
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @ParamConverter("afterCourse", options={"mapping": {"afterCourseId" : "id"}})
+     */
+    public function applicationAfterCourseAction(Request $request, AfterCourse $afterCourse)
+    {
+        $form = $this->createForm(AfterCourseType::class, $afterCourse, ['disabled' => true]);
+        $form->handleRequest($request);
+
+        return $this->render('AppBundle:Student:afterCourse.html.twig',[
+            'form' => $form->createView()
         ]);
     }
 }

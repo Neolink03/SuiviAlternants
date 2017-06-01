@@ -1,11 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Après la formation - Suivis alternants{% endblock %}
+{% block title %}Après la formation{% endblock %}
 
 {% block body %}
     <h1>Votre situation après votre formation</h1>
+    <hr>
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <input type="submit" value="Modifier" class="btn btn-primary">
+    <input type="submit" class="btn btn-primary">
     {{ form_end(form) }}
 {% endblock %}

@@ -15,28 +15,34 @@ class CompanyType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, [
-            'label' => "Nom",
+        $builder
+            ->add('name', TextType::class, [
+                'label' => "Nom",
+                'disabled' => $options['disabled']
             ])
-            ->add('address', AddressType::class, array(
-                'label' => false)
-            )
+            ->add('address', AddressType::class, [
+                'label' => false,
+                'disabled' => $options['disabled']
+            ])
             ->add('employeeNumber', IntegerType::class, [
                 'label' => "Nombre de salariés",
+                'disabled' => $options['disabled']
             ])
             ->add('itNumber', IntegerType::class, [
                 'label' => "Nombre d'informaticiens",
+                'disabled' => $options['disabled']
             ]);
 
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Company'
+            'data_class' => 'AppBundle\Entity\Company',
+            'disabled' => false
         ));
     }
 
