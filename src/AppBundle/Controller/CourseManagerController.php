@@ -28,7 +28,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CourseManagerController extends Controller
 {
@@ -328,5 +328,20 @@ class CourseManagerController extends Controller
             'juryList' => $form->createView(),
             'course' => $course
         ]);
+    }
+
+    public function findStudentsAction(Request $request) {
+
+      $query = $request->get('search', null);
+      $data = [
+        "1",
+        "2",
+        "3",
+        "4",
+      ];
+
+        return new JsonResponse($data, 200, array(
+            'Cache-Control' => 'no-cache',
+        ));
     }
 }

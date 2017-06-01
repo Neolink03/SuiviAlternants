@@ -1,21 +1,54 @@
 {% extends '::base.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-{% endblock %}
-
 {% block title %}Ajouter un étudiant{% endblock %}
 
 {% block body %}
     <h1>Ajouter un étudiant</h1>
-    <hr>
+    <hr />
+
     <p class="mb-0">Formation : {{ promotion.course.name }}</p>
     <p>Promotion : {{ promotion.name }}</p>
+
+    <input placeholder="" id="autocomplete-input" data-suggest="{{ path('course_manager.students.find') }}" class="autocomplete">
+
     <div id="addStudent">
         {{ form_start(student) }}
         {{ form_widget(student) }}
         <input type="submit" value="Valider" class="btn btn-secondary">
         {{ form_rest(student) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+      var search = "";
+
+      $( "#autocomplete-input" ).keypress(function(event) {
+            search = $("#autocomplete-input" ).val();
+      });
+
+      $('#autocomplete-input').autocomplete({
+            source: function( request, response ) {
+                $.ajax( {
+                    url: $('#autocomplete-input').attr('data-suggest'),
+                    dataType: "json",
+                    data: {
+                        search: $("#autocomplete-input" ).val(),
+                    },
+                    success: function( data ) {
+                        response( data );
+                    }
+                });
+            },
+            messages: {
+                noResults: '',
+                results: function() {}
+            },
+            limit: 10,
+            minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+      });
+    </script>
+
 {% endblock %}
