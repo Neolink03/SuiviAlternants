@@ -80,7 +80,7 @@
         <default key="_controller">AppBundle:Workflow:addConditionWorkflowDate</default>
     </route>
 
-    <route id="course_manager.jury.add" path="/course/{courseId}/jury/add">
+    <route id="course_manager.jury.add" path="/promotion/{promotionId}/jury/add">
         <default key="_controller">AppBundle:CourseManager:addJury</default>
     </route>
 

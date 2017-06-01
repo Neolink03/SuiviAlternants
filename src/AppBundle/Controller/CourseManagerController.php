@@ -298,12 +298,13 @@ class CourseManagerController extends Controller
     }
 
     /**
-     * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      */
-    public function addJuryAction(Request $request, Course $course)
+    public function addJuryAction(Request $request, Promotion $promotion)
     {
 
         $em = $this->getDoctrine()->getManager();
+        $course = $promotion->getCourse();
 
         $form = $this->createForm(AddJuryType::class, null, array(
             'applications' => $jury = $this->getDoctrine()->getManager()->getRepository(Jury::class)->findAll()
@@ -321,12 +322,14 @@ class CourseManagerController extends Controller
                 $em->persist($course);
                 $em->flush();
                 $this->addFlash("success", "Les jurys ont bien été ajoutés à la promotion");
+                return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
             }
         }
 
         return $this->render('AppBundle:CourseManager:addJuryToCourse.html.twig', [
             'juryList' => $form->createView(),
-            'course' => $course
+            'course' => $course,
+            'promotionId' => $promotion->getId()
         ]);
     }
 }

@@ -22,7 +22,7 @@
                 <a href="{{ path('course_manager.promotion.add', { 'courseId': course.id }) }}" class="dropdown-item">
                     <i class="fa fa-users fa-fw" aria-hidden="true"></i> Ajouter une promotion
                 </a>
-                <a href="{{ path('course_manager.jury.add', { 'courseId': course.id }) }}" class="dropdown-item">
+                <a href="{{ path('course_manager.jury.add', { 'promotionId': promotion.id }) }}" class="dropdown-item">
                     <i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> Ajouter un Jury
                 </a>
 
