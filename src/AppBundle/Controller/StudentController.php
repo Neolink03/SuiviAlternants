@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\AfterCourse;
 use AppBundle\Entity\Company;
 use AppBundle\Forms\Types\CompanyType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -46,6 +47,30 @@ class StudentController extends Controller
         }
         return $this->render('AppBundle:Student:company.html.twig',[
             'compagny' => $company,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @ParamConverter("afterCourse", options={"mapping": {"afterCourseId" : "id"}})
+     */
+    public function afterCourseEditAction(Request $request, AfterCourse $afterCourse)
+    {
+
+        $form = $this->createForm(AfterCourse::class, $afterCourse);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($afterCourse);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre situation après votre formation a bien été enregistrée.');
+
+            return $this->redirectToRoute('student.home');
+        }
+        return $this->render('AppBundle:Student:company.html.twig',[
+            'compagny' => $afterCourse,
             'form' => $form->createView()
         ]);
     }
