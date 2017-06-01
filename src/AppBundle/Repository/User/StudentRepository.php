@@ -3,6 +3,7 @@
 namespace AppBundle\Repository\User;
 
 use AppBundle\Entity\User\Student;
+use AppBundle\Entity\User;
 
 /**
  * StudentRepository
@@ -57,6 +58,16 @@ class StudentRepository extends \Doctrine\ORM\EntityRepository
 
         $qb->setParameters($parameters);
 
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByNameLike($nameKeyWord)
+    {
+        $qb = $this->createQueryBuilder('student');
+        $qb->from(User::class, 'user')
+            ->where('user.id = student.id')
+            ->andwhere('((user.firstName LIKE :nameKeyWord) OR (user.lastName LIKE :nameKeyWord))')
+            ->setParameter('nameKeyWord', "%$nameKeyWord%");
         return $qb->getQuery()->getResult();
     }
 }
