@@ -32,7 +32,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CourseManagerController extends Controller
 {
@@ -64,12 +64,21 @@ class CourseManagerController extends Controller
 
             if ($studentForm->isSubmitted() && $studentForm->isValid()) {
 
-                $userFactory = $this->get('app.factory.user');
-                $student = $userFactory->getOrCreateStudentIfNotExist($student);
-                $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
-                $em->persist($student);
-                $em->flush();
-                return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
+                $application = $this->getDoctrine()->getRepository(Application::class)->findByEmail($promotion, $student);
+
+                if(count($application) == 0){
+                    $userFactory = $this->get('app.factory.user');
+                    //dump($application);die;
+                    $student = $userFactory->getOrCreateStudentIfNotExist($student);
+
+                    $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
+                    $em->persist($student);
+                    $em->flush();
+                    return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
+                }else{
+                    $this->addFlash('danger', 'Cet utilisateur est déjà présent dans cette formation.');
+                }
+
             }
         }
 
@@ -77,6 +86,21 @@ class CourseManagerController extends Controller
             'student' => $studentForm->createView(),
             'promotion' => $promotion,
         ]);
+    }
+
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+      * @ParamConverter("student", options={"mapping": {"studentId" : "id"}})
+     */
+    public function addExistingStudentAction(Request $request, Promotion $promotion, Student $student)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $userFactory = $this->get('app.factory.user');
+        $userFactory->getOrCreateStudentIfNotExist($student);
+        $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
+        $em->persist($student);
+        $em->flush();
+        return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
     }
 
     /**
@@ -307,12 +331,12 @@ class CourseManagerController extends Controller
      */
     public function addJuryAction(Request $request, Promotion $promotion)
     {
-
         $em = $this->getDoctrine()->getManager();
         $course = $promotion->getCourse();
 
         $form = $this->createForm(AddJuryType::class, null, array(
-            'applications' => $jury = $this->getDoctrine()->getManager()->getRepository(Jury::class)->findAll()
+            'juries' => $jury = $this->getDoctrine()->getManager()->getRepository(Jury::class)->findAll(),
+            'juriesSelected' => $promotion->getCourse()->getJurys()->toArray()
         ));
 
         if ($request->isMethod('post')) {
@@ -362,5 +386,25 @@ class CourseManagerController extends Controller
         return $this->render('AppBundle:Student:afterCourse.html.twig',[
             'form' => $form->createView()
         ]);
+    }
+
+    public function findStudentsAction(Request $request) {
+
+      $em = $this->getDoctrine()->getManager();
+      $nameKeyWord = $request->get('search');
+      $students = $em->getRepository(Student::class)->findByNameLike($nameKeyWord);
+
+      $data = [];
+      foreach ($students as $student) {
+        $data[] = [
+          "id" => $student->getId(),
+          "name" => $student->getFullName(),
+          "email" => $student->getEmail()
+        ];
+      }
+
+      return new JsonResponse($data, 200, array(
+          'Cache-Control' => 'no-cache',
+      ));
     }
 }

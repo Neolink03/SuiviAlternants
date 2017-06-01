@@ -4,6 +4,14 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
+    <route id="course_manager.students.find" path="students/find">
+        <default key="_controller">AppBundle:CourseManager:findStudents</default>
+    </route>
+
+    <route id="course_manager.student.add.existing" path="/promotion/{promotionId}/student/add/existing/{studentId}">
+        <default key="_controller">AppBundle:CourseManager:addExistingStudent</default>
+    </route>
+
     <route id="course_manager.student.add" path="/promotion/{promotionId}/student/add">
         <default key="_controller">AppBundle:CourseManager:addStudent</default>
     </route>
@@ -71,7 +79,7 @@
     <route id="course_manager.promotion.workflow.condition.delete" path="/promotion/{promotionId}/workflow/condition/{conditionId}/delete">
         <default key="_controller">AppBundle:Workflow:deleteConditionWorkflow</default>
     </route>
-    
+
     <route id="course_manager.promotion.workflow.transition.delete" path="/promotion/{promotionId}/workflow/transition/{transitionId}/delete">
         <default key="_controller">AppBundle:Workflow:deleteTransitionWorkflow</default>
     </route>

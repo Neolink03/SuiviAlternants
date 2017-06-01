@@ -64,3 +64,9 @@ transitions:
 
 nb:
 - startStateName et endStateName doivent être un name donné à un état précédemment
+
+Import d'étudiants au format csv
+```csv
+Joubert;Antoine;joub@example.com
+Martin;Marc;marc.martin@example.com
+```

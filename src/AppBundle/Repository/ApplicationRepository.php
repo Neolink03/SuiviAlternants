@@ -5,6 +5,7 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
+use AppBundle\Entity\User\Student;
 
 /**
  * ApplicationRepository
@@ -48,6 +49,23 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
 
 
         $qb->setParameter('promotion', $promotion->getId());
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByEmail(Promotion $promotion, Student $student){
+
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('a')->from(Application::class, 'a')
+            ->from(Promotion::class, 'p')
+            ->from(Student::class, 's')
+            ->andWhere('a.promotion = :promotionEntity')
+            ->andWhere('a.student = s')
+            ->andWhere('s.email = :email');
+
+
+        $qb->setParameter('promotionEntity', $promotion);
+        $qb->setParameter('email', $student->getEmail());
 
         return $qb->getQuery()->getResult();
     }
