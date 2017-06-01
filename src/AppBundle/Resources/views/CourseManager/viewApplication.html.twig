@@ -16,11 +16,12 @@
         {{ form_start(form) }}
         <div class="form-group">
             {{ form_label(form.transition) }}
-            {{ form_widget(form.transition, { 'attr': { 'class': 'custom-select' } }) }}
+            {{ form_widget(form.transition) }}
         </div>
         <div class="form-group">
             {{ form_label(form.comment) }}
             {{ form_widget(form.comment, { 'attr': { 'rows': '5' } }) }}
+            {{ form_errors(form.comment) }}
         </div>
         <input type="submit" class="btn btn-primary"/>
         {{ form_end(form) }}

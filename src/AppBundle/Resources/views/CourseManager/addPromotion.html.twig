@@ -10,7 +10,7 @@
         {{ form_start(addPromotionForm, { 'action': path('course_manager.promotion.add', { 'courseId': app.request.get('courseId') }), 'method': 'POST' }) }}
         <div class="form-group {{ addPromotionForm.name.vars.valid ?: 'has-danger' }}">
             {{ form_label(addPromotionForm.name) }}
-            {{ form_widget(addPromotionForm.name, {'attr': {'class': 'form-control'}} ) }}
+            {{ form_widget(addPromotionForm.name) }}
             {% if not addPromotionForm.name.vars.valid %}
                 <ul>
                     {% for error in addPromotionForm.name.vars.errors %}

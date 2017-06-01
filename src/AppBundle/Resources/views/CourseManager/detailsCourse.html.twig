@@ -44,7 +44,7 @@
         <div class="form-group">
             {{ form_label(promotionsForm.promotions, null, { 'label_attr': { 'class': 'mr-sm-2' } }) }}
             {{ form_widget(promotionsForm.promotions,
-            { 'attr': { 'class': 'custom-select form-control mb-2 mr-sm-2 mb-sm-0', 'onchange': 'this.form.submit()' } }) }}
+            { 'attr': { 'class': 'mb-2 mr-sm-2 mb-sm-0', 'onchange': 'this.form.submit()' } }) }}
         </div>
         {{ form_rest(promotionsForm) }}
         {{ form_end(promotionsForm) }}
@@ -87,13 +87,13 @@
             <hr>
 
             {{ form_start(searchForm, { 'attr': { 'class': 'form-inline mb-4' } }) }}
-            {{ form_widget(searchForm.lastName, { 'attr': { 'class': 'form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
-            {{ form_widget(searchForm.firstName, { 'attr': { 'class': 'form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
-            {{ form_widget(searchForm.currentState, { 'attr': { 'class': 'custom-select form-control mb-2 mr-sm-2 mb-sm-0' } }) }}
-            <button type="submit" class="btn btn-secondary form-control mb-2 mr-sm-2 mb-sm-0" role="button">
+            {{ form_widget(searchForm.lastName, { 'attr': { 'class': 'mb-2 mr-sm-2 mb-sm-0' } }) }}
+            {{ form_widget(searchForm.firstName, { 'attr': { 'class': 'mb-2 mr-sm-2 mb-sm-0' } }) }}
+            {{ form_widget(searchForm.currentState, { 'attr': { 'class': 'mb-2 mr-sm-2 mb-sm-0' } }) }}
+            <button type="submit" class="btn btn-secondary mb-2 mr-sm-2 mb-sm-0" role="button">
                 Rechercher <i class="fa fa-search" aria-hidden="true"></i>
             </button>
-            <button class="btn btn-secondary"
+            <button class="btn btn-secondary" role="button"
                     onclick="for (var elem in this.form.elements) { this.form.elements[elem].value = ''; } this.form.submit();">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
