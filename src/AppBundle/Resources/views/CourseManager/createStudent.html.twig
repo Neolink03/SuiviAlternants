@@ -11,7 +11,7 @@
 
     <div class="mb-3">
       <h2>Etudiant existant</h2>
-      <form class="form-inline" action="" method="post">
+      <form id="addExistingStudent" class="form-inline" action="" method="post">
           <div class="form-group">
           <input placeholder="" id="autocomplete-input" data-suggest="{{ path('course_manager.students.find') }}" class="autocomplete form-control">
           <span id="id-student" class="invisible"></span>
@@ -53,6 +53,12 @@
         console.log(ui.item.name);
         $('#autocomplete-input').val(ui.item.name);
         $('#id-student').val(ui.item.id);
+
+        let url = "{{ path( 'course_manager.student.add.existing', {'promotionId' : 'promotionId', 'studentId' : 'studentId'} ) }}";
+        url = url.replace('promotionId', {{ promotion.id }});
+        url = url.replace('studentId', ui.item.id);
+
+        $('#addExistingStudent').attr('action', url);
         return false;
       }
 

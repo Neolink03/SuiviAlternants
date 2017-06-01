@@ -77,6 +77,21 @@ class CourseManagerController extends Controller
 
     /**
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
+      * @ParamConverter("student", options={"mapping": {"studentId" : "id"}})
+     */
+    public function addExistingStudentAction(Request $request, Promotion $promotion, Student $student)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $userFactory = $this->get('app.factory.user');
+        $userFactory->getOrCreateStudentIfNotExist($student);
+        $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
+        $em->persist($student);
+        $em->flush();
+        return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
+    }
+
+    /**
+     * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      */
     public function detailsPromotionAction(Request $request, Promotion $promotion)
     {

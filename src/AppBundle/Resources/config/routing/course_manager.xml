@@ -8,6 +8,10 @@
         <default key="_controller">AppBundle:CourseManager:findStudents</default>
     </route>
 
+    <route id="course_manager.student.add.existing" path="/promotion/{promotionId}/student/add/existing/{studentId}">
+        <default key="_controller">AppBundle:CourseManager:addExistingStudent</default>
+    </route>
+
     <route id="course_manager.student.add" path="/promotion/{promotionId}/student/add">
         <default key="_controller">AppBundle:CourseManager:addStudent</default>
     </route>
