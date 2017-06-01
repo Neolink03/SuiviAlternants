@@ -10,11 +10,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Course
 {
-    const DEFAULT_STUDENT_NUMBER = 25;
-    
     private $id;
     private $name;
-    private $studentNumber;
     private $manager;
     private $coManager;
     private $secretariatContactDetails;
@@ -68,18 +65,6 @@ class Course
     public function getName()
     {
         return $this->name;
-    }
-
-    public function setStudentNumber(int $studentNumber)
-    {
-        $this->studentNumber = $studentNumber;
-
-        return $this;
-    }
-
-    public function getStudentNumber() : int
-    {
-        return $this->studentNumber;
     }
     
     function getManager() {

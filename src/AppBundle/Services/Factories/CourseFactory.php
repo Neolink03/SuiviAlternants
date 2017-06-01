@@ -31,7 +31,6 @@ class CourseFactory {
         $course->setManager($courseDto->getManager());
         $course->setCoManager($courseDto->getCoManager());
         $course->setSecretariatContactDetails($courseDto->getSecretariatContactDetails());
-        $course->setStudentNumber(Course::DEFAULT_STUDENT_NUMBER); // no student number field in course create form 
 
         if (!is_null($courseDataBase)) {
             throw new AlreadyExistCourseException($courseDataBase);

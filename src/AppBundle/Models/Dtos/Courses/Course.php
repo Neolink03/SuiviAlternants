@@ -4,17 +4,12 @@ namespace AppBundle\Models\Dtos\Courses;
 
 class Course {
     private $name;
-    private $studentNumber;
     private $manager;
     private $coManager;
     private $secretariatContactDetails;
     
     function getName() {
         return $this->name;
-    }
-
-    function getStudentNumber() {
-        return $this->studentNumber;
     }
 
     function getManager() {
@@ -33,10 +28,6 @@ class Course {
         $this->name = $name;
     }
 
-    function setStudentNumber($studentNumber) {
-        $this->studentNumber = $studentNumber;
-    }
-
     function setManager($managerSelector) {
         $this->manager = $managerSelector;
     }
@@ -48,6 +39,5 @@ class Course {
     function setSecretariatContactDetails($secretariatContactDetails) {
         $this->secretariatContactDetails = $secretariatContactDetails;
     }
-
 
 }
