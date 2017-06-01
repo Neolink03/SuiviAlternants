@@ -1,13 +1,11 @@
 AppBundle\Entity\Course:
    Course{1..10}:
         name: <lastName()> <lastName()>
-        studentNumber: <numberBetween(10,30)>
         manager: '@Manager*'
         coManager: '@Manager*'
         secretariatContactDetails: <text(200)>
    Course_1:
         name: METINET
-        studentNumber: 15
         manager: '@manager_1'
         coManager: '@Manager*'
         secretariatContactDetails: <text(200)>

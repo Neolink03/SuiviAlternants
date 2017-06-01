@@ -6,7 +6,6 @@
       <generator strategy="AUTO"/>
     </id>
     <field name="name" unique="true" />
-    <field name="studentNumber" type="integer" />
     <field name="secretariatContactDetails" type="text" />
     <one-to-many field="promotions" target-entity="AppBundle\Entity\Promotion" mapped-by="course">
         <cascade>
