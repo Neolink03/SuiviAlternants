@@ -332,16 +332,17 @@ class CourseManagerController extends Controller
 
     public function findStudentsAction(Request $request) {
 
-      $query = $request->get('search', null);
-      $data = [
-        "1",
-        "2",
-        "3",
-        "4",
-      ];
+      $em = $this->getDoctrine()->getManager();
+      $nameKeyWord = $request->get('search');
+      $students = $em->getRepository(Student::class)->findByNameLike($nameKeyWord);
 
-        return new JsonResponse($data, 200, array(
-            'Cache-Control' => 'no-cache',
-        ));
+      $data = [];
+      foreach ($students as $student) {
+        $data[] = sprintf("%s, %s", $student->getFullName(), $student->getEmail());
+      }
+
+      return new JsonResponse($data, 200, array(
+          'Cache-Control' => 'no-cache',
+      ));
     }
 }

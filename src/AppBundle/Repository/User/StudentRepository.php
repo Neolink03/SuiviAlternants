@@ -59,4 +59,10 @@ class StudentRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findByNameLike($nameKeyWord)
+    {
+        $qb = $this->createQueryBuilder('s');
+        return $qb->getQuery()->getResult();
+    }
 }
