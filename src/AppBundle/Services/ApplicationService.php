@@ -6,6 +6,7 @@
 namespace AppBundle\Services;
 
 
+use AppBundle\Entity\AfterCourse;
 use AppBundle\Entity\Application;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\State;
@@ -90,8 +91,8 @@ class ApplicationService
                 case "CompanyTrigger":
                     $application->addDataAttachments(new Company());
                     break;
-                case "EndTrigger":
-                    throw new \DomainException("Trigger à implementer BIS");
+                case "AfterCourseTrigger":
+                    $application->addDataAttachments(new AfterCourse());
                     break;
                 default:
                     throw new \DomainException("Problème dans le choix du trigger");

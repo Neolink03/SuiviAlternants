@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity repository-class="AppBundle\Repository\AfterCourseRepository" name="AppBundle\Entity\AfterCourse">
-    <id name="id" type="integer" column="id">
-      <generator strategy="AUTO"/>
-    </id>
-    <field name="job" type="string" column="job" length="255"/>
+    <field name="job" type="string" column="job" length="255" nullable="true"/>
     <field name="wage" type="integer" column="wage" nullable="true"/>
     <field name="company" type="string" column="company" length="255" nullable="true"/>
     <field name="comment" type="text" column="comment" length="255" nullable="true"/>

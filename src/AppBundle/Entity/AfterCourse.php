@@ -5,25 +5,12 @@ namespace AppBundle\Entity;
 /**
  * AfterCourse
  */
-class AfterCourse
+class AfterCourse extends DataAttachments
 {
-    private $id;
     private $job;
     private $wage;
     private $company;
     private $comment;
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setJob($job)
-    {
-        $this->job = $job;
-
-        return $this;
-    }
 
     public function getJob()
     {

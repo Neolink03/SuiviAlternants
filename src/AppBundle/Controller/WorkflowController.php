@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\AfterCourseTrigger;
 use AppBundle\Entity\CompanyTrigger;
 use AppBundle\Entity\DatetimeCondition;
 use AppBundle\Entity\Promotion;
@@ -64,6 +65,7 @@ class WorkflowController extends Controller
         $state = new State();
         $state->setName("Départ");
         $state->setWorkflow($workflow);
+        $state->setJuryCanEdit(false);
 
         $workflow->addState($state);
         $workflow->setPromotion($promotion);
@@ -185,7 +187,7 @@ class WorkflowController extends Controller
                 'triggersAviable' => [
                     '' => '',
                     'Affiche un formulaire entreprise' => 'CompanyTrigger',
-                    'Affiche un formulaire après la fin des études' => 'EndTrigger',
+                    'Affiche un formulaire après la fin des études' => 'AfterCourseTrigger',
                 ],
                 'stateName' => $state->getName(),
                 'juryCanEdit' => $state->getJuryCanEdit(),
@@ -205,8 +207,11 @@ class WorkflowController extends Controller
                         $em->persist($trigger);
                         $state->setTrigger($trigger);
                         break;
-                    case "EndTrigger":
-                        throw new \DomainException("Trigger à implementer");
+                    case "AfterCourseTrigger":
+                        $trigger = new AfterCourseTrigger();
+                        $trigger->setState($state);
+                        $em->persist($trigger);
+                        $state->setTrigger($trigger);
                         break;
                     case "":
                         if(!is_null($state->getTrigger()))
