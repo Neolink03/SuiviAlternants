@@ -9,26 +9,47 @@
     <p class="mb-0">Formation : {{ promotion.course.name }}</p>
     <p>Promotion : {{ promotion.name }}</p>
 
-    <div class="mb-3">
-      <h2>Etudiant existant</h2>
-      <form id="addExistingStudent" class="form-inline" action="" method="post">
-          <div class="form-group">
-          <input placeholder="" id="autocomplete-input" data-suggest="{{ path('course_manager.students.find') }}" class="autocomplete form-control">
-          <span id="id-student" class="invisible"></span>
-          <button class="btn btn-secondary" type="submit">
-            Ajouter etudiant
-          </button>
-        </div>
-      </form>
-   </div>
+    <div class="row">
+        <div class="col">
+          <div class="card">
 
-  <div id="addStudent">
-    <h2>Nouvel étudiant</h2>
-      {{ form_start(student) }}
-      {{ form_widget(student) }}
-      <input type="submit" value="Valider" class="btn btn-secondary">
-      {{ form_rest(student) }}
-  </div>
+            <h3 class="card-header">
+              <i class="fa fa-user" aria-hidden="true"></i> Etudiant existant
+            </h3>
+
+            <div class="card-block">
+              <form id="addExistingStudent" class="form-inline" action="" method="post">
+                  <div class="form-group">
+                  <input placeholder="Saisir le nom"
+                          id="autocomplete-input"
+                          data-suggest="{{ path('course_manager.students.find') }}"
+                          class="autocomplete form-control mr-2">
+                  <span id="id-student" class="invisible"></span>
+                  <button class="btn btn-primary" type="submit">Ajouter</button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card">
+
+            <h3 class="card-header">
+              <i class="fa fa-user-plus" aria-hidden="true"></i> Nouvel étudiant
+            </h3>
+
+            <div class="card-block">
+              {{ form_start(student) }}
+              {{ form_widget(student) }}
+              <button type="submit" class="btn btn-primary">Valider</button>
+              {{ form_rest(student) }}
+            </div>
+          </div>
+
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
