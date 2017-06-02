@@ -10,6 +10,7 @@ use AppBundle\Entity\State;
 use AppBundle\Entity\StudentCountCondition;
 use AppBundle\Entity\Transition;
 use AppBundle\Entity\TransitionCondition;
+use AppBundle\Entity\TutorTrigger;
 use AppBundle\Forms\Types\TransitionConditions\DatetimeConditionType;
 use AppBundle\Forms\Types\TransitionConditions\StudentCountConditionType;
 use AppBundle\Forms\Types\Workflow\ComplexStateType;
@@ -186,8 +187,9 @@ class WorkflowController extends Controller
             $form = $this->createForm(ComplexStateType::class, null, [
                 'triggersAviable' => [
                     '' => '',
-                    'Affiche un formulaire entreprise' => 'CompanyTrigger',
-                    'Affiche un formulaire après la fin des études' => 'AfterCourseTrigger',
+                    'Affiche un formulaire entreprise à l\'étudiant' => 'CompanyTrigger',
+                    'Affiche un formulaire après la fin des études à l\'étudiant' => 'AfterCourseTrigger',
+                    'Affiche un formulaire pour remplir le tuteur IUT de l\'étudiant' => 'TutorTrigger',
                 ],
                 'stateName' => $state->getName(),
                 'juryCanEdit' => $state->getJuryCanEdit(),
@@ -224,6 +226,21 @@ class WorkflowController extends Controller
                             $em->flush();
 
                             $trigger = new AfterCourseTrigger();
+                            $trigger->setState($state);
+                            $em->persist($trigger);
+                            $state->setTrigger($trigger);
+                        }
+                        break;
+                    case "TutorTrigger":
+                        if(!$state->getTrigger() instanceof TutorTrigger){
+
+                            if(!is_null($state->getTrigger())){
+                                $em->remove($state->getTrigger());
+                            }
+                            $em->persist($state);
+                            $em->flush();
+
+                            $trigger = new TutorTrigger();
                             $trigger->setState($state);
                             $em->persist($trigger);
                             $state->setTrigger($trigger);

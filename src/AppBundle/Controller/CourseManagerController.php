@@ -15,6 +15,7 @@ use AppBundle\Entity\Company;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
+use AppBundle\Entity\Tutor;
 use AppBundle\Entity\User\Jury;
 use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddJuryType;
@@ -27,6 +28,7 @@ use AppBundle\Forms\Types\EmailMessageType;
 use AppBundle\Forms\Types\PromotionFormType;
 use AppBundle\Forms\Types\SearchStudentType;
 use AppBundle\Forms\Types\StudentsCsvType;
+use AppBundle\Forms\Types\TutorType;
 use AppBundle\Forms\Types\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -68,7 +70,6 @@ class CourseManagerController extends Controller
 
                 if(count($application) == 0){
                     $userFactory = $this->get('app.factory.user');
-                    //dump($application);die;
                     $student = $userFactory->getOrCreateStudentIfNotExist($student);
 
                     $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
@@ -76,7 +77,7 @@ class CourseManagerController extends Controller
                     $em->flush();
                     return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
                 }else{
-                    $this->addFlash('danger', 'Cet utilisateur est déjà présent dans cette formation.');
+                    $this->addFlash('danger', 'Cet utilisateur est déjà présent dans cette promotion.');
                 }
 
             }
@@ -370,8 +371,9 @@ class CourseManagerController extends Controller
         $form = $this->createForm(CompanyType::class, $company, ['disabled' => true]);
         $form->handleRequest($request);
 
-        return $this->render('AppBundle:Student:company.html.twig',[
-            'form' => $form->createView()
+        return $this->render('AppBundle:CourseManager:company.html.twig',[
+            'form' => $form->createView(),
+            'applicationId' => $company->getApplication()->getId()
         ]);
     }
 
@@ -382,6 +384,30 @@ class CourseManagerController extends Controller
     {
         $form = $this->createForm(AfterCourseType::class, $afterCourse, ['disabled' => true]);
         $form->handleRequest($request);
+
+        return $this->render('AppBundle:CourseManager:afterCourse.html.twig',[
+            'form' => $form->createView(),
+            'applicationId' => $afterCourse->getApplication()->getId()
+        ]);
+    }
+
+    /**
+     * @ParamConverter("tutor", options={"mapping": {"tutorId" : "id"}})
+     */
+    public function applicationTutorAction(Request $request, Tutor $tutor)
+    {
+        $form = $this->createForm(TutorType::class, $tutor);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($tutor);
+            $em->flush();
+
+            $this->addFlash('success', 'Les informations du tuteur ont bien été mise à jour.');
+
+            return $this->redirectToRoute('course_manager.application.view', ['applicationId' => $tutor->getApplication()->getId()]);
+        }
 
         return $this->render('AppBundle:Student:afterCourse.html.twig',[
             'form' => $form->createView()

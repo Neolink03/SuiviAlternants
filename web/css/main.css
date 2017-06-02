@@ -7,7 +7,10 @@
 }
 
 .workflow-dump {
+    min-height: 20rem;
     overflow: hidden;
+    align-items: center;
+    justify-content: center;
 }
 
 .workflow-dump img {
