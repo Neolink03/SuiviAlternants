@@ -15,6 +15,9 @@
         {% elseif dataAttachment is afterCourse %}
             <a href="{{ path('course_manager.after_course', { 'afterCourseId' : dataAttachment.id}) }}"
                class="btn btn-secondary mb-4">Voir les informations de fin de formation</a>
+        {% elseif dataAttachment is tutor %}
+            <a href="{{ path('course_manager.tutor', { 'tutorId' : dataAttachment.id}) }}"
+               class="btn btn-secondary mb-4">Modifier le tuteur IUT</a>
         {% endif %}
     {% endfor %}
 
