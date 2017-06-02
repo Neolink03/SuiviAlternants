@@ -28,11 +28,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.51809596"
-     inkscape:cx="102.64655"
-     inkscape:cy="470.66306"
+     inkscape:zoom="1.0361919"
+     inkscape:cx="550.31084"
+     inkscape:cy="236.45965"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="g10823"
      showgrid="false"
      inkscape:window-width="1680"
      inkscape:window-height="988"
@@ -52,7 +52,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <cc:license
            rdf:resource="http://creativecommons.org/licenses/by/4.0/" />
         <dc:contributor>
@@ -210,30 +210,30 @@
        style="fill:#058ebb;fill-opacity:1">
       <text
          id="text8509"
-         y="121.24107"
-         x="59.72023"
+         y="121.77941"
+         x="53.260178"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10.58333302px;line-height:31.75px;font-family:Consolas;-inkscape-font-specification:'Consolas Bold';letter-spacing:0px;word-spacing:0px;fill:#058ebb;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:70.55555725px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#058ebb;fill-opacity:1;stroke-width:0.26458332px"
-           y="121.24107"
-           x="59.72023"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:66.93852234px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#058ebb;fill-opacity:1;stroke-width:0.26458332px"
+           y="121.77941"
+           x="53.260178"
            id="tspan8507"
            sodipodi:role="line">S</tspan></text>
       <text
          id="text8513"
-         y="148.07738"
-         x="84.666634"
+         y="148.61572"
+         x="84.397469"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10.58333302px;line-height:31.75px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#058ebb;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:70.55555725px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#058ebb;fill-opacity:1;stroke-width:0.26458332px"
-           y="148.07738"
-           x="84.666634"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:66.93852234px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#058ebb;fill-opacity:1;stroke-width:0.26458332px"
+           y="148.61572"
+           x="84.397469"
            id="tspan8511"
            sodipodi:role="line">A</tspan></text>
       <path
          inkscape:connector-curvature="0"
          id="path8562"
-         d="M 86.395633,62.526277 103.4213,77.647603 85.899489,89.134798 Z"
+         d="M 84.242283,65.217965 101.26795,80.339291 83.746139,91.826486 Z"
          style="fill:#058ebb;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.32503226px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
   </g>
