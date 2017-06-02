@@ -204,4 +204,20 @@ class UserFactory
         $student->addApplication($application);
         return $student;
     }
+
+    public function addStudentToPromotionAndSave(Promotion $promotion, Student $student)
+    {
+      $application = $this->em->getRepository(Application::class)->findByEmail($promotion, $student);
+      $student = $this->getOrCreateStudentIfNotExist($student);
+
+      if($application) {
+        throw new \Exception(
+          sprintf("Cannot add student %s to promotion n°%s, it already have an application", $student->getId(), $promotion->getId())
+        );
+      }
+
+      $student = $this->createStudentApplicationFromPromotion($student, $promotion);
+      $this->em->persist($student);
+      $this->em->flush();
+    }
 }
