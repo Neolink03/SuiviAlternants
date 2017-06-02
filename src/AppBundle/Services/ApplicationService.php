@@ -11,6 +11,7 @@ use AppBundle\Entity\Application;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\State;
 use AppBundle\Entity\StatusModification;
+use AppBundle\Entity\Tutor;
 use AppBundle\Services\Factories\SwiftMessageFactory;
 use Doctrine\ORM\EntityManager;
 use ReflectionClass;
@@ -93,6 +94,9 @@ class ApplicationService
                     break;
                 case "AfterCourseTrigger":
                     $application->addDataAttachments(new AfterCourse());
+                    break;
+                case "TutorTrigger":
+                    $application->addDataAttachments(new Tutor());
                     break;
                 default:
                     throw new \DomainException("Problème dans le choix du trigger");

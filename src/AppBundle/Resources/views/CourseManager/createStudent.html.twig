@@ -6,8 +6,22 @@
     <h1>Ajouter un étudiant</h1>
     <hr />
 
-    <p class="mb-0">Formation : {{ promotion.course.name }}</p>
-    <p>Promotion : {{ promotion.name }}</p>
+    <dl class="row">
+      <dt class="col-sm-2">Formation</dt>
+      <dd class="col-sm-10">{{ promotion.course.name }}</dd>
+
+      <dt class="col-sm-2">Promotion</dt>
+      <dd class="col-sm-10">{{ promotion.name }}</dd>
+    </dl>
+
+    <div class="form-group">
+      <a href="{{ path('course_manager.promotion', {'promotionId': promotion.id}) }}"
+         class="btn btn-secondary">
+
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+          Retour
+      </a>
+    </div>
 
     <div class="row">
         <div class="col-md-6 mb-3">
@@ -71,7 +85,6 @@
       }
 
       function selectStudent(event, ui) {
-        console.log(ui.item.name);
         $('#autocomplete-input').val(ui.item.name);
         $('#id-student').val(ui.item.id);
 

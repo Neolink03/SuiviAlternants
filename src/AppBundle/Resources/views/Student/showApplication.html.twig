@@ -10,6 +10,10 @@
             {% elseif dataAttachment is afterCourse %}
                 <a href="{{ path('student.after_course.edit', { 'afterCourseId' : dataAttachment.id}) }}"
                    class="btn btn-success float-right ml-2">Questionnaire de fin de formation</a>
+            {% elseif dataAttachment is tutor %}
+                {% if dataAttachment.name is not null %}
+                    Tuteur IUT : {{ dataAttachment.name }}
+                {% endif %}
             {% else %}
                 Aucun formulaire pris en charge, merci de contacter l'administrateur.
             {% endif %}

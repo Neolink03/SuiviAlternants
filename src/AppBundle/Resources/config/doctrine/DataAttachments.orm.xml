@@ -5,6 +5,7 @@
     <discriminator-map>
       <discriminator-mapping value="company" class="AppBundle\Entity\Company" />
       <discriminator-mapping value="afterCourse" class="AppBundle\Entity\AfterCourse" />
+      <discriminator-mapping value="tutor" class="AppBundle\Entity\Tutor" />
     </discriminator-map>
 
     <id name="id" type="integer" column="id">

@@ -15,6 +15,7 @@ use AppBundle\Entity\Company;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\State;
+use AppBundle\Entity\Tutor;
 use AppBundle\Entity\User\Jury;
 use AppBundle\Entity\User\Student;
 use AppBundle\Forms\Types\AddJuryType;
@@ -27,6 +28,7 @@ use AppBundle\Forms\Types\EmailMessageType;
 use AppBundle\Forms\Types\PromotionFormType;
 use AppBundle\Forms\Types\SearchStudentType;
 use AppBundle\Forms\Types\StudentsCsvType;
+use AppBundle\Forms\Types\TutorType;
 use AppBundle\Forms\Types\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -386,6 +388,29 @@ class CourseManagerController extends Controller
         return $this->render('AppBundle:CourseManager:afterCourse.html.twig',[
             'form' => $form->createView(),
             'applicationId' => $afterCourse->getApplication()->getId()
+        ]);
+    }
+
+    /**
+     * @ParamConverter("tutor", options={"mapping": {"tutorId" : "id"}})
+     */
+    public function applicationTutorAction(Request $request, Tutor $tutor)
+    {
+        $form = $this->createForm(TutorType::class, $tutor);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($tutor);
+            $em->flush();
+
+            $this->addFlash('success', 'Les informations du tuteur ont bien été mise à jour.');
+
+            return $this->redirectToRoute('course_manager.application.view', ['applicationId' => $tutor->getApplication()->getId()]);
+        }
+
+        return $this->render('AppBundle:Student:afterCourse.html.twig',[
+            'form' => $form->createView()
         ]);
     }
 
