@@ -1,2 +1,6 @@
-Message envoyé :
+{% extends '@App/email/common.html.twig' %}
+
+{% block body %}
+    Message envoyé :
     {{ message }}
+{% endblock %}

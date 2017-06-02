@@ -1,9 +1,8 @@
-<div>
+{% extends '@App/email/common.html.twig' %}
+
+{% block body %}
     <h1>Candidature</h1>
     <p>Votre inscription a bien été prise en compte.</p>
     <p>Login : {{ email }}</p>
     <p>Mot de passe : {{ password }}</p>
-
-    <p>Cordialement, <br>
-        L'équipe pédagogique</p>
-</div>
+{% endblock %}

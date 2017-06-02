@@ -1,8 +1,10 @@
-<div>
+{% extends '@App/email/common.html.twig' %}
+
+{% block body %}
     <h1>Notification de changement de statut</h1>
     <p>Votre statut pour la formation {{ formation }} est passé de {{ stateStart }} à {{ stateEnd }}</p>
     <p>Pour plus d'informations veuillez vous connectez au site.</p>
     <p>Cordialement, <br>
         L'équipe pédagogique</p>
     <a href="{{ app.request.getSchemeAndHttpHost() }}">{{ app.request.getSchemeAndHttpHost() }}</a>
-</div>
+{% endblock %}
