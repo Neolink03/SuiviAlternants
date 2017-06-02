@@ -315,7 +315,7 @@ class CourseManagerController extends Controller
 
             $swiftMail = $this->get('app.factory.swift_message')->create(
                 $data['object'],
-                "uneadresse@hotmail.com",
+                "no-reply@univ-lyon1.fr",
                 $mailRecipients,
                 "AppBundle:email:contact.html.twig",
                 array(
