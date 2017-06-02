@@ -68,7 +68,6 @@ class CourseManagerController extends Controller
 
                 if(count($application) == 0){
                     $userFactory = $this->get('app.factory.user');
-                    //dump($application);die;
                     $student = $userFactory->getOrCreateStudentIfNotExist($student);
 
                     $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
@@ -370,8 +369,9 @@ class CourseManagerController extends Controller
         $form = $this->createForm(CompanyType::class, $company, ['disabled' => true]);
         $form->handleRequest($request);
 
-        return $this->render('AppBundle:Student:company.html.twig',[
-            'form' => $form->createView()
+        return $this->render('AppBundle:CourseManager:company.html.twig',[
+            'form' => $form->createView(),
+            'applicationId' => $company->getApplication()->getId()
         ]);
     }
 
@@ -383,8 +383,9 @@ class CourseManagerController extends Controller
         $form = $this->createForm(AfterCourseType::class, $afterCourse, ['disabled' => true]);
         $form->handleRequest($request);
 
-        return $this->render('AppBundle:Student:afterCourse.html.twig',[
-            'form' => $form->createView()
+        return $this->render('AppBundle:CourseManager:afterCourse.html.twig',[
+            'form' => $form->createView(),
+            'applicationId' => $afterCourse->getApplication()->getId()
         ]);
     }
 

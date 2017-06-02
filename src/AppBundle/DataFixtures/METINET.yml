@@ -59,7 +59,7 @@ transitions:
         endStateName:
             name: Refusé
     -
-        name: Entretient
+        name: Entretien
         startStateName:
             name: Etude
         endStateName:

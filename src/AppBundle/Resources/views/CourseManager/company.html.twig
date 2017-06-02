@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Modification de l'entreprise{% endblock %}
+
+{% block body %}
+    <h1>Entreprise d'acceuil</h1>
+    <hr>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <a href="{{ path('course_manager.application.view', {'applicationId': applicationId}) }}"
+       class="btn btn-secondary"><i class="fa fa-chevron-left" aria-hidden="true"></i> Retour</a>
+    {{ form_end(form) }}
+{% endblock %}

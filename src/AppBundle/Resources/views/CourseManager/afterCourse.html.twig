@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Après la formation{% endblock %}
+
+{% block body %}
+    <h1>Votre situation après votre formation</h1>
+    <hr>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <a href="{{ path('course_manager.application.view', {'applicationId': applicationId}) }}"
+       class="btn btn-secondary"><i class="fa fa-chevron-left" aria-hidden="true"></i> Retour</a>
+    {{ form_end(form) }}
+{% endblock %}
