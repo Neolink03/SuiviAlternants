@@ -17,6 +17,7 @@ use AppBundle\Models\AdminNewUserDto;
 use AppBundle\Services\PasswordService;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Session\Session;
+use AppBundle\Errors\Student\StudentAlreadyHasApplicationException;
 
 class UserFactory
 {
@@ -203,5 +204,19 @@ class UserFactory
         $application->setPromotion($promotion);
         $student->addApplication($application);
         return $student;
+    }
+
+    public function addStudentToPromotionAndSave(Promotion $promotion, Student $student)
+    {
+      $application = $this->em->getRepository(Application::class)->findByEmail($promotion, $student);
+      $student = $this->getOrCreateStudentIfNotExist($student);
+
+      if($application) {
+        throw new StudentAlreadyHasApplicationException($student, $promotion);
+      }
+
+      $student = $this->createStudentApplicationFromPromotion($student, $promotion);
+      $this->em->persist($student);
+      $this->em->flush();
     }
 }

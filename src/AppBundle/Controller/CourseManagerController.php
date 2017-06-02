@@ -35,6 +35,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use AppBundle\Errors\Student\StudentAlreadyHasApplicationException;
 
 class CourseManagerController extends Controller
 {
@@ -66,20 +67,18 @@ class CourseManagerController extends Controller
 
             if ($studentForm->isSubmitted() && $studentForm->isValid()) {
 
-                $application = $this->getDoctrine()->getRepository(Application::class)->findByEmail($promotion, $student);
+              $userFactory = $this->get('app.factory.user');
+              try {
+                  $userFactory->addStudentToPromotionAndSave($promotion, $student);
+                  return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
 
-                if(count($application) == 0){
-                    $userFactory = $this->get('app.factory.user');
-                    $student = $userFactory->getOrCreateStudentIfNotExist($student);
-
-                    $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
-                    $em->persist($student);
-                    $em->flush();
-                    return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
-                }else{
-                    $this->addFlash('danger', 'Cet utilisateur est déjà présent dans cette promotion.');
-                }
-
+              } catch (StudentAlreadyHasApplicationException $e) {
+                  $this->addFlash('danger', 'Cet utilisateur est déjà présent dans cette promotion.');
+                  return $this->render('AppBundle:CourseManager:createStudent.html.twig', [
+                      'student' => $studentForm->createView(),
+                      'promotion' => $promotion,
+                  ]);
+              }
             }
         }
 
@@ -91,17 +90,23 @@ class CourseManagerController extends Controller
 
     /**
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
-      * @ParamConverter("student", options={"mapping": {"studentId" : "id"}})
+     * @ParamConverter("student", options={"mapping": {"studentId" : "id"}})
      */
     public function addExistingStudentAction(Request $request, Promotion $promotion, Student $student)
     {
-        $em = $this->getDoctrine()->getManager();
         $userFactory = $this->get('app.factory.user');
-        $userFactory->getOrCreateStudentIfNotExist($student);
-        $student = $userFactory->createStudentApplicationFromPromotion($student, $promotion);
-        $em->persist($student);
-        $em->flush();
-        return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
+        try {
+            $userFactory->addStudentToPromotionAndSave($promotion, $student);
+            return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
+
+        } catch (StudentAlreadyHasApplicationException $e) {
+            $this->addFlash('danger', 'Cet utilisateur est déjà présent dans cette promotion.');
+            $studentForm = $this->createForm(UserType::class);
+            return $this->render('AppBundle:CourseManager:createStudent.html.twig', [
+                'student' => $studentForm->createView(),
+                'promotion' => $promotion,
+            ]);
+        }
     }
 
     /**
