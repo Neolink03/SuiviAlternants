@@ -152,8 +152,8 @@ class UserFactory
             $this->em->flush();
 
             $swiftMessage = $this->swiftMessageFactory->create(
-                'New Registration',
-                'send@example.com',
+                'Candidature - IUT LYON 1',
+                'no-reply@univ-lyon1.fr',
                 [$student->getEmail()],
                 '@App/email/registration.html.twig',
                 [
