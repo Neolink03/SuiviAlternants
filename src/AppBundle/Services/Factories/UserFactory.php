@@ -17,6 +17,7 @@ use AppBundle\Models\AdminNewUserDto;
 use AppBundle\Services\PasswordService;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Session\Session;
+use AppBundle\Errors\Student\StudentAlreadyHasApplicationException;
 
 class UserFactory
 {
@@ -211,9 +212,7 @@ class UserFactory
       $student = $this->getOrCreateStudentIfNotExist($student);
 
       if($application) {
-        throw new \Exception(
-          sprintf("Cannot add student %s to promotion n°%s, it already have an application", $student->getId(), $promotion->getId())
-        );
+        throw new StudentAlreadyHasApplicationException($student, $promotion);
       }
 
       $student = $this->createStudentApplicationFromPromotion($student, $promotion);

@@ -35,6 +35,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use AppBundle\Errors\Student\StudentAlreadyHasApplicationException;
 
 class CourseManagerController extends Controller
 {
@@ -71,7 +72,7 @@ class CourseManagerController extends Controller
                   $userFactory->addStudentToPromotionAndSave($promotion, $student);
                   return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
 
-              } catch (\Exception $e) {
+              } catch (StudentAlreadyHasApplicationException $e) {
                   $this->addFlash('danger', 'Cet utilisateur est déjà présent dans cette promotion.');
                   return $this->render('AppBundle:CourseManager:createStudent.html.twig', [
                       'student' => $studentForm->createView(),
@@ -98,7 +99,7 @@ class CourseManagerController extends Controller
             $userFactory->addStudentToPromotionAndSave($promotion, $student);
             return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
 
-        } catch (\Exception $e) {
+        } catch (StudentAlreadyHasApplicationException $e) {
             $this->addFlash('danger', 'Cet utilisateur est déjà présent dans cette promotion.');
             $studentForm = $this->createForm(UserType::class);
             return $this->render('AppBundle:CourseManager:createStudent.html.twig', [
