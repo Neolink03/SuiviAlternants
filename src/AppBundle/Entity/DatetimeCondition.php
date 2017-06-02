@@ -36,7 +36,7 @@ class DatetimeCondition extends TransitionCondition
 
     public function getErrorMessage(): string
     {
-        return "Impossible de passer à cet état, la changement doit être fait ". $this->getOperator()." ".$this->getDatetime()->format('Y-m-d H:i:s').".";
+        return "Impossible de passer à cet état, la changement doit être fait ". ($this->getOperator() == '<' ? "avant" : "après")." le ".$this->getDatetime()->format('d/m/Y').".";
     }
 }
 
