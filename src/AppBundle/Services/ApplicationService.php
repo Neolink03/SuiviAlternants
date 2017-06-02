@@ -67,7 +67,7 @@ class ApplicationService
             $this->em->flush();
             $message = $this->message->create(
                 "Changement d'état de votre dossier pour la formation ".$application->getPromotion()->getCourse()->getName(),
-                "uneadresse@hotmail.com",
+                "no-reply@univ-lyon1.frm",
                 [$application->getStudent()->getEmail()],
                 "AppBundle:email:studentChangeStateNotification.html.twig",
                 array(
