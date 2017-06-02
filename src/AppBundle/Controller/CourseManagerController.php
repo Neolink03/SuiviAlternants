@@ -76,7 +76,7 @@ class CourseManagerController extends Controller
                     $em->flush();
                     return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
                 }else{
-                    $this->addFlash('danger', 'Cet utilisateur est déjà présent dans cette formation.');
+                    $this->addFlash('danger', 'Cet utilisateur est déjà présent dans cette promotion.');
                 }
 
             }
