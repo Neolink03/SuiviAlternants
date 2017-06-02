@@ -12,7 +12,7 @@ $(function () {
 
         this.removeChild(this.firstChild);
         this.appendChild(result);
-        this.style.display = 'block';
+        this.style.display = 'flex';
     });
 
     $(workflows).attr("data-scale", "2.4");
