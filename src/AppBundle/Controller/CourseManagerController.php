@@ -414,8 +414,9 @@ class CourseManagerController extends Controller
             return $this->redirectToRoute('course_manager.application.view', ['applicationId' => $tutor->getApplication()->getId()]);
         }
 
-        return $this->render('AppBundle:Student:afterCourse.html.twig',[
-            'form' => $form->createView()
+        return $this->render('@App/CourseManager/tutor.html.twig',[
+            'form' => $form->createView(),
+            'application' => $tutor->getApplication()
         ]);
     }
 

@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Informations tuteur{% endblock %}
+
+{% block body %}
+    <h1>Tuteur IUT</h1>
+    <hr>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <a href="{{ path('course_manager.application.view', {'applicationId' : application.id}) }}"
+       class="btn btn-secondary"><i class="fa fa-times" aria-hidden="true"></i> Annuler</a>
+    <input type="submit" class="btn btn-primary">
+    {{ form_end(form) }}
+{% endblock %}
