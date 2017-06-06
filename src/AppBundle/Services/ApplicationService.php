@@ -23,21 +23,21 @@ class ApplicationService
     private $em;
     private $tcs;
     private $session;
-    private $message;
+    private $messageFactory;
     private $mailer;
 
     public function __construct(
         EntityManager $em,
         TransitionConditionService $tcs,
         Session $session,
-        SwiftMessageFactory $message,
+        SwiftMessageFactory $messageFactory,
         Swift_Mailer $mailer
     )
     {
         $this->em = $em;
         $this->tcs = $tcs;
         $this->session = $session;
-        $this->message = $message;
+        $this->messageFactory = $messageFactory;
         $this->mailer = $mailer;
     }
 
@@ -65,7 +65,7 @@ class ApplicationService
 
             $this->em->persist($application);
             $this->em->flush();
-            $message = $this->message->create(
+            $message = $this->messageFactory->create(
                 "Changement d'état de votre dossier pour la formation ".$application->getPromotion()->getCourse()->getName(),
                 "no-reply@univ-lyon1.frm",
                 [$application->getStudent()->getEmail()],
