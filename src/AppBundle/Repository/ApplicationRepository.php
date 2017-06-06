@@ -15,7 +15,27 @@ use AppBundle\Entity\User\Student;
  */
 class ApplicationRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAllByPromotionAndFilters(Promotion $promotion, array $data)
+    public function findByPromotionAndFilters(Promotion $promotion, array $data)
+    {
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('a')->from(Application::class, 'a')
+            ->andWhere('s.lastName LIKE :lastName')
+            ->andWhere('s.firstName LIKE :firstName')
+            ->andWhere('a.currentState LIKE :currentState')
+            ->andWhere('p.id = :promotion')
+            ->join('a.student', 's')
+            ->join('a.promotion', 'p');
+
+        $qb->setParameter('lastName', '%' . $data['lastName'] . '%');
+        $qb->setParameter('firstName', '%' . $data['firstName'] . '%');
+        $qb->setParameter('currentState', $data['currentState'] ? $data['currentState']->getMachineName() : '%%');
+        $qb->setParameter('promotion', $promotion->getId());
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByPromotionAndFiltersWhereJuryCanEdit(Promotion $promotion, array $data)
     {
         $qb = $this->_em->createQueryBuilder();
 
