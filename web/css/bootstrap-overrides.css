@@ -1,7 +1,15 @@
+button, input, optgroup, select, textarea {
+    font-family: inherit;
+}
+
 .jumbotron {
-    background-color: inherit!important;
+    background-color: inherit !important;
 }
 
 .dropdown-item {
-    padding: 3px 1.5rem;
+    padding: 0.5rem 1.5rem;
+}
+
+.btn {
+    cursor: pointer;
 }

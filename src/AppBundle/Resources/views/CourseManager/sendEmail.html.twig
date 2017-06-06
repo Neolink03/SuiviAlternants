@@ -3,14 +3,29 @@
 {% block title %}Ajouter un étudiant{% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
     <h1>Envoyer e-mail</h1>
     <hr>
+
+    {{ form_start(searchForm, { 'attr': { 'class': 'form-inline mb-4' } }) }}
+    {{ form_widget(searchForm.lastName, { 'attr': { 'class': 'mb-2 mr-sm-2 mb-sm-0' } }) }}
+    {{ form_widget(searchForm.firstName, { 'attr': { 'class': 'mb-2 mr-sm-2 mb-sm-0' } }) }}
+    {{ form_widget(searchForm.currentState, { 'attr': { 'class': 'mb-2 mr-sm-2 mb-sm-0' } }) }}
+    <button type="submit" class="btn btn-secondary mb-2 mr-sm-2 mb-sm-0" role="button">
+        Rechercher <i class="fa fa-search" aria-hidden="true"></i>
+    </button>
+    <button class="btn btn-secondary" role="button"
+            onclick="for (var elem in this.form.elements) { this.form.elements[elem].value = ''; } this.form.submit();">
+        <i class="fa fa-refresh" aria-hidden="true"></i>
+    </button>
+    {{ form_end(searchForm) }}
+
+    {{ form_start(form) }}
     <table class="table">
         <thead>
         <tr>
             <th>Nom</th>
-            <th>Status</th>
+            <th>Prénom</th>
+            <th>Statut</th>
             <th><input type="checkbox" name="select-all" id="select-all"/></th>
         </tr>
         </thead>
@@ -18,20 +33,16 @@
         {% for choice in form.users.vars.choices %}
             {% set application = choice.data %}
             <tr>
-
-                <td>{{ application.student.firstName }} {{ application.student.lastName }}</td>
+                <td>{{ application.student.lastName }}</td>
+                <td>{{ application.student.firstName }}</td>
                 {% if application.getLastStatusModification() %}
                     <td>{{ application.getLastStatusModification().state.name }}</td>
                 {% else %}
-                    <td>Il n'y a pas de latest status, ce qui n'est pas trop logique</td>
+                    <td>--</td>
                 {% endif %}
                 <td>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" id="email_message_users_{{ loop.index - 1 }}"
-                                   name="email_message[users][]" value="{{ loop.index - 1 }}">
-                        </label>
-                    </div>
+                    <input type="checkbox" id="email_message_users_{{ loop.index - 1 }}"
+                           name="email_message[users][]" value="{{ loop.index - 1 }}">
                 </td>
             </tr>
         {% endfor %}
@@ -54,6 +65,8 @@
     {{ form_row(form._token) }}
     <a href="{{ path('course_manager.promotion', { 'promotionId': promotion.id }) }}"
        class="btn btn-secondary"><i class="fa fa-chevron-left" aria-hidden="true"></i> Retour</a>
-    <input type="submit" value="Envoyer l'email" class="btn btn-primary"/>
+    <button type="submit" class="btn btn-primary">
+        <i class="fa fa-envelope" aria-hidden="true"></i> Envoyer l'email
+    </button>
 
 {% endblock %}

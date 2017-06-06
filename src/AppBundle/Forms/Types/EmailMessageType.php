@@ -31,14 +31,14 @@ class EmailMessageType extends AbstractType
                 return strtoupper($application->getStudent()->getFirstName().' '.$application->getStudent()->getLastName());
             },
             'expanded' => true,
-            'multiple' => true,
+            'multiple' => true
         ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'applications' => [],
+            'applications' => []
         ));
     }
 }

@@ -302,12 +302,12 @@ class CourseManagerController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $applications = $promotion->getApplications();
+
         $form = $this->createForm(EmailMessageType::class, null, [
             'applications' => $applications
         ]);
 
         $states = $promotion->getWorkflow()->getStates();
-
         $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
 
         if ($request->isMethod('post')) {
@@ -317,7 +317,6 @@ class CourseManagerController extends Controller
 
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
                 $applications = $em->getRepository(Application::class)->findByPromotionAndFilters($promotion, $searchForm->getData());
-                dump($applications); die;
                 $form = $this->createForm(EmailMessageType::class, null, [
                     'applications' => $applications
                 ]);
@@ -326,23 +325,27 @@ class CourseManagerController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 $data = $form->getData();
 
-                $mailRecipients = [];
-                foreach ($data['users'] as $key => $application) {
-                    $mailRecipients[] = $application->getStudent()->getEmail();
-                };
+                if (!count($data['users'])) {
+                    $this->addFlash("danger", "Veuillez sélectionner au moins un étudiant.");
+                } else {
+                    $mailRecipients = [];
+                    foreach ($data['users'] as $key => $application) {
+                        $mailRecipients[] = $application->getStudent()->getEmail();
+                    };
 
-                $swiftMail = $this->get('app.factory.swift_message')->create(
-                    $data['object'],
-                    "no-reply@univ-lyon1.fr",
-                    $mailRecipients,
-                    "AppBundle:email:contact.html.twig",
-                    array(
-                        "message" => $data['message']
-                    )
-                );
+                    $swiftMail = $this->get('app.factory.swift_message')->create(
+                        $data['object'],
+                        "no-reply@univ-lyon1.fr",
+                        $mailRecipients,
+                        "AppBundle:email:contact.html.twig",
+                        [
+                            "message" => $data['message']
+                        ]
+                    );
 
-                $this->get('mailer')->send($swiftMail);
-                $this->addFlash("success", "Email envoyé à tous les destinataires.");
+                    $this->get('mailer')->send($swiftMail);
+                    $this->addFlash("success", "Email envoyé à tous les destinataires.");
+                }
             }
         }
 
