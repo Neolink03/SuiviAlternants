@@ -13,7 +13,7 @@
             <th>Nom</th>
             <th>Prénom</th>
             <th>Statut</th>
-            <th>
+            <th class="text-center">
                 <select name="select-all-by-status" id="select-all-by-status" class="custom-select">
                     <option value="none" selected>Aucun</option>
                     <option value="all">Tous</option>
@@ -35,7 +35,7 @@
                 {% else %}
                     <td>--</td>
                 {% endif %}
-                <td>
+                <td class="text-center">
                     {% if application.getLastStatusModification() %}
                         <input type="checkbox" id="email_message_users_{{ loop.index - 1 }}"
                                name="email_message[users][]" value="{{ loop.index - 1 }}"
