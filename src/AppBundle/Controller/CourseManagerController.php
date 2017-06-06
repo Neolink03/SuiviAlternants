@@ -125,13 +125,17 @@ class CourseManagerController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $applications = $promotion->getApplications();
-        $states = $promotion->getWorkflow()->getStates();
 
         $promotionsForm = $this->createForm(PromotionFormType::class, null, [
             "promotions" => $promotion->getCourse()->getPromotions(),
             "promotionSelected" => $promotion
         ]);
         $studentsCsvForm = $this->createForm(StudentsCsvType::class);
+
+        $states = [];
+        if($promotion->getWorkflow()){
+            $states = $promotion->getWorkflow()->getStates();
+        }
         $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
 
         if ($request->isMethod('post')) {
