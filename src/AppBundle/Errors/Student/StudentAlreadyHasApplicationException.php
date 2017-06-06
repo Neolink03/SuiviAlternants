@@ -11,7 +11,7 @@ class StudentAlreadyHasApplicationException extends \Exception {
     {
         parent::__construct(
             sprintf(
-              "Cannot add student %s to promotion n°%s, it already have an application",
+              "Cannot add student %s to promotion n°%s, it already has an application",
               $student->getId(), $promotion->getId())
         );
     }

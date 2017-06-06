@@ -48,7 +48,7 @@
             <argument type="service" id="app.transition_condition"/>
             <argument type="service" id="session"/>
             <argument type="service" id="app.factory.swift_message"/>
-            <argument type="service" id="swiftmailer.mailer"/>
+            <argument type="service" id="mailer"/>
         </service>
 
         <service id="app.factory.swift_message" class="AppBundle\Services\Factories\SwiftMessageFactory">
