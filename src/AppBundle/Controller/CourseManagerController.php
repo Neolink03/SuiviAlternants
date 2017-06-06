@@ -342,10 +342,7 @@ class CourseManagerController extends Controller
      */
     public function sendMailAction(Request $request, Promotion $promotion)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $applications = $promotion->getApplications();
-
         $form = $this->createForm(EmailMessageType::class, null, [
             'applications' => $applications
         ]);
@@ -356,14 +353,6 @@ class CourseManagerController extends Controller
         if ($request->isMethod('post')) {
 
             $form->handleRequest($request);
-            $searchForm->handleRequest($request);
-
-            if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-                $applications = $em->getRepository(Application::class)->findByPromotionAndFilters($promotion, $searchForm->getData());
-                $form = $this->createForm(EmailMessageType::class, null, [
-                    'applications' => $applications
-                ]);
-            }
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $data = $form->getData();
