@@ -193,6 +193,7 @@ class WorkflowController extends Controller
                 ],
                 'stateName' => $state->getName(),
                 'juryCanEdit' => $state->getJuryCanEdit(),
+                'sendMail' => $state->getSendMail(),
                 'triggersSelected' => $selected
             ]);
 
@@ -202,6 +203,7 @@ class WorkflowController extends Controller
                 $data = $form->getData();
                 $state->setName($data['name']);
                 $state->setJuryCanEdit($data['juryCanEdit']);
+                $state->setSendMail($data['sendMail']);
                 switch ($data['trigger']) {
                     case "CompanyTrigger":
                         if(!$state->getTrigger() instanceof CompanyTrigger){

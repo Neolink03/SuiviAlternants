@@ -14,7 +14,7 @@
                 Nombre d'étudiants {{ operator }} {{ transition.condition.number }}
 
             {% elseif transition.condition is DatetimeCondition %}
-                Date {{ transition.condition.operator }} {{ transition.condition.dateTime | date('D d/m/Y') }}
+                Date {{ transition.condition.operator }} {{ transition.condition.dateTime | date('d/m/Y') }}
             {% endif %}
 
             <div class="btn-group ml-2">

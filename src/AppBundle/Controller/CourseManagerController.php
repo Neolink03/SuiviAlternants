@@ -30,12 +30,19 @@ use AppBundle\Forms\Types\SearchStudentType;
 use AppBundle\Forms\Types\StudentsCsvType;
 use AppBundle\Forms\Types\TutorType;
 use AppBundle\Forms\Types\UserType;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Errors\Student\StudentAlreadyHasApplicationException;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class CourseManagerController extends Controller
 {
@@ -114,16 +121,21 @@ class CourseManagerController extends Controller
      */
     public function detailsPromotionAction(Request $request, Promotion $promotion)
     {
+
         $em = $this->getDoctrine()->getManager();
 
         $applications = $promotion->getApplications();
-        $states = $promotion->getWorkflow()->getStates();
 
         $promotionsForm = $this->createForm(PromotionFormType::class, null, [
             "promotions" => $promotion->getCourse()->getPromotions(),
             "promotionSelected" => $promotion
         ]);
         $studentsCsvForm = $this->createForm(StudentsCsvType::class);
+
+        $states = [];
+        if($promotion->getWorkflow()){
+            $states = $promotion->getWorkflow()->getStates();
+        }
         $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
 
         if ($request->isMethod('post')) {
@@ -147,6 +159,37 @@ class CourseManagerController extends Controller
 
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
                 $applications = $em->getRepository(Application::class)->findByPromotionAndFilters($promotion, $searchForm->getData());
+            }
+
+            if($request->request->has('exportCsv')){
+                $rows = [];
+                $rows[] = implode(';', [
+                    'Application ID',
+                    'Prénom',
+                    'Nom',
+                    'Email',
+                    'Téléphone',
+                    'Etat actuel',
+                ]);
+                /** @var Application $application */
+                foreach ($applications as $application) {
+                    $data = [
+                        $application->getId(),
+                        $application->getStudent()->getFirstName(),
+                        $application->getStudent()->getLastName(),
+                        $application->getStudent()->getEmail(),
+                        $application->getStudent()->getPhone(),
+                        $application->getLastStatusModification()->getState()->getName(),
+                    ];
+
+                    $rows[] = implode(';', $data);
+                }
+
+                $content = implode("\n", $rows);
+                $response = new Response($content);
+                $response->headers->set('Content-Type', 'text/csv');
+                $response->headers->set('Content-Disposition', 'attachment; filename="listeEtudiants.csv";');
+                return $response;
             }
         }
 

@@ -1,168 +1,288 @@
 states:
     -
         name: Dossier
+        jury_can_edit: false
+        send_mail: true
     -
         name: Etude
+        jury_can_edit: false
+        send_mail: false
     -
         name: 'En attente'
+        jury_can_edit: false
+        send_mail: false
     -
         name: Refusé
+        jury_can_edit: false
+        send_mail: false
     -
         name: Appel
+        jury_can_edit: false
+        send_mail: true
     -
         name: Admissible
+        jury_can_edit: false
+        send_mail: false
     -
         name: Quitter
+        jury_can_edit: false
+        send_mail: false
     -
         name: Recherche
+        jury_can_edit: false
+        send_mail: false
     -
         name: Attente
+        jury_can_edit: false
+        send_mail: false
     -
         name: Validation
+        jury_can_edit: false
+        send_mail: false
     -
         name: 'En cours d''année'
+        jury_can_edit: false
+        send_mail: false
     -
         name: Abandon
+        jury_can_edit: false
+        send_mail: false
     -
         name: 'Post Alternant'
+        jury_can_edit: false
+        send_mail: false
     -
         name: 'Plus d''entreprise'
+        jury_can_edit: false
+        send_mail: false
 transitions:
     -
         name: Complet
         startStateName:
             name: Dossier
+            jury_can_edit: false
+            send_mail: true
         endStateName:
             name: Etude
+            jury_can_edit: false
+            send_mail: false
     -
         name: Incomplet
         startStateName:
             name: Dossier
+            jury_can_edit: false
+            send_mail: true
         endStateName:
             name: 'En attente'
+            jury_can_edit: false
+            send_mail: false
     -
         name: Complet
         startStateName:
             name: 'En attente'
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: Etude
+            jury_can_edit: false
+            send_mail: false
     -
         name: Relance
         startStateName:
             name: 'En attente'
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: 'En attente'
+            jury_can_edit: false
+            send_mail: false
     -
         name: Refusé
         startStateName:
             name: Etude
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: Refusé
+            jury_can_edit: false
+            send_mail: false
     -
         name: Entretien
         startStateName:
             name: Etude
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: Appel
+            jury_can_edit: false
+            send_mail: true
     -
         name: Admission
         startStateName:
             name: Etude
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: Admissible
+            jury_can_edit: false
+            send_mail: false
     -
         name: Refusé
         startStateName:
             name: Appel
+            jury_can_edit: false
+            send_mail: true
         endStateName:
             name: Refusé
+            jury_can_edit: false
+            send_mail: false
     -
         name: Admis
         startStateName:
             name: Appel
+            jury_can_edit: false
+            send_mail: true
         endStateName:
             name: Admissible
+            jury_can_edit: false
+            send_mail: false
     -
         name: Abandon
         startStateName:
             name: Etude
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: Quitter
+            jury_can_edit: false
+            send_mail: false
     -
         name: Abandon
         startStateName:
             name: Admissible
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: Quitter
+            jury_can_edit: false
+            send_mail: false
     -
         name: Date
         startStateName:
             name: Admissible
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: Recherche
+            jury_can_edit: false
+            send_mail: false
     -
         name: Abandon
         startStateName:
             name: Recherche
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: Quitter
+            jury_can_edit: false
+            send_mail: false
     -
         name: 'Trouvé > Quota'
         startStateName:
             name: Recherche
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: Attente
+            jury_can_edit: false
+            send_mail: false
     -
         name: 'Trouvé < Quota'
         startStateName:
             name: Recherche
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: Validation
+            jury_can_edit: false
+            send_mail: false
     -
         name: 'Place se libère'
         startStateName:
             name: Attente
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: Validation
+            jury_can_edit: false
+            send_mail: false
     -
         name: Abandon
         startStateName:
             name: Validation
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: Quitter
+            jury_can_edit: false
+            send_mail: false
     -
         name: Validé
         startStateName:
             name: Validation
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: 'En cours d''année'
+            jury_can_edit: false
+            send_mail: false
     -
         name: Abandon
         startStateName:
             name: 'En cours d''année'
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: Abandon
+            jury_can_edit: false
+            send_mail: false
     -
         name: 'Diplome validé'
         startStateName:
             name: 'En cours d''année'
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: 'Post Alternant'
+            jury_can_edit: false
+            send_mail: false
     -
         name: 'Rupture du contrat'
         startStateName:
             name: 'En cours d''année'
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: 'Plus d''entreprise'
+            jury_can_edit: false
+            send_mail: false
     -
         name: 'Formation initiale'
         startStateName:
             name: 'Plus d''entreprise'
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: 'En cours d''année'
+            jury_can_edit: false
+            send_mail: false
     -
         name: 'Nouvelle entreprise'
         startStateName:
             name: 'Plus d''entreprise'
+            jury_can_edit: false
+            send_mail: false
         endStateName:
             name: 'En cours d''année'
+            jury_can_edit: false
+            send_mail: false
