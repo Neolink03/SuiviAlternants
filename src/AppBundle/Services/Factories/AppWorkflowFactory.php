@@ -33,6 +33,7 @@ class AppWorkflowFactory
             $stateEntity = new State();
             $stateEntity->setName($state["name"]);
             $stateEntity->setJuryCanEdit(false);
+            $stateEntity->setSendMail(false);
             $workflow->addState($stateEntity);
             $stateDictionary[$state["name"]] = $stateEntity;
         }

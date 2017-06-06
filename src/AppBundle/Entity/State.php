@@ -20,6 +20,8 @@ class State
     private $workflow;
     /** @Exclude */
     private $juryCanEdit;
+    /** @Exclude */
+    private $sendMail;
 
     public function getId()
     {
@@ -80,5 +82,14 @@ class State
         $this->juryCanEdit = $juryCanEdit;
     }
 
+    public function getSendMail()
+    {
+        return $this->sendMail;
+    }
+
+    public function setSendMail($sendMail)
+    {
+        $this->sendMail = $sendMail;
+    }
 }
 

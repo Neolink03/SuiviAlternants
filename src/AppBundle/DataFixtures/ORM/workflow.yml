@@ -8,11 +8,13 @@ AppBundle\Entity\State:
         name:  <words(2, true)>
         workflow: '@WorkFlow*'
         juryCanEdit: false
+        sendMail: false
 
    State_1:
         name:  State avec trigger
         workflow: '@WorkFlow_1'
         juryCanEdit: false
+        sendMail: false
 
 AppBundle\Entity\CompanyTrigger:
    CompanyTrigger_1:

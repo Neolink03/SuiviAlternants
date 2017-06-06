@@ -43,7 +43,7 @@ class ApplicationService
 
     public function setState(Application $application, array $data){
         $authoriseChangeState =true;
-        $stateStart = $data['transition']->getStartState()->getName();
+        $stateStart = $data['transition']->getStartState();
 
         if($data['transition']->getCondition()){
             $authoriseChangeState = $this->tcs->isChecked($data['transition']->getCondition());
@@ -65,6 +65,17 @@ class ApplicationService
 
             $this->em->persist($application);
             $this->em->flush();
+
+            $this->sendMailIfAllow($application, $stateStart, $state);
+        }
+        else{
+            $this->session->getFlashBag()->add("danger", $data['transition']->getCondition()->getErrorMessage());
+        }
+        return $application;
+    }
+
+    private function sendMailIfAllow(Application $application, State $stateStart, State $stateEnd){
+        if($stateEnd->getSendMail()){
             $message = $this->messageFactory->create(
                 "Changement d'état de votre dossier pour la formation ".$application->getPromotion()->getCourse()->getName(),
                 "no-reply@univ-lyon1.frm",
@@ -72,17 +83,17 @@ class ApplicationService
                 "AppBundle:email:studentChangeStateNotification.html.twig",
                 array(
                     "formation" => $application->getPromotion()->getCourse()->getName(),
-                    "stateStart" => $stateStart,
-                    "stateEnd" => $state->getName(),
+                    "stateStart" => $stateStart->getName(),
+                    "stateEnd" => $stateEnd->getName(),
                 )
             );
             $this->mailer->send($message);
-            $this->session->getFlashBag()->add("success", "Email envoyé au destinataire");
+            $this->session->getFlashBag()->add("success", "Email envoyé à l'étudiant");
         }
         else{
-            $this->session->getFlashBag()->add("danger", $data['transition']->getCondition()->getErrorMessage());
+            $this->session->getFlashBag()->add("success", "Changement réussi, aucun email envoyé");
         }
-        return $application;
+
     }
 
     private function tryTrigger(Application $application, State $state) : Application {

@@ -8,6 +8,7 @@
         </id>
         <field name="name" type="string" column="name" length="255"/>
         <field name="juryCanEdit" type="boolean" column="juryCanEdit"/>
+        <field name="sendMail" type="boolean" column="sendMail"/>
         <field name="machineName" type="string" column="machineName" length="255" unique="true">
             <gedmo:slug unique="true" style="camel" updatable="false" separator="_" fields="name" />
         </field>
