@@ -4,6 +4,10 @@
         <field name="name" type="string" column="name" length="255" nullable="true"/>
         <field name="employeeNumber" type="integer" nullable="true"/>
         <field name="itNumber" type="integer" nullable="true"/>
+        <field name="tutorFirstame" type="string" column="tutorFirstame" length="255" nullable="true"/>
+        <field name="tutorLastname" type="string" column="tutorLastname" length="255" nullable="true"/>
+        <field name="tutorEmail" type="string" column="tutorEmail" length="255" nullable="true"/>
+        <field name="tutorPhonenumber" type="string" column="tutorPhonenumber" length="255" nullable="true"/>
         <one-to-one field="address" target-entity="AppBundle\Entity\Address" >
             <cascade>
                 <cascade-persist/>

@@ -67,6 +67,7 @@ class WorkflowController extends Controller
         $state->setName("Départ");
         $state->setWorkflow($workflow);
         $state->setJuryCanEdit(false);
+        $state->setSendMail(false);
 
         $workflow->addState($state);
         $workflow->setPromotion($promotion);
