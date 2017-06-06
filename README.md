@@ -30,11 +30,16 @@ Example de format d'import d'un workflow yml :
 states:
     -
         name: 'Dossiér'
+        jury_can_edit: false
+        send_mail: false
     -
         name: 'En attente'
+        jury_can_edit: false
+        send_mail: false
     -
         name: 'Etude'
-         
+        jury_can_edit: false
+        send_mail: false
 transitions:
     -
         name: 'Complet'

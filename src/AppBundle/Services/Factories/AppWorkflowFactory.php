@@ -32,8 +32,8 @@ class AppWorkflowFactory
         foreach ($states as $state){
             $stateEntity = new State();
             $stateEntity->setName($state["name"]);
-            $stateEntity->setJuryCanEdit(false);
-            $stateEntity->setSendMail(false);
+            $stateEntity->setJuryCanEdit($state["jury_can_edit"]);
+            $stateEntity->setSendMail($state["send_mail"]);
             $workflow->addState($stateEntity);
             $stateDictionary[$state["name"]] = $stateEntity;
         }

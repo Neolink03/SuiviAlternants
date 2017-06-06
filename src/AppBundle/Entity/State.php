@@ -18,9 +18,7 @@ class State
     private $trigger;
     /** @Exclude */
     private $workflow;
-    /** @Exclude */
     private $juryCanEdit;
-    /** @Exclude */
     private $sendMail;
 
     public function getId()
