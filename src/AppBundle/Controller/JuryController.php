@@ -24,19 +24,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 class JuryController extends Controller
 {
-    public function juryIndexAction(Request $request){
+    public function juryIndexAction(Request $request)
+    {
 
         $jury = $this->getUser();
 
-        if(count($jury->getCoursesAttached()->toArray()))
+        if (count($jury->getCoursesAttached()->toArray()))
             $courseAttached = $jury->getCoursesAttached()->toArray();
 
-        if(count($jury->getCoursesAttached()->toArray())){
+        if (count($jury->getCoursesAttached()->toArray())) {
             return $this->render('AppBundle:Jury:home.html.twig', [
                 'courseAttached' => $courseAttached
             ]);
-        }
-        else{
+        } else {
             return $this->render('AppBundle:Jury:home.html.twig');
         }
     }
@@ -69,7 +69,7 @@ class JuryController extends Controller
             }
 
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-                $applications = $em->getRepository(Application::class)->findAllByPromotionAndFilters($promotion, $searchForm->getData());
+                $applications = $em->getRepository(Application::class)->findByPromotionAndFiltersWhereJuryCanEdit($promotion, $searchForm->getData());
             }
         }
 

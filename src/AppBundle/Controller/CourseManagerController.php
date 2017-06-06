@@ -67,18 +67,18 @@ class CourseManagerController extends Controller
 
             if ($studentForm->isSubmitted() && $studentForm->isValid()) {
 
-              $userFactory = $this->get('app.factory.user');
-              try {
-                  $userFactory->addStudentToPromotionAndSave($promotion, $student);
-                  return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
+                $userFactory = $this->get('app.factory.user');
+                try {
+                    $userFactory->addStudentToPromotionAndSave($promotion, $student);
+                    return $this->redirectToRoute('course_manager.promotion', ['promotionId' => $promotion->getId()]);
 
-              } catch (StudentAlreadyHasApplicationException $e) {
-                  $this->addFlash('danger', 'Cet utilisateur est déjà présent dans cette promotion.');
-                  return $this->render('AppBundle:CourseManager:createStudent.html.twig', [
-                      'student' => $studentForm->createView(),
-                      'promotion' => $promotion,
-                  ]);
-              }
+                } catch (StudentAlreadyHasApplicationException $e) {
+                    $this->addFlash('danger', 'Cet utilisateur est déjà présent dans cette promotion.');
+                    return $this->render('AppBundle:CourseManager:createStudent.html.twig', [
+                        'student' => $studentForm->createView(),
+                        'promotion' => $promotion,
+                    ]);
+                }
             }
         }
 
@@ -117,9 +117,7 @@ class CourseManagerController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $applications = $promotion->getApplications();
-        $states = $em->getRepository(State::class)->findBy(
-            ['workflow' => $promotion->getWorkflow()]
-        );
+        $states = $promotion->getWorkflow()->getStates();
 
         $promotionsForm = $this->createForm(PromotionFormType::class, null, [
             "promotions" => $promotion->getCourse()->getPromotions(),
@@ -129,6 +127,7 @@ class CourseManagerController extends Controller
         $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
 
         if ($request->isMethod('post')) {
+
             $promotionsForm->handleRequest($request);
             $studentsCsvForm->handleRequest($request);
             $searchForm->handleRequest($request);
@@ -147,7 +146,7 @@ class CourseManagerController extends Controller
             }
 
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-                $applications = $em->getRepository(Application::class)->findAllByPromotionAndFilters($promotion, $searchForm->getData());
+                $applications = $em->getRepository(Application::class)->findByPromotionAndFilters($promotion, $searchForm->getData());
             }
         }
 
@@ -300,35 +299,57 @@ class CourseManagerController extends Controller
      */
     public function sendMailAction(Request $request, Promotion $promotion)
     {
-        $form = $this->createForm(EmailMessageType::class, null, array(
-            'applications' => $promotion->getApplications()->toArray()
-        ));
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+        $applications = $promotion->getApplications();
+        $form = $this->createForm(EmailMessageType::class, null, [
+            'applications' => $applications
+        ]);
 
-            $mailRecipients = [];
-            foreach ($data['users'] as $key => $application) {
-                $mailRecipients[] = $application->getStudent()->getEmail();
-            };
+        $states = $promotion->getWorkflow()->getStates();
 
-            $swiftMail = $this->get('app.factory.swift_message')->create(
-                $data['object'],
-                "no-reply@univ-lyon1.fr",
-                $mailRecipients,
-                "AppBundle:email:contact.html.twig",
-                array(
-                    "message" => $data['message']
-                )
-            );
-            $this->get('mailer')->send($swiftMail);
-            $this->addFlash("success", "Email envoyé à tous les destinataires");
+        $searchForm = $this->createForm(SearchStudentType::class, null, ['states' => $states]);
+
+        if ($request->isMethod('post')) {
+
+            $form->handleRequest($request);
+            $searchForm->handleRequest($request);
+
+            if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+                $applications = $em->getRepository(Application::class)->findByPromotionAndFilters($promotion, $searchForm->getData());
+                dump($applications); die;
+                $form = $this->createForm(EmailMessageType::class, null, [
+                    'applications' => $applications
+                ]);
+            }
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $data = $form->getData();
+
+                $mailRecipients = [];
+                foreach ($data['users'] as $key => $application) {
+                    $mailRecipients[] = $application->getStudent()->getEmail();
+                };
+
+                $swiftMail = $this->get('app.factory.swift_message')->create(
+                    $data['object'],
+                    "no-reply@univ-lyon1.fr",
+                    $mailRecipients,
+                    "AppBundle:email:contact.html.twig",
+                    array(
+                        "message" => $data['message']
+                    )
+                );
+
+                $this->get('mailer')->send($swiftMail);
+                $this->addFlash("success", "Email envoyé à tous les destinataires.");
+            }
         }
 
         return $this->render('AppBundle:CourseManager:sendEmail.html.twig', [
             'promotion' => $promotion,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'searchForm' => $searchForm->createView()
         ]);
     }
 
@@ -376,7 +397,7 @@ class CourseManagerController extends Controller
         $form = $this->createForm(CompanyType::class, $company, ['disabled' => true]);
         $form->handleRequest($request);
 
-        return $this->render('AppBundle:CourseManager:company.html.twig',[
+        return $this->render('AppBundle:CourseManager:company.html.twig', [
             'form' => $form->createView(),
             'applicationId' => $company->getApplication()->getId()
         ]);
@@ -390,7 +411,7 @@ class CourseManagerController extends Controller
         $form = $this->createForm(AfterCourseType::class, $afterCourse, ['disabled' => true]);
         $form->handleRequest($request);
 
-        return $this->render('AppBundle:CourseManager:afterCourse.html.twig',[
+        return $this->render('AppBundle:CourseManager:afterCourse.html.twig', [
             'form' => $form->createView(),
             'applicationId' => $afterCourse->getApplication()->getId()
         ]);
@@ -414,29 +435,30 @@ class CourseManagerController extends Controller
             return $this->redirectToRoute('course_manager.application.view', ['applicationId' => $tutor->getApplication()->getId()]);
         }
 
-        return $this->render('@App/CourseManager/tutor.html.twig',[
+        return $this->render('@App/CourseManager/tutor.html.twig', [
             'form' => $form->createView(),
             'application' => $tutor->getApplication()
         ]);
     }
 
-    public function findStudentsAction(Request $request) {
+    public function findStudentsAction(Request $request)
+    {
 
-      $em = $this->getDoctrine()->getManager();
-      $nameKeyWord = $request->get('search');
-      $students = $em->getRepository(Student::class)->findByNameLike($nameKeyWord);
+        $em = $this->getDoctrine()->getManager();
+        $nameKeyWord = $request->get('search');
+        $students = $em->getRepository(Student::class)->findByNameLike($nameKeyWord);
 
-      $data = [];
-      foreach ($students as $student) {
-        $data[] = [
-          "id" => $student->getId(),
-          "name" => $student->getFullName(),
-          "email" => $student->getEmail()
-        ];
-      }
+        $data = [];
+        foreach ($students as $student) {
+            $data[] = [
+                "id" => $student->getId(),
+                "name" => $student->getFullName(),
+                "email" => $student->getEmail()
+            ];
+        }
 
-      return new JsonResponse($data, 200, array(
-          'Cache-Control' => 'no-cache',
-      ));
+        return new JsonResponse($data, 200, array(
+            'Cache-Control' => 'no-cache',
+        ));
     }
 }
