@@ -27,6 +27,10 @@
                                 <i class="fa fa-gavel" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
                                    title="Le jury peut passer cet état à un autre état"></i>
                             {% endif %}
+                            {% if state.sendMail %}
+                                <i class="fa fa-envelope" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
+                                   title="Un email sera envoyé à l'étudiant"></i>
+                            {% endif %}
                         </td>
                         <td>
                             <div class="btn-group">
@@ -50,6 +54,10 @@
                                 {% if state.juryCanEdit %}
                                     <i class="fa fa-gavel" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
                                        title="Le jury peut passer cet état à un autre état"></i>
+                                {% endif %}
+                                {% if state.sendMail %}
+                                    <i class="fa fa-envelope" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
+                                       title="Un email sera envoyé à l'étudiant"></i>
                                 {% endif %}
                             </td>
                             <td>

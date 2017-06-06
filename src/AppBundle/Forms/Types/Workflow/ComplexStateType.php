@@ -40,7 +40,7 @@ class ComplexStateType extends AbstractType
                 'Oui' => true,
                 'Non' => false
             ],
-            'label' => "Envoyer un email à l'étudiant",
+            'label' => "Un email sera envoyé à l'étudiant",
             'data' =>  $options['sendMail']
         ]);
         $builder->add('trigger', ChoiceType::class, [
