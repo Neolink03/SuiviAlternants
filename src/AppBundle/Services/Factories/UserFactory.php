@@ -42,13 +42,14 @@ class UserFactory
         $this->session = $session;
     }
 
-    public function saveFromAdmin(AdminNewUserDto $adminUserDto){
+    public function saveFromAdmin(AdminNewUserDto $adminUserDto)
+    {
 
         $managerDataBase = $this->em->getRepository(User::class)->findOneBy(array(
             'email' => $adminUserDto->getUser()->getEmail()
         ));
 
-        if(is_null($managerDataBase)){
+        if (is_null($managerDataBase)) {
             switch ($adminUserDto->getUserType()) {
                 case "administrateur":
                     $user = $this->saveAdministratorFromAdmin($adminUserDto);
@@ -79,12 +80,13 @@ class UserFactory
             );
 
             $this->mailer->send($swiftMessage);
-        }else{
+        } else {
             $this->session->getFlashBag()->add("danger", "Cet email est déjà utilisé pour un autre utilisateur.");
         }
     }
 
-    public function saveCourseManagerFromAdmin(AdminNewUserDto $adminUserDto) : CourseManager{
+    public function saveCourseManagerFromAdmin(AdminNewUserDto $adminUserDto): CourseManager
+    {
         $courseManager = new CourseManager();
         $courseManager->setFirstName($adminUserDto->getUser()->getFirstName());
         $courseManager->setLastName($adminUserDto->getUser()->getLastName());
@@ -101,7 +103,8 @@ class UserFactory
         return $courseManager;
     }
 
-    public function saveJuryFromAdmin(AdminNewUserDto $adminUserDto) : Jury{
+    public function saveJuryFromAdmin(AdminNewUserDto $adminUserDto): Jury
+    {
         $jury = new Jury();
         $jury->setFirstName($adminUserDto->getUser()->getFirstName());
         $jury->setLastName($adminUserDto->getUser()->getLastName());
@@ -117,7 +120,8 @@ class UserFactory
         return $jury;
     }
 
-    public function saveAdministratorFromAdmin(AdminNewUserDto $adminUserDto) : Administrator{
+    public function saveAdministratorFromAdmin(AdminNewUserDto $adminUserDto): Administrator
+    {
         $administrator = new Administrator();
         $administrator->setFirstName($adminUserDto->getUser()->getFirstName());
         $administrator->setLastName($adminUserDto->getUser()->getLastName());
@@ -133,13 +137,14 @@ class UserFactory
         return $administrator;
     }
 
-    public function getOrCreateStudentIfNotExist(Student $student){
+    public function getOrCreateStudentIfNotExist(Student $student)
+    {
 
         $studentDataBase = $this->em->getRepository(Student::class)->findOneBy(array(
             'email' => $student->getEmail()
         ));
 
-        if(is_null($studentDataBase)){
+        if (is_null($studentDataBase)) {
             $password = $this->passwordService->generate();
 
             $studentDataBase = $student;
@@ -168,10 +173,11 @@ class UserFactory
         return $studentDataBase;
     }
 
-    public function saveStudentsfromCsvFile(string $filePath, Promotion $promotion){
+    public function saveStudentsfromCsvFile(string $filePath, Promotion $promotion)
+    {
         $csvFile = file($filePath);
         foreach ($csvFile as $line) {
-            $studentArray = explode(';', str_replace("\r\n",'', $line));
+            $studentArray = explode(';', str_replace("\r\n", '', $line));
             $student = new Student();
             $student->setLastName($studentArray[0]);
             $student->setFirstName($studentArray[1]);
@@ -180,7 +186,10 @@ class UserFactory
             $student->setEnabled(true);
 
             $student = $this->getOrCreateStudentIfNotExist($student);
-            $student = $this->createStudentApplicationFromPromotion($student, $promotion);
+
+            if (!$this->em->getRepository(Application::class)->findByEmail($promotion, $student)) {
+                $student = $this->createStudentApplicationFromPromotion($student, $promotion);
+            }
 
             $this->em->persist($student);
         }
@@ -188,7 +197,8 @@ class UserFactory
         $this->em->flush();
     }
 
-    public function createStudentApplicationFromPromotion(Student $student, Promotion $promotion) : Student{
+    public function createStudentApplicationFromPromotion(Student $student, Promotion $promotion): Student
+    {
         $application = New Application();
         $statusModif = new StatusModification();
         $statusModif->setApplication($application);
@@ -208,15 +218,15 @@ class UserFactory
 
     public function addStudentToPromotionAndSave(Promotion $promotion, Student $student)
     {
-      $application = $this->em->getRepository(Application::class)->findByEmail($promotion, $student);
-      $student = $this->getOrCreateStudentIfNotExist($student);
+        $application = $this->em->getRepository(Application::class)->findByEmail($promotion, $student);
+        $student = $this->getOrCreateStudentIfNotExist($student);
 
-      if($application) {
-        throw new StudentAlreadyHasApplicationException($student, $promotion);
-      }
+        if ($application) {
+            throw new StudentAlreadyHasApplicationException($student, $promotion);
+        }
 
-      $student = $this->createStudentApplicationFromPromotion($student, $promotion);
-      $this->em->persist($student);
-      $this->em->flush();
+        $student = $this->createStudentApplicationFromPromotion($student, $promotion);
+        $this->em->persist($student);
+        $this->em->flush();
     }
 }
