@@ -8,6 +8,7 @@ use AppBundle\Forms\Types\CompanyContactType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Companycontact controller.
@@ -19,8 +20,42 @@ class CompanyContactController extends Controller
      * Lists all companyContact entities.
      * @ParamConverter("course", options={"mapping": {"courseId" : "id"}})
      */
-    public function indexAction(Course $course)
+    public function indexAction(Request $request, Course $course)
     {
+        $companyContacts = $course->getCompanyContacts();
+
+        if ($request->request->has('exportCsv')) {
+            $rows = [];
+            $rows[] = implode(';', [
+                'Nom de la société',
+                'Prénom du contact',
+                'Nom du contact',
+                'Email',
+                'Téléphone'
+            ]);
+
+            /** @var CompanyContact $companyContact */
+            foreach ($companyContacts as $companyContact) {
+                $data = [
+                    $companyContact->getCompanyName(),
+                    $companyContact->getFirstNameContact(),
+                    $companyContact->getLastNameContact(),
+                    $companyContact->getEmail(),
+                    $companyContact->getPhoneNumber()
+                ];
+
+                $rows[] = implode(';', $data);
+            }
+
+            $content = implode("\n", $rows);
+
+            $response = new Response($content);
+            $response->headers->set('Content-Type', 'text/csv');
+            $response->headers->set('Content-Disposition', 'attachment; filename="listeContactsEntreprise' . $course->getName() . '.csv";');
+
+            return $response;
+        }
+
         return $this->render('AppBundle:companycontact:index.html.twig', array(
             'course' => $course,
         ));
@@ -78,7 +113,7 @@ class CompanyContactController extends Controller
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('companycontact_show', [
-                'courseId' => $course->getId(), 
+                'courseId' => $course->getId(),
                 'id' => $companyContact->getId()
             ]);
         }
@@ -118,7 +153,6 @@ class CompanyContactController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('companycontact_delete', array('courseId' => $course->getId(), 'id' => $companyContact->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }
