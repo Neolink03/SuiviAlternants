@@ -39,12 +39,19 @@ class StudentType extends AbstractType
                         'message' => 'Le numéro de téléphone doit être de format 0xxxxxxxxx ou +33xxxxxxxxx',)
                 ))
             ))
-            ->add('birthday', BirthdayType::class, array('label' => 'Date de naissance', 'required' => false))
-            ->add('professionnalSocialNetworkLink', TextType::class, array('label' => 'Lien réseau social professionnel', 'required' => false))
-        ;
+            ->add('birthday', BirthdayType::class, array(
+                'label' => 'Date de naissance',
+                'years' => range(2017, 1897),
+                'placeholder' => array(
+                    'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
+                ),
+                'required' => false
+            ))
+            ->add('professionnalSocialNetworkLink', TextType::class, array('label' => 'Lien réseau social professionnel', 'required' => false));
     }
 
-    public function getParent(){
+    public function getParent()
+    {
         return UserType::class;
     }
 }
