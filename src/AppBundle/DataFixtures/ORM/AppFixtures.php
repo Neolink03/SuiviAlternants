@@ -15,12 +15,12 @@ class AppFixtures implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         Fixtures::load(
-            [/*
+            [
                 __DIR__ . '/realUsers.yml',
                 __DIR__ . '/realCourses.yml',
                 __DIR__ . '/realCompanyContacts.yml',
                 __DIR__ . '/realPromotions.yml',
-                /**/
+                /*
                 __DIR__ . '/users.yml',
                 __DIR__ . '/courses.yml',
                 __DIR__ . '/companyContacts.yml',
@@ -29,7 +29,7 @@ class AppFixtures implements FixtureInterface
                 __DIR__ . '/applications.yml',
                 __DIR__ . '/statusModifications.yml',
                 __DIR__ . '/dataAttachments.yml',
-
+                */
             ],
             $manager,
             [
