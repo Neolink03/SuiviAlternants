@@ -179,9 +179,9 @@ class UserFactory
         foreach ($csvFile as $line) {
             $studentArray = explode(';', str_replace("\r\n", '', $line));
             $student = new Student();
-            $student->setLastName($studentArray[0]);
-            $student->setFirstName($studentArray[1]);
-            $student->setEmail($studentArray[2]);
+            $student->setLastName(utf8_encode($studentArray[0]));
+            $student->setFirstName(utf8_encode($studentArray[1]));
+            $student->setEmail(utf8_encode($studentArray[2]));
             $student->addRole('ROLE_STUDENT');
             $student->setEnabled(true);
 
