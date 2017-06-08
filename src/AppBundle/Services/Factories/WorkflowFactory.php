@@ -97,8 +97,15 @@ class WorkflowFactory
     public function dumpStudentWorflowFromApplication(Application $application) : string
     {
         $modifications = $application->getStatusModifications()->toArray();
+        $statusModificationVisibles = [];
+        /** @var StatusModification $statusModification */
+        foreach ($modifications as $statusModification){
+            if($statusModification->getState()->getIsVisibleByStudent()){
+                $statusModificationVisibles[] = $statusModification;
+            }
+        }
 
-        $builder = $this->definitionBuilderFromModifications($modifications);
+        $builder = $this->definitionBuilderFromModifications($statusModificationVisibles);
         $definition = $builder->build();
 
         return (new CustomGraphvizDumper)->dump($definition);
