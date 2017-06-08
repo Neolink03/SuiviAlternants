@@ -8,12 +8,13 @@ AppBundle\Entity\User\Administrator:
         roles:
           - ROLE_ADMIN
         enabled: true
+
    admin_2:
-        firstName: Xavier
-        lastName: Aponex
-        username: xavier.aponex
-        plainPassword: motdepasse
-        email: XavierAponexPtutInfo@yopmail.com
+        firstName: Adrien
+        lastName: Peytavie
+        username: adrien.peytavie@univ-lyon1.fr
+        plainPassword: admin
+        email: adrien.peytavie@univ-lyon1.fr
         roles:
           - ROLE_ADMIN
         enabled: true
@@ -29,46 +30,6 @@ AppBundle\Entity\User\CourseManager:
         phoneNumber: '0645986552'
         roles:
           - ROLE_MANAGER
-   manager_2:
-        firstName: Paul
-        lastName: Collex
-        username: paul.collex
-        plainPassword: motdepasse
-        email: PaulCollexPtutInfo@yopmail.com
-        enabled: true
-        phoneNumber: '0698021235'
-        roles:
-          - ROLE_MANAGER
-   manager_3:
-        firstName: Noémie
-        lastName: Tenerhit
-        username: noemie.tenerhit
-        plainPassword: motdepasse
-        email: NoemieTenerhitPtutInfo@yopmail.com
-        enabled: true
-        phoneNumber: '0632598741'
-        roles:
-          - ROLE_MANAGER
-   manager_4:
-        firstName: Maurice
-        lastName: Jendoje
-        username: maurice.jendoje
-        plainPassword: motdepasse
-        email: MauriceJendojePtutInfo@yopmail.com
-        enabled: true
-        phoneNumber: '0698543268'
-        roles:
-          - ROLE_MANAGER
-   manager_5:
-        firstName: Aurélie
-        lastName: Podfentur
-        username: aurelie.podfentur
-        plainPassword: motdepasse
-        email: AureliePodfenturPtutInfo@yopmail.com
-        enabled: true
-        phoneNumber: '0610238759'
-        roles:
-          - ROLE_MANAGER
 
 AppBundle\Entity\User\Student:
    student_1:
@@ -80,132 +41,6 @@ AppBundle\Entity\User\Student:
         enabled: true
         roles:
           - ROLE_STUDENT
-   student_2:
-        firstName: Jeremy
-        lastName: Soul
-        username: jeremy.soul
-        plainPassword: motdepasse
-        email: JeremySoulPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
-   student_3:
-        firstName: Béatrice
-        lastName: Malovert
-        username: beatrice.malovert
-        plainPassword: motdepasse
-        email: BeatriceMalovertPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
-   student_4:
-        firstName: Ilias
-        lastName: Parlhepa
-        username: ilias.parlhepa
-        plainPassword: motdepasse
-        email: IliasParlhepaPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
-   student_5:
-        firstName: Selène
-        lastName: Koridhor
-        username: selene.koridhor
-        plainPassword: motdepasse
-        email: SeleneKoridhorPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
-   student_6:
-        firstName: Bruno
-        lastName: Kinnder
-        username: bruno.kinnder
-        plainPassword: motdepasse
-        email: BrunoKinnderPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
-   student_7:
-        firstName: Elodie
-        lastName: Reckteur
-        username: elodie.reckteur
-        plainPassword: motdepasse
-        email: ElodieReckteurPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
-   student_8:
-        firstName: Luc
-        lastName: Jerxis
-        username: luc.jerxis
-        plainPassword: motdepasse
-        email: LucJerxisPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
-   student_9:
-        firstName: Fanny
-        lastName: Podter
-        username: fanny.podter
-        plainPassword: motdepasse
-        email: FannyPodterPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
-   student_10:
-        firstName: David
-        lastName: Hasselhoff
-        username: david.hasselhoff
-        plainPassword: motdepasse
-        email: DavidHasselhoffPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
-   student_11:
-        firstName: Antoine
-        lastName: Daniel
-        username: antoine.daniel
-        plainPassword: motdepasse
-        email: AntoineDanielPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
-   student_12:
-        firstName: Carlos
-        lastName: Herfi
-        username: carlos.herfi
-        plainPassword: motdepasse
-        email: CarlosHerfiPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
-   student_13:
-        firstName: Hélène
-        lastName: Napoli
-        username: helene.napoli
-        plainPassword: motdepasse
-        email: HeleneNapoliPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
-   student_14:
-        firstName: Sophie
-        lastName: Venaco
-        username: sophie.venaco
-        plainPassword: motdepasse
-        email: SophieVenacoPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
-   student_15:
-        firstName: Hector
-        lastName: Debras
-        username: hector.debras
-        plainPassword: motdepasse
-        email: HectorDebrasPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_STUDENT
 
 AppBundle\Entity\User\Jury:
    jury_1:
@@ -214,24 +49,6 @@ AppBundle\Entity\User\Jury:
         username: jean.ganourdi
         plainPassword: jury
         email: jury@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_JURY
-   jury_2:
-        firstName: Marie
-        lastName: Lofenza
-        username: marie.lofenza
-        plainPassword: jury
-        email: MarieLofenzaPtutInfo@yopmail.com
-        enabled: true
-        roles:
-          - ROLE_JURY
-   jury_3:
-        firstName: Edouard
-        lastName: Brachi
-        username: edouard.brachi
-        plainPassword: motdepasse
-        email: EdouardBrachiPtutInfo@yopmail.com
         enabled: true
         roles:
           - ROLE_JURY
