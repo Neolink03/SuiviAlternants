@@ -34,6 +34,7 @@ class AppWorkflowFactory
             $stateEntity->setName($state["name"]);
             $stateEntity->setJuryCanEdit($state["jury_can_edit"]);
             $stateEntity->setSendMail($state["send_mail"]);
+            $stateEntity->setIsVisibleByStudent($state["is_visible_by_student"]);
             $workflow->addState($stateEntity);
             $stateDictionary[$state["name"]] = $stateEntity;
         }

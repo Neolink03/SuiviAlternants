@@ -68,6 +68,7 @@ class WorkflowController extends Controller
         $state->setWorkflow($workflow);
         $state->setJuryCanEdit(false);
         $state->setSendMail(false);
+        $state->setIsVisibleByStudent(false);
 
         $workflow->addState($state);
         $workflow->setPromotion($promotion);
@@ -105,6 +106,7 @@ class WorkflowController extends Controller
             $state->setWorkflow($promotion->getWorkflow());
             $state->setJuryCanEdit(false);
             $state->setSendMail(false);
+            $state->setIsVisibleByStudent(false);
             $em->persist($state);
             $em->flush();
             $this->addFlash('success', 'L\'état a été ajouté au workflow');
@@ -196,6 +198,7 @@ class WorkflowController extends Controller
                 'stateName' => $state->getName(),
                 'juryCanEdit' => $state->getJuryCanEdit(),
                 'sendMail' => $state->getSendMail(),
+                'isVisibleByStudent' => $state->getIsVisibleByStudent(),
                 'triggersSelected' => $selected
             ]);
 
@@ -206,6 +209,7 @@ class WorkflowController extends Controller
                 $state->setName($data['name']);
                 $state->setJuryCanEdit($data['juryCanEdit']);
                 $state->setSendMail($data['sendMail']);
+                $state->setIsVisibleByStudent($data['isVisibleByStudent']);
                 switch ($data['trigger']) {
                     case "CompanyTrigger":
                         if(!$state->getTrigger() instanceof CompanyTrigger){
