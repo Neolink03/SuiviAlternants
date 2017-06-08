@@ -91,4 +91,4 @@ stof_doctrine_extensions:
 ivory_ck_editor:
     configs:
         default:
-            toolbar: basic
+            toolbar: standard
