@@ -104,6 +104,7 @@ class WorkflowController extends Controller
             $em = $this->getDoctrine()->getManager();
             $state->setWorkflow($promotion->getWorkflow());
             $state->setJuryCanEdit(false);
+            $state->setSendMail(false);
             $em->persist($state);
             $em->flush();
             $this->addFlash('success', 'L\'état a été ajouté au workflow');
