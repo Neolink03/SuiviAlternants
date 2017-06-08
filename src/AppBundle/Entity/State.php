@@ -20,6 +20,7 @@ class State
     private $workflow;
     private $juryCanEdit;
     private $sendMail;
+    private $isVisibleByStudent;
 
     public function getId()
     {
@@ -89,5 +90,17 @@ class State
     {
         $this->sendMail = $sendMail;
     }
+
+    public function getIsVisibleByStudent()
+    {
+        return $this->isVisibleByStudent;
+    }
+
+    public function setIsVisibleByStudent($isVisibleByStudent)
+    {
+        $this->isVisibleByStudent = $isVisibleByStudent;
+    }
+
+
 }
 

@@ -31,6 +31,10 @@
                                 <i class="fa fa-envelope" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
                                    title="Un email sera envoyé à l'étudiant"></i>
                             {% endif %}
+                            {% if state.isVisibleByStudent %}
+                                <i class="fa fa-eye" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
+                                   title="Afficher cet état à un étudiant"></i>
+                            {% endif %}
                         </td>
                         <td>
                             <div class="btn-group">
@@ -58,6 +62,10 @@
                                 {% if state.sendMail %}
                                     <i class="fa fa-envelope" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
                                        title="Un email sera envoyé à l'étudiant"></i>
+                                {% endif %}
+                                {% if state.isVisibleByStudent %}
+                                    <i class="fa fa-eye" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
+                                       title="Afficher cet état à un étudiant"></i>
                                 {% endif %}
                             </td>
                             <td>

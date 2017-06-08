@@ -3,58 +3,72 @@ states:
         name: Dossier
         jury_can_edit: false
         send_mail: true
+        is_visible_by_student: false
     -
         name: Etude
         jury_can_edit: false
         send_mail: false
+        is_visible_by_student: false
     -
         name: 'En attente'
         jury_can_edit: false
         send_mail: false
+        is_visible_by_student: false
     -
         name: Refusé
         jury_can_edit: false
         send_mail: false
+        is_visible_by_student: false
     -
         name: Appel
         jury_can_edit: false
         send_mail: true
+        is_visible_by_student: false
     -
         name: Admissible
         jury_can_edit: false
         send_mail: false
+        is_visible_by_student: false
     -
         name: Quitter
         jury_can_edit: false
         send_mail: false
+        is_visible_by_student: false
     -
         name: Recherche
         jury_can_edit: false
         send_mail: false
+        is_visible_by_student: false
     -
         name: Attente
         jury_can_edit: false
         send_mail: false
+        is_visible_by_student: false
     -
         name: Validation
         jury_can_edit: false
         send_mail: false
+        is_visible_by_student: false
     -
         name: 'En cours d''année'
         jury_can_edit: false
         send_mail: false
+        is_visible_by_student: false
     -
         name: Abandon
         jury_can_edit: false
         send_mail: false
+        is_visible_by_student: false
     -
         name: 'Post Alternant'
         jury_can_edit: false
         send_mail: false
+        is_visible_by_student: false
     -
         name: 'Plus d''entreprise'
         jury_can_edit: false
         send_mail: false
+        is_visible_by_student: false
 transitions:
     -
         name: Complet
