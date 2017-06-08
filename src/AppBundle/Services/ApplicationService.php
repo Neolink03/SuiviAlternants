@@ -15,7 +15,6 @@ use AppBundle\Entity\Tutor;
 use AppBundle\Services\Factories\SwiftMessageFactory;
 use Doctrine\ORM\EntityManager;
 use ReflectionClass;
-use Swift_Mailer;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class ApplicationService
@@ -31,7 +30,7 @@ class ApplicationService
         TransitionConditionService $tcs,
         Session $session,
         SwiftMessageFactory $messageFactory,
-        Swift_Mailer $mailer
+        \Swift_Mailer $mailer
     )
     {
         $this->em = $em;
@@ -78,7 +77,7 @@ class ApplicationService
         if($stateEnd->getSendMail()){
             $message = $this->messageFactory->create(
                 "Changement d'état de votre dossier pour la formation ".$application->getPromotion()->getCourse()->getName(),
-                "no-reply@univ-lyon1.frm",
+                "no-reply@univ-lyon1.fr",
                 [$application->getStudent()->getEmail()],
                 "AppBundle:email:studentChangeStateNotification.html.twig",
                 array(
