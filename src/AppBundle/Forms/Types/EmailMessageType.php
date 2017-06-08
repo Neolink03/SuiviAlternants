@@ -13,15 +13,17 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
 class EmailMessageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('object', TextType::class,array(
+        $builder->add('object', TextType::class, array(
             'label' => "Objet du message"
         ));
-        $builder->add('message', TextareaType::class, array(
+        $builder->add('message', CKEditorType::class, array(
+            'config_name' => 'default',
             'label' => "Message"
         ));
         $builder->add('users', ChoiceType::class, [
