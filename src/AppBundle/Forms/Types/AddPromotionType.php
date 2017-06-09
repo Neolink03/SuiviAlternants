@@ -22,8 +22,14 @@ class AddPromotionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, array('label' => 'Nom'));
-        $builder->add('startDate', DateType::class, array('label' => 'Date de début'));
-        $builder->add('endDate', DateType::class, array('label' => 'Date de fin'));
+        $builder->add('startDate', DateType::class, array(
+          'label' => 'Date de début',
+          'data' => new \DateTime("now")
+        ));
+        $builder->add('endDate', DateType::class, array(
+          'label' => 'Date de fin',
+          'data' => new \DateTime("now")
+        ));
         $builder->add('studentNumber', IntegerType::class, array('label' => 'Nombre d\'étudiants maximal'));
         $builder->add('submit', SubmitType::class, array('label' => 'Ajouter'));
     }
