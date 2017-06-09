@@ -37,6 +37,6 @@ class SwiftMessageFactory
     }
 
     private function createBody(string $templatePath, array $params) : string {
-        return $this->twig->render($templatePath, $params);
+        return html_entity_decode($this->twig->render($templatePath, $params));
     }
 }
