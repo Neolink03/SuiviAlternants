@@ -40,15 +40,16 @@ class ApplicationService
         $this->mailer = $mailer;
     }
 
-    public function setState(Application $application, array $data){
-        $authoriseChangeState =true;
+    public function setState(Application $application, array $data)
+    {
+        $authoriseChangeState = true;
         $stateStart = $data['transition']->getStartState();
 
-        if($data['transition']->getCondition()){
+        if ($data['transition']->getCondition()) {
             $authoriseChangeState = $this->tcs->isChecked($data['transition']->getCondition());
         }
 
-        if($authoriseChangeState){
+        if ($authoriseChangeState) {
             $state = $data['transition']->getEndState();
 
             $statusModif = new StatusModification();
@@ -66,39 +67,56 @@ class ApplicationService
             $this->em->flush();
 
             $this->sendMailIfAllow($application, $stateStart, $state);
-        }
-        else{
+        } else {
             $this->session->getFlashBag()->add("danger", $data['transition']->getCondition()->getErrorMessage());
         }
         return $application;
     }
 
-    private function sendMailIfAllow(Application $application, State $stateStart, State $stateEnd){
-        if($stateEnd->getSendMail()){
-            $message = $this->messageFactory->create(
-                "Changement d'état de votre dossier pour la formation ".$application->getPromotion()->getCourse()->getName(),
-                "no-reply@univ-lyon1.fr",
-                [$application->getStudent()->getEmail()],
-                "AppBundle:email:studentChangeStateNotification.html.twig",
-                array(
+    private function sendMailIfAllow(Application $application, State $stateStart, State $stateEnd)
+    {
+        if ($stateEnd->getSendMail()) {
+
+            if ($stateEnd->getMailMessage()) {
+                $templatePath = "AppBundle:email:studentChangeStateNotification.html.twig";
+                $params = [
+                    "mailMessage" => html_entity_decode($stateEnd->getMailMessage())
+                ];
+            } else {
+                $templatePath = "AppBundle:email:studentChangeStateNotificationDefault.html.twig";
+                $params = [
                     "formation" => $application->getPromotion()->getCourse()->getName(),
                     "stateStart" => $stateStart->getName(),
                     "stateEnd" => $stateEnd->getName(),
-                )
+                ];
+            }
+
+            $message = $this->messageFactory->create(
+                "Changement d'état de votre dossier pour la formation " . $application->getPromotion()->getCourse()->getName(),
+                "no-reply@univ-lyon1.fr",
+                [$application->getStudent()->getEmail()],
+                $templatePath,
+                $params
             );
+
+            if ($stateEnd->getMailMessage()) {
+                $message->setBody(html_entity_decode($message->getBody()));
+            }
+
             $this->mailer->send($message);
+
             $this->session->getFlashBag()->add("success", "Email envoyé à l'étudiant");
-        }
-        else{
+        } else {
             $this->session->getFlashBag()->add("success", "Changement réussi, aucun email envoyé");
         }
 
     }
 
-    private function tryTrigger(Application $application, State $state) : Application {
-        if($state->getTrigger()){
+    private function tryTrigger(Application $application, State $state): Application
+    {
+        if ($state->getTrigger()) {
             $reflect = new ReflectionClass($state->getTrigger());
-            switch (  $reflect->getShortName()) {
+            switch ($reflect->getShortName()) {
                 case "CompanyTrigger":
                     $application->addDataAttachments(new Company());
                     break;

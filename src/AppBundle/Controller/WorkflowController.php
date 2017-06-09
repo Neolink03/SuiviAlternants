@@ -37,14 +37,14 @@ class WorkflowController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->getData()['file'];
-            if (pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) == 'yml'){
+            if (pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) == 'yml') {
                 $this->get('app.factory.workflow.custom')->createAppWorflowFromYml($promotion, $file->getPathname());
                 $this->addFlash('success', 'La workflow a été ajouté à la formation');
 
                 return $this->redirectToRoute('course_manager.promotion.workflow.edit', [
                     'promotionId' => $promotion->getId()
                 ]);
-            }else{
+            } else {
                 $this->addFlash('danger', 'Le fichier fournit pour le workflow n\'est pas valide. Veuillez choisir un autre fichier (au format yml) ou créer votre workflow.');
             }
 
@@ -148,9 +148,9 @@ class WorkflowController extends Controller
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      * @ParamConverter("state", options={"mapping": {"stateId" : "id"}})
      */
-    public function deleteStateWorkflowAction(Request $request ,Promotion $promotion, State $state)
+    public function deleteStateWorkflowAction(Request $request, Promotion $promotion, State $state)
     {
-        $em =$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $startTransitions = $this->getDoctrine()->getRepository(Transition::class)->findBy(
             ['startState' => $state]
         );
@@ -158,17 +158,17 @@ class WorkflowController extends Controller
             ['endState' => $state]
         );
 
-        foreach ($startTransitions as $transition){
+        foreach ($startTransitions as $transition) {
             $em->remove($transition);
         }
-        foreach ($endTransition as $transition){
+        foreach ($endTransition as $transition) {
             $em->remove($transition);
         }
         $promotion->getWorkflow()->removeState($state);
         $em->persist($promotion);
         $em->remove($state);
         $em->flush();
-        
+
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
     }
@@ -177,129 +177,131 @@ class WorkflowController extends Controller
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      * @ParamConverter("state", options={"mapping": {"stateId" : "id"}})
      */
-    public function editStateWorkflowAction(Request $request , State $state, Promotion $promotion)
+    public function editStateWorkflowAction(Request $request, State $state, Promotion $promotion)
     {
 
-        $em =$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $selected = '';
         if ($state->getTrigger()) {
             $reflect = new ReflectionClass($state->getTrigger());
-            $selected= $reflect->getShortName();
+            $selected = $reflect->getShortName();
         }
 
-            $form = $this->createForm(ComplexStateType::class, null, [
-                'triggersAviable' => [
-                    '' => '',
-                    'Affiche un formulaire entreprise à l\'étudiant' => 'CompanyTrigger',
-                    'Affiche un formulaire après la fin des études à l\'étudiant' => 'AfterCourseTrigger',
-                    'Affiche un formulaire pour remplir le tuteur IUT de l\'étudiant' => 'TutorTrigger',
-                ],
-                'stateName' => $state->getName(),
-                'juryCanEdit' => $state->getJuryCanEdit(),
-                'sendMail' => $state->getSendMail(),
-                'isVisibleByStudent' => $state->getIsVisibleByStudent(),
-                'triggersSelected' => $selected
-            ]);
+        $form = $this->createForm(ComplexStateType::class, null, [
+            'triggersAviable' => [
+                '' => '',
+                'Affiche un formulaire entreprise à l\'étudiant' => 'CompanyTrigger',
+                'Affiche un formulaire après la fin des études à l\'étudiant' => 'AfterCourseTrigger',
+                'Affiche un formulaire pour remplir le tuteur IUT de l\'étudiant' => 'TutorTrigger',
+            ],
+            'stateName' => $state->getName(),
+            'juryCanEdit' => $state->getJuryCanEdit(),
+            'sendMail' => $state->getSendMail(),
+            'isVisibleByStudent' => $state->getIsVisibleByStudent(),
+            'triggersSelected' => $selected,
+            'mailMessage' => $state->getMailMessage()
+        ]);
 
-            $form->handleRequest($request);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $data = $form->getData();
-                $state->setName($data['name']);
-                $state->setJuryCanEdit($data['juryCanEdit']);
-                $state->setSendMail($data['sendMail']);
-                $state->setIsVisibleByStudent($data['isVisibleByStudent']);
-                switch ($data['trigger']) {
-                    case "CompanyTrigger":
-                        if(!$state->getTrigger() instanceof CompanyTrigger){
-                            if(!is_null($state->getTrigger())){
-                                $em->remove($state->getTrigger());
-                            }
-                            $em->persist($state);
-                            $em->flush();
-                            $trigger = new CompanyTrigger();
-                            $trigger->setState($state);
-                            $em->persist($trigger);
-                            $state->setTrigger($trigger);
-                        }
-                        break;
-                    case "AfterCourseTrigger":
-                        if(!$state->getTrigger() instanceof AfterCourseTrigger){
-
-                            if(!is_null($state->getTrigger())){
-                                $em->remove($state->getTrigger());
-                            }
-                            $em->persist($state);
-                            $em->flush();
-
-                            $trigger = new AfterCourseTrigger();
-                            $trigger->setState($state);
-                            $em->persist($trigger);
-                            $state->setTrigger($trigger);
-                        }
-                        break;
-                    case "TutorTrigger":
-                        if(!$state->getTrigger() instanceof TutorTrigger){
-
-                            if(!is_null($state->getTrigger())){
-                                $em->remove($state->getTrigger());
-                            }
-                            $em->persist($state);
-                            $em->flush();
-
-                            $trigger = new TutorTrigger();
-                            $trigger->setState($state);
-                            $em->persist($trigger);
-                            $state->setTrigger($trigger);
-                        }
-                        break;
-                    case "":
-                        if(!is_null($state->getTrigger()))
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $state->setName($data['name']);
+            $state->setJuryCanEdit($data['juryCanEdit']);
+            $state->setSendMail($data['sendMail']);
+            $state->setIsVisibleByStudent($data['isVisibleByStudent']);
+            $state->setMailMessage($data['mailMessage']);
+            switch ($data['trigger']) {
+                case "CompanyTrigger":
+                    if (!$state->getTrigger() instanceof CompanyTrigger) {
+                        if (!is_null($state->getTrigger())) {
                             $em->remove($state->getTrigger());
-                        break;
-                    default:
-                        throw new \DomainException("Problème dans le choix du trigger");
-                }
-                $em->persist($state);
-                $em->flush();
+                        }
+                        $em->persist($state);
+                        $em->flush();
+                        $trigger = new CompanyTrigger();
+                        $trigger->setState($state);
+                        $em->persist($trigger);
+                        $state->setTrigger($trigger);
+                    }
+                    break;
+                case "AfterCourseTrigger":
+                    if (!$state->getTrigger() instanceof AfterCourseTrigger) {
 
-                return $this->redirectToRoute('course_manager.promotion.workflow.edit', [
-                    'promotionId' => $promotion->getId()
-                ]);
+                        if (!is_null($state->getTrigger())) {
+                            $em->remove($state->getTrigger());
+                        }
+                        $em->persist($state);
+                        $em->flush();
+
+                        $trigger = new AfterCourseTrigger();
+                        $trigger->setState($state);
+                        $em->persist($trigger);
+                        $state->setTrigger($trigger);
+                    }
+                    break;
+                case "TutorTrigger":
+                    if (!$state->getTrigger() instanceof TutorTrigger) {
+
+                        if (!is_null($state->getTrigger())) {
+                            $em->remove($state->getTrigger());
+                        }
+                        $em->persist($state);
+                        $em->flush();
+
+                        $trigger = new TutorTrigger();
+                        $trigger->setState($state);
+                        $em->persist($trigger);
+                        $state->setTrigger($trigger);
+                    }
+                    break;
+                case "":
+                    if (!is_null($state->getTrigger()))
+                        $em->remove($state->getTrigger());
+                    break;
+                default:
+                    throw new \DomainException("Problème dans le choix du trigger");
             }
+            $em->persist($state);
+            $em->flush();
 
-            return $this->render('AppBundle:CourseManager:editWorkflowState.html.twig',
-                [
-                    'form' => $form->createView(),
-                    'state' => $state,
-                    'promotionId' => $promotion->getId()
-                ]);
+            return $this->redirectToRoute('course_manager.promotion.workflow.edit', [
+                'promotionId' => $promotion->getId()
+            ]);
+        }
+
+        return $this->render('AppBundle:CourseManager:editWorkflowState.html.twig',
+            [
+                'form' => $form->createView(),
+                'state' => $state,
+                'promotionId' => $promotion->getId()
+            ]);
     }
 
     /**
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      * @ParamConverter("transition", options={"mapping": {"transitionId" : "id"}})
      */
-    public function deleteTransitionWorkflowAction(Request $request , Promotion $promotion, Transition $transition)
+    public function deleteTransitionWorkflowAction(Request $request, Promotion $promotion, Transition $transition)
     {
-        $em =$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $promotion->getWorkflow()->removeTransition($transition);
         $em->persist($promotion);
         $em->remove($transition);
         $em->flush();
-        
+
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
     }
-    
+
     /**
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      * @ParamConverter("transition", options={"mapping": {"transitionId" : "id"}})
      */
-    public function renameTransitionWorkflowAction(Request $request , Transition $transition, Promotion $promotion)
+    public function renameTransitionWorkflowAction(Request $request, Transition $transition, Promotion $promotion)
     {
-        $em =$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(SampleTransitionType::class, $transition, array(
             'states' => $promotion->getWorkflow()->getStates()
@@ -308,10 +310,10 @@ class WorkflowController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($transition);
-            
+
             $promotion->getWorkflow()->renameTransition($transition->getName());
             $em->persist($promotion);
-            
+
             $em->flush();
 
             return $this->redirectToRoute('course_manager.promotion.workflow.edit', [
@@ -330,9 +332,9 @@ class WorkflowController extends Controller
      * @ParamConverter("promotion", options={"mapping": {"promotionId" : "id"}})
      * @ParamConverter("condition", options={"mapping": {"conditionId" : "id"}})
      */
-    public function deleteConditionWorkflowAction(Request $request , TransitionCondition $condition, Promotion $promotion)
+    public function deleteConditionWorkflowAction(Request $request, TransitionCondition $condition, Promotion $promotion)
     {
-        $em =$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $condition->getTransition()->setCondition(null);
         $em->persist($condition);
         $em->flush();
@@ -346,7 +348,7 @@ class WorkflowController extends Controller
      */
     public function addConditionWorkflowCountAction(Request $request, Promotion $promotion, Transition $transition)
     {
-        $em =$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $condition = new StudentCountCondition();
         $condition->setNumber($promotion->getStudentNumber());
@@ -378,7 +380,7 @@ class WorkflowController extends Controller
      */
     public function editConditionWorkflowAction(Request $request, Promotion $promotion, TransitionCondition $condition)
     {
-        $em =$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         if ($condition instanceof StudentCountCondition) {
             $form = $this->createForm(StudentCountConditionType::class, $condition);
@@ -417,7 +419,7 @@ class WorkflowController extends Controller
      */
     public function addConditionWorkflowDateAction(Request $request, Promotion $promotion, Transition $transition)
     {
-        $em =$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $condition = new DatetimeCondition();
         $form = $this->createForm(DatetimeConditionType::class, $condition);

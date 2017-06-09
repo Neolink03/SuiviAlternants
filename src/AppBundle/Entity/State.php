@@ -21,6 +21,7 @@ class State
     private $juryCanEdit;
     private $sendMail;
     private $isVisibleByStudent;
+    private $mailMessage;
 
     public function getId()
     {
@@ -102,5 +103,28 @@ class State
     }
 
 
-}
 
+    /**
+     * Set mailMessage
+     *
+     * @param string $mailMessage
+     *
+     * @return State
+     */
+    public function setMailMessage($mailMessage)
+    {
+        $this->mailMessage = $mailMessage;
+
+        return $this;
+    }
+
+    /**
+     * Get mailMessage
+     *
+     * @return string
+     */
+    public function getMailMessage()
+    {
+        return $this->mailMessage;
+    }
+}

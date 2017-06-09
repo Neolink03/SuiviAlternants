@@ -7,6 +7,7 @@ namespace AppBundle\Forms\Types\Workflow;
 
 
 use AppBundle\Entity\State;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,11 +19,10 @@ class ComplexStateType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name', TextType::class, array(
-                'label' => "Nom de l'état",
-                'data' => $options['stateName']
-            ));
+        $builder->add('name', TextType::class, array(
+            'label' => "Nom de l'état",
+            'data' => $options['stateName']
+        ));
         $builder->add('juryCanEdit', ChoiceType::class, [
             'expanded' => true,
             'multiple' => false,
@@ -31,7 +31,7 @@ class ComplexStateType extends AbstractType
                 'Non' => false
             ],
             'label' => "Le jury peut passer cet état à un autre état",
-            'data' =>  $options['juryCanEdit']
+            'data' => $options['juryCanEdit']
         ]);
         $builder->add('sendMail', ChoiceType::class, [
             'expanded' => true,
@@ -41,7 +41,12 @@ class ComplexStateType extends AbstractType
                 'Non' => false
             ],
             'label' => "Un email sera envoyé à l'étudiant",
-            'data' =>  $options['sendMail']
+            'data' => $options['sendMail']
+        ]);
+        $builder->add('mailMessage', CKEditorType::class, [
+            'config_name' => 'default',
+            'label' => "Message à envoyer automatiquement",
+            'data' => $options['mailMessage']
         ]);
         $builder->add('isVisibleByStudent', ChoiceType::class, [
             'expanded' => true,
@@ -51,16 +56,15 @@ class ComplexStateType extends AbstractType
                 'Non' => false
             ],
             'label' => "Afficher cet état à un étudiant",
-            'data' =>  $options['isVisibleByStudent']
+            'data' => $options['isVisibleByStudent']
         ]);
 
         $builder->add('trigger', ChoiceType::class, [
             'required' => false,
             'choices' => $options['triggersAviable'],
             'label' => "Trigger à déclencher",
-            'data' =>  $options['triggersSelected']
+            'data' => $options['triggersSelected']
         ]);
-
 
 
     }
@@ -74,6 +78,7 @@ class ComplexStateType extends AbstractType
             'juryCanEdit' => false,
             'sendMail' => false,
             'isVisibleByStudent' => false,
+            'mailMessage' => ''
         ));
     }
 }

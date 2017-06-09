@@ -5,7 +5,19 @@
 {% block body %}
     <h1>Modification de l'état</h1>
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.juryCanEdit) }}
+    {{ form_row(form.sendMail) }}
+    <div class="form-group">
+        {{ form_label(form.mailMessage) }}
+        <p class="form-text text-muted">
+            Vous pouvez personnaliser le message envoyé automatiquement lors de l'accès à cet étape. Le message par
+            défaut sera envoyé si vous laissez ce champ vide.
+        </p>
+        {{ form_widget(form.mailMessage) }}
+    </div>
+    {{ form_row(form.isVisibleByStudent) }}
+    {{ form_row(form.trigger) }}
     <a href="{{ path('course_manager.promotion.workflow.edit', { 'promotionId': promotionId }) }}"
        class="btn btn-secondary"><i class="fa fa-chevron-left" aria-hidden="true"></i> Retour</a>
     <input type="submit" value="Modifier" class="btn btn-primary">
